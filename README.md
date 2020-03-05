@@ -10,18 +10,18 @@
 `$documents->listById($documentId)`
 
 #### 3 - Criar um Documento
-`$attributes = [`<br>
-     `'document' => [`<br>
-         `'name' => 'Package Autentique V2'`<br>
-     `],`<br>
-     `'signers' => [`<br>
-         `'email' => 'dutra_morais@hotmail.com',`<br>
-         `'x' => '50',`<br>
-         `'y' => '80',`<br>
-         `'z' => '1'`<br>
-     `],`<br>
-     `'file' => '$filePath'`<br>
- `];`<br>
+$attributes = [
+     'document' => [
+         'name' => 'Package Autentique V2'
+     ],
+     'signers' => [
+         'email' => 'dutra_morais@hotmail.com',
+         'x' => '50',
+         'y' => '80',
+         'z' => '1'
+     ],
+     'file' => '$filePath'
+ ];<br>
 `$documents->create($attributes)`
 
 #### 4 - Assinar um Documento
