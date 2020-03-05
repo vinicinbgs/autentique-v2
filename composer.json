@@ -2,7 +2,11 @@
   "name": "vinicibgs/autentique-v2",
   "type": "library",
   "description": "Api Autentique V2",
-  "keywords": ["api","autentique", "v2"],
+  "keywords": [
+    "api",
+    "autentique",
+    "v2"
+  ],
   "homepage": "https://github.com/vinicinbgs/autentique-v2",
   "license": "MIT",
   "authors": [
@@ -13,11 +17,16 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0"
+    "php": ">=7.0.0",
+    "ext-curl": "*",
+    "ext-json": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Autetinque": "src"
+    "classmap": [
+      "src"
+    ],
+    "psr-4": {
+      "App\\": "src/"
     }
   }
 }

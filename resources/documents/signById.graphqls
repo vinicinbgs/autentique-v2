@@ -1,0 +1,4 @@
+"mutation {
+  signDocument(id: \"$documentId\")
+}",
+"variables": {}
