@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace vinicinbgs\Autentique;
 
 Class Query
 {
@@ -15,7 +15,7 @@ Class Query
      */
     public function __construct()
     {
-        $this->folder = "resources/documents/";
+        $this->folder = __DIR__ . "\\resources\\documents\\";
     }
 
     /**
@@ -23,7 +23,7 @@ Class Query
      */
     public function query()
     {
-        $query = file_get_contents("../$this->folder$this->file.graphqls");
+        $query = file_get_contents("$this->folder$this->file.graphqls");
 
         if (gettype($query) !== 'string')
             return 'This query is not a valid string';

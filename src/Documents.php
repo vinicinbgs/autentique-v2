@@ -1,12 +1,10 @@
 <?php
 
-namespace App;
-
-require __DIR__ . '\..\vendor\autoload.php';
+namespace vinicinbgs\Autentique;
 
 use Api;
 
-Class Documents extends Query
+Class Documents
 {
     private $QUERY;
 
