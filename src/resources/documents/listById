@@ -1,4 +1,4 @@
-query {document(id: "$documentId") {
+"query {document(id: \"$documentId\") {
     id
     name
     refusable
@@ -22,4 +22,4 @@ fragment event on Event {
     reason
     created_at
     geolocation { country countryISO state stateISO city zipcode latitude longitude }
-}
+}"

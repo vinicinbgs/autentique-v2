@@ -15,30 +15,63 @@ Class Documents
 
     public function listAll()
     {
-        return $this->QUERY->setFile(__FUNCTION__)->query();
+        $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
+
+        return Api::request($graphQuery, 'json');
     }
 
-    public function listById($documentId)
+    /**
+     * @param string $documentId
+     * @return bool|string
+     */
+    public function listById(string $documentId)
     {
         $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
-        $response = Api::request($graphQuery, 'json');
-
-        return json_encode($response);
+        return Api::request($graphQuery, 'json');
     }
 
-    public function create()
+    /**
+     * @param array $attributes
+     * @param string $pathPdf
+     * @return string|string[]|null
+     */
+    public function create(array $attributes)
+    {
+        $variables = [
+            'document' => [
+                'name' => $attributes['document']['name']
+            ],
+            'signers' => [
+                [
+                    "email" => $attributes['signers']['email'],
+                    "action" => "SIGN",
+                    "positions" => [
+                        [
+                            "x" => $attributes['signers']['x'], // x axis
+                            "y" => $attributes['signers']['y'], // y axis
+                            "z" => $attributes['signers']['z']  // page number
+                        ]
+                    ]
+                ]
+            ],
+            'file' => NULL,
+        ];
+
+        $graphMutation = $this->QUERY->setFile(__FUNCTION__)->query();
+        $graphMutation = str_replace('$variables', json_encode($variables), $graphMutation);
+        $graphMutation = str_replace('$sandbox', getenv('AUTENTIQUE_DEV_MODE') ? 'true' : 'false', $graphMutation);
+
+        return Api::request($graphMutation, 'form', $attributes['file']);
+    }
+
+    public function signById(string $documentId)
     {
         return $this->QUERY->setFile(__FUNCTION__)->query();
     }
 
-    public function signById()
-    {
-        return $this->QUERY->setFile(__FUNCTION__)->query();
-    }
-
-    public function deleteById()
+    public function deleteById(string $documentId)
     {
         return $this->QUERY->setFile(__FUNCTION__)->query();
     }

@@ -11,7 +11,6 @@ Class Query
 
     /**
      * Query constructor.
-     * @param $file
      */
     public function __construct()
     {
@@ -23,7 +22,7 @@ Class Query
      */
     public function query()
     {
-        $query = file_get_contents("$this->folder$this->file.graphqls");
+        $query = file_get_contents("$this->folder$this->file");
 
         if (gettype($query) !== 'string')
             return 'This query is not a valid string';

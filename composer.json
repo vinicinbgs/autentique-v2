@@ -19,7 +19,8 @@
   "require": {
     "php": ">=7.0.0",
     "ext-curl": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "vlucas/phpdotenv": "^4.1"
   },
   "autoload": {
     "classmap": [
