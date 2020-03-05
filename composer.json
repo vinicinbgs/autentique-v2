@@ -1,0 +1,23 @@
+{
+  "name": "vinicibgs/autentique-v2",
+  "type": "library",
+  "description": "Api Autentique V2",
+  "keywords": ["api","autentique", "v2"],
+  "homepage": "https://github.com/vinicinbgs/autentique-v2",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vinicius Morais Dutra",
+      "email": "dutra_morais@hotmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Autetinque": "src"
+    }
+  }
+}
