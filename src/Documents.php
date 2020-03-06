@@ -7,13 +7,16 @@ use Api;
 Class Documents
 {
     private $QUERY;
+    private $token;
 
     /**
      * Documents constructor.
+     * @param $token
      */
-    public function __construct()
+    public function __construct($token)
     {
         $this->QUERY = new Query();
+        $this->token = $token;
     }
 
     /**
@@ -23,7 +26,7 @@ Class Documents
     {
         $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
 
-        return Api::request($graphQuery, 'json');
+        return Api::request($this->token, $graphQuery, 'json');
     }
 
     /**
@@ -35,7 +38,7 @@ Class Documents
         $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
-        return Api::request($graphQuery, 'json');
+        return Api::request($this->token, $graphQuery, 'json');
     }
 
     /**
@@ -69,7 +72,7 @@ Class Documents
         $graphMutation = str_replace('$variables', json_encode($variables), $graphMutation);
         $graphMutation = str_replace('$sandbox', getenv('AUTENTIQUE_DEV_MODE') ? 'true' : 'false', $graphMutation);
 
-        return Api::request($graphMutation, 'form', $attributes['file']);
+        return Api::request($this->token, $graphMutation, 'form', $attributes['file']);
     }
 
     /**
@@ -81,7 +84,7 @@ Class Documents
         $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
-        return Api::request($graphQuery, 'json');
+        return Api::request($this->token, $graphQuery, 'json');
     }
 
     /**
@@ -93,6 +96,6 @@ Class Documents
         $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
-        return Api::request($graphQuery, 'json');
+        return Api::request($this->token, $graphQuery, 'json');
     }
 }

@@ -2,10 +2,10 @@
 
 class Api
 {
-    static public function request(string $query, string $contentType, string $pathFile = null)
+    static public function request(string $token, string $query, string $contentType, string $pathFile = null)
     {
         $httpHeader = [
-            "Authorization: Bearer " . getenv('AUTENTIQUE_TOKEN')
+            "Authorization: Bearer {$token}"
         ];
 
         switch ($contentType) {

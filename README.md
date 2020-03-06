@@ -14,7 +14,7 @@ AUTENTIQUE_DEV_MODE=true || false
 
 **Import library** `use vinicinbgs\Autentique\Documents;`
 
-**Instance** `$documents = new Documents();`
+**Instance** `$documents = new Documents($AUTENTIQUE_TOKEN);`
 ]
 #### 1 - Listar todos os Documentos
 `$documents->listAll();`
