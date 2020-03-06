@@ -1,8 +1,8 @@
 #### <span style="text-align: center">AUTENTIQUE Api v2</span>
 
-[![Monthly Downloads](https://poser.pugx.org/vinicibgs/autentique-v2/d/monthly?format=plastic)](https://packagist.org/packages/vinicibgs/autentique-v2)
-[![Daily Downloads](https://poser.pugx.org/vinicibgs/autentique-v2/d/daily?format=plastic)](https://packagist.org/packages/vinicibgs/autentique-v2)
-[![Latest Stable Version](https://poser.pugx.org/vinicibgs/autentique-v2/version?format=plastic)](https://packagist.org/packages/vinicibgs/autentique-v2)
+[![Monthly Downloads](https://poser.pugx.org/vinicibgs/autentique-v2/d/monthly)](https://packagist.org/packages/vinicibgs/autentique-v2)
+[![Daily Downloads](https://poser.pugx.org/vinicibgs/autentique-v2/d/daily)](https://packagist.org/packages/vinicibgs/autentique-v2)
+[![Latest Version on Packagist](https://img.shields.io/badge/stable-1.0.0-brightgreen)](https://packagist.org/packages/vinicibgs/autentique-v2)
 # 🚀 Usage
 **Set file .env**
 <pre>
@@ -15,7 +15,7 @@ AUTENTIQUE_DEV_MODE=true || false
 **Import library** `use vinicinbgs\Autentique\Documents;`
 
 **Instance** `$documents = new Documents();`
-
+]
 #### 1 - Listar todos os Documentos
 `$documents->listAll();`
 
