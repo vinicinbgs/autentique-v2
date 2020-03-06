@@ -2,6 +2,7 @@
   "name": "vinicibgs/autentique-v2",
   "type": "library",
   "description": "Api Autentique V2",
+  "version": "1.0.0",
   "keywords": [
     "api",
     "autentique",
