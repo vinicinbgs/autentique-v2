@@ -1,16 +1,29 @@
+#### <span style="text-align: center">AUTENTIQUE Api v2</span>
+
+[![Monthly Downloads](https://poser.pugx.org/vinicibgs/autentique-v2/d/monthly?format=plastic)](https://packagist.org/packages/vinicibgs/autentique-v2)
+[![Daily Downloads](https://poser.pugx.org/vinicibgs/autentique-v2/d/daily?format=plastic)](https://packagist.org/packages/vinicibgs/autentique-v2)
+[![Latest Stable Version](https://poser.pugx.org/vinicibgs/autentique-v2/version?format=plastic)](https://packagist.org/packages/vinicibgs/autentique-v2)
 # 🚀 Usage
+**Set file .env**
+<pre>
+AUTENTIQUE_URL=https://api.autentique.com.br/v2/graphql
+AUTENTIQUE_TOKEN=YOURTOKEN
+AUTENTIQUE_DEV_MODE=true || false
+# IF TRUE, DOCUMENT CREATE IN MODE SANDBOX
+</pre>
+
 **Import library** `use vinicinbgs\Autentique\Documents;`
 
 **Instance** `$documents = new Documents();`
 
 #### 1 - Listar todos os Documentos
-`$documents->listAll()`
+`$documents->listAll();`
 
 #### 2 - Listar um Documento
-`$documents->listById($documentId)`
+`$documents->listById($documentId);`
 
 #### 3 - Criar um Documento
-$attributes = [
+<pre>$attributes = [
      'document' => [
          'name' => 'Package Autentique V2'
      ],
@@ -21,11 +34,13 @@ $attributes = [
          'z' => '1'
      ],
      'file' => '$filePath'
- ];<br>
-`$documents->create($attributes)`
+ ];
+ 
+ $documents->create($attributes);
+ </pre>
 
 #### 4 - Assinar um Documento
-`$documents->signById()`
+`$documents->signById($documentId);`
 
 #### 5 - Deletar um Documento
-`$documents->listAll()`
+`$documents->deleteById($documentId);`

@@ -8,11 +8,17 @@ Class Documents
 {
     private $QUERY;
 
+    /**
+     * Documents constructor.
+     */
     public function __construct()
     {
         $this->QUERY = new Query();
     }
 
+    /**
+     * @return bool|string
+     */
     public function listAll()
     {
         $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
@@ -66,13 +72,27 @@ Class Documents
         return Api::request($graphMutation, 'form', $attributes['file']);
     }
 
+    /**
+     * @param string $documentId
+     * @return bool|string
+     */
     public function signById(string $documentId)
     {
-        return $this->QUERY->setFile(__FUNCTION__)->query();
+        $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
+        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+
+        return Api::request($graphQuery, 'json');
     }
 
+    /**
+     * @param string $documentId
+     * @return bool|string
+     */
     public function deleteById(string $documentId)
     {
-        return $this->QUERY->setFile(__FUNCTION__)->query();
+        $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
+        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+
+        return Api::request($graphQuery, 'json');
     }
 }
