@@ -1,5 +1,3 @@
-# Required to run your project under the correct environment.
-
 language: php
 
 # Versions of PHP you want your project run with.
@@ -7,11 +5,10 @@ language: php
 php:
   - 7.3
   - hhvm
-
+  - nightly
 # Commands to be run before your environment runs.
 
 before_script:
-  - composer self-update
   - composer install --prefer-source --no-interaction --dev
 
 # Commands you want to run that will verify your build.
