@@ -1,9 +1,10 @@
 #### <span style="text-align: center">AUTENTIQUE Api v2</span>
-
-[![Monthly Downloads](https://poser.pugx.org/vinicibgs/autentique-v2/d/monthly)](https://packagist.org/packages/vinicibgs/autentique-v2)
-[![Daily Downloads](https://poser.pugx.org/vinicibgs/autentique-v2/d/daily)](https://packagist.org/packages/vinicibgs/autentique-v2)
-[![Latest Version on Packagist](https://img.shields.io/badge/stable-1.0.0-brightgreen)](https://packagist.org/packages/vinicibgs/autentique-v2)
+[![Latest Stable Version](https://poser.pugx.org/vinicinbgs/autentique-v2/v/stable)](https://packagist.org/packages/vinicinbgs/autentique-v2)
+[![Total Downloads](https://poser.pugx.org/vinicinbgs/autentique-v2/downloads)](https://packagist.org/packages/vinicinbgs/autentique-v2)
+[![composer.lock](https://poser.pugx.org/vinicinbgs/autentique-v2/composerlock)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 # 🚀 Usage
+<pre>composer install vinicinbgs/autentique-v2</pre>
+
 **Set file .env**
 <pre>
 AUTENTIQUE_URL=https://api.autentique.com.br/v2/graphql
@@ -14,8 +15,8 @@ AUTENTIQUE_DEV_MODE=true || false
 
 **Import library** `use vinicinbgs\Autentique\Documents;`
 
-**Instance** `$documents = new Documents($AUTENTIQUE_TOKEN);`
-]
+**Instance** <pre>$documents = new Documents($AUTENTIQUE_TOKEN);</pre>
+
 #### 1 - Listar todos os Documentos
 `$documents->listAll();`
 
