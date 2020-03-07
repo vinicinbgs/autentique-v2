@@ -7,7 +7,7 @@ php:
 # Commands to be run before your environment runs.
 
 before_script:
-  - composer install
+  - composer install --dev
   - composer dump-autoload
 
 # Commands you want to run that will verify your build.
