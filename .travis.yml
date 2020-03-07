@@ -4,8 +4,6 @@ language: php
 
 php:
   - 7.3
-  - hhvm
-  - nightly
 # Commands to be run before your environment runs.
 
 before_script:
@@ -13,7 +11,7 @@ before_script:
 
 # Commands you want to run that will verify your build.
 
-script: phpunit
+script: phpunit tests
 
 # allow_failures: Allow this build to fail under the specified environments.
 
@@ -22,7 +20,6 @@ script: phpunit
 matrix:
   allow_failures:
     - php: 7.3
-    - php: hhvm
   fast_finish: true
 
 # Customize when the notification emails are sent.
