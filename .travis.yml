@@ -8,6 +8,7 @@ php:
 
 before_script:
   - composer install
+  - composer dump-autoload
 
 # Commands you want to run that will verify your build.
 
