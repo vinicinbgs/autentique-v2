@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use vinicinbgs\Autentique\Documents;
+use App\Documents;
 //use Dotenv\Dotenv;
 
 final class DocumentTest extends TestCase
