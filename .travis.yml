@@ -12,6 +12,11 @@ before_script:
 
 # Commands you want to run that will verify your build.
 
+env:
+  - AUTENTIQUE_TOKEN="1AAA95DCA22EAD45836A01A561BCE34B36DEF038CCC59B07A04670305F4834A6"
+  - AUTENTIQUE_URL="https://api.autentique.com.br/v2/graphql"
+  - AUTENTIQUE_DEV_MODE="true"
+
 script: phpunit tests
 
 # allow_failures: Allow this build to fail under the specified environments.
