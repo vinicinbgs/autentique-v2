@@ -14,7 +14,7 @@ Class Query
      */
     public function __construct()
     {
-        $this->folder = __DIR__ . "\\resources\\documents\\";
+        $this->folder = __DIR__ . "/resources/documents/";
     }
 
     /**
