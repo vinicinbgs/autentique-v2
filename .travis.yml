@@ -17,7 +17,7 @@ env:
   - AUTENTIQUE_URL="https://api.autentique.com.br/v2/graphql"
   - AUTENTIQUE_DEV_MODE="true"
 
-script: phpunit tests
+script: vendor\bin\phpunit tests
 
 # allow_failures: Allow this build to fail under the specified environments.
 
