@@ -5,7 +5,7 @@ class DocumentTest extends PHPUnit\Framework\TestCase
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '\..\src');
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '\..\src\.env');
         $dotenv->load();
     }
 
