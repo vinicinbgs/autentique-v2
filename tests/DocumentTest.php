@@ -1,24 +1,20 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use vinicinbgs\Autentique\Documents;
-//use Dotenv\Dotenv;
-
-final class DocumentTest extends TestCase
+class DocumentTest extends PHPUnit\Framework\TestCase
 {
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        //$dotenv = Dotenv::createImmutable(__DIR__ . '\..\src');
-        //$dotenv->load();
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '\..\src');
+        $dotenv->load();
     }
 
     /**
      * @test
      */
-    public function readAllDocuments(): void
+    public function testListAll()
     {
-        $data = json_decode((new Documents(getenv('AUTENTIQUE_TOKEN')))->listAll(), true);
+        $data = json_decode((new vinicinbgs\Autentique\Documents(getenv('AUTENTIQUE_TOKEN')))->listAll(), true);
 
         $this->assertArrayHasKey('data', $data);
     }
