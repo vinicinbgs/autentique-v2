@@ -1,8 +1,8 @@
 #### <span style="text-align: center">AUTENTIQUE Api v2</span>
 [![Latest Stable Version](https://poser.pugx.org/vinicinbgs/autentique-v2/v/stable)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 [![Total Downloads](https://poser.pugx.org/vinicinbgs/autentique-v2/downloads)](https://packagist.org/packages/vinicinbgs/autentique-v2)
-[![composer.lock](https://poser.pugx.org/vinicinbgs/autentique-v2/composerlock)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 [![Build Status](https://travis-ci.org/vinicinbgs/autentique-v2.svg?branch=master)](https://travis-ci.org/vinicinbgs/autentique-v2)
+[![codecov](https://codecov.io/gh/vinicinbgs/autentique-v2/branch/master/graph/badge.svg)](https://codecov.io/gh/vinicinbgs/autentique-v2)
 # 🚀 Usage
 <pre>composer install vinicinbgs/autentique-v2</pre>
 
