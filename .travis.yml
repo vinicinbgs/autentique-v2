@@ -22,7 +22,7 @@ script:
   - phpunit tests
   - bundle exec rspec
 
-after_script:g
+after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 # allow_failures: Allow this build to fail under the specified environments.
