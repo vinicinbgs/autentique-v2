@@ -39,6 +39,8 @@ class DocumentTest extends PHPUnit\Framework\TestCase
 
         $data = json_decode($documents->create($attributes), true);
 
+        var_dump($data['data']);
+
         $this->assertArrayHasKey('createDocument', $data['data'], 'Array doesn\'t contains "createDocument" as key');
     }
 }
