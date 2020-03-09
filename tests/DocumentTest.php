@@ -25,16 +25,16 @@ class DocumentTest extends PHPUnit\Framework\TestCase
 
         $attributes = [
             'document' => [
-                'name' => 'Package Autentique V2'
+                'name' => 'Package Autentique V2',
             ],
             'signers' => [
-                'email' => 'dutra_morais@hotmail.com',
+                'email'     => 'dutra_morais@hotmail.com',
                 'positions' => [
                     ['x' => '50', 'y' => '80', 'z' => '1'],
-                    ['x' => '50', 'y' => '50', 'z' => '2']
-                ]
+                    ['x' => '50', 'y' => '50', 'z' => '2'],
+                ],
             ],
-            'file' => 'C:\Users\dutra\Downloads\A internet das coisas.pdf'
+            'file' => 'C:\Users\dutra\Downloads\A internet das coisas.pdf',
         ];
 
         $data = json_decode($documents->create($attributes), true);

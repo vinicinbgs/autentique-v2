@@ -4,13 +4,14 @@ namespace vinicinbgs\Autentique;
 
 use Api;
 
-Class Documents
+class Documents
 {
     private $QUERY;
     private $token;
 
     /**
      * Documents constructor.
+     *
      * @param $token
      */
     public function __construct($token)
@@ -31,6 +32,7 @@ Class Documents
 
     /**
      * @param string $documentId
+     *
      * @return bool|string
      */
     public function listById(string $documentId)
@@ -42,24 +44,25 @@ Class Documents
     }
 
     /**
-     * @param array $attributes
+     * @param array  $attributes
      * @param string $pathPdf
+     *
      * @return string|string[]|null
      */
     public function create(array $attributes)
     {
         $variables = [
             'document' => [
-                'name' => $attributes['document']['name']
+                'name' => $attributes['document']['name'],
             ],
             'signers' => [
                 [
-                    "email" => $attributes['signers']['email'],
-                    "action" => "SIGN",
-                    "positions" => []
-                ]
+                    'email'     => $attributes['signers']['email'],
+                    'action'    => 'SIGN',
+                    'positions' => [],
+                ],
             ],
-            'file' => NULL,
+            'file' => null,
         ];
 
         foreach ($attributes['signers']['positions'] as $k => $position) {
@@ -75,6 +78,7 @@ Class Documents
 
     /**
      * @param string $documentId
+     *
      * @return bool|string
      */
     public function signById(string $documentId)
@@ -87,6 +91,7 @@ Class Documents
 
     /**
      * @param string $documentId
+     *
      * @return bool|string
      */
     public function deleteById(string $documentId)
