@@ -9,21 +9,17 @@ php:
 before_script:
   - composer install --dev
   - composer dump-autoload
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 
 # Commands you want to run that will verify your build.
 
 env:
-  - CC_TEST_REPORTER_ID="3cf8178110f1349a55cd0055a7e5cbf4c180aaa54d07b4455f93456b3f51ac68" AUTENTIQUE_TOKEN="1AAA95DCA22EAD45836A01A561BCE34B36DEF038CCC59B07A04670305F4834A6" AUTENTIQUE_URL="https://api.autentique.com.br/v2/graphql" AUTENTIQUE_DEV_MODE="true"
+  CODECOV_TOKEN="6effcfa8-1979-4840-858b-8dc30b3f401e" AUTENTIQUE_TOKEN="1AAA95DCA22EAD45836A01A561BCE34B36DEF038CCC59B07A04670305F4834A6" AUTENTIQUE_URL="https://api.autentique.com.br/v2/graphql" AUTENTIQUE_DEV_MODE="true"
 
 script:
   - phpunit tests
-  - bundle exec rspec
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - bash <(curl -s https://codecov.io/bash)
 
 # allow_failures: Allow this build to fail under the specified environments.
 
