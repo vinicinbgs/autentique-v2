@@ -28,18 +28,18 @@ class DocumentTest extends PHPUnit\Framework\TestCase
                 'name' => 'Package Autentique V2',
             ],
             'signers' => [
-                'email'     => 'dutra_morais@hotmail.com',
+                'email' => 'dutra_morais@hotmail.com',
                 'positions' => [
                     ['x' => '50', 'y' => '80', 'z' => '1'],
                     ['x' => '50', 'y' => '50', 'z' => '2'],
                 ],
             ],
-            'file' => 'C:\Users\dutra\Downloads\A internet das coisas.pdf',
+            'file' => './tests/resources/document_test.pdf'
         ];
 
         $data = json_decode($documents->create($attributes), true);
 
-        var_dump($data['data']);
+        var_dump($data);
 
         $this->assertArrayHasKey('createDocument', $data['data'], 'Array doesn\'t contains "createDocument" as key');
     }
