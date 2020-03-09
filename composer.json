@@ -20,7 +20,8 @@
   "require": {
     "php": ">=7.3",
     "ext-curl": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-debug": "*"
   },
   "require-dev": {
     "vlucas/phpdotenv": "^4.1"
