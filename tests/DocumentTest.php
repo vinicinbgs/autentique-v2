@@ -30,7 +30,7 @@ class DocumentTest extends PHPUnit\Framework\TestCase
                 'name' => 'Package Autentique V2',
             ],
             'signers' => [
-                'email' => 'dutra_morais@hotmail.com',
+                'email' => 'vinicius.morais@liberfly.com.br',
                 'positions' => [
                     ['x' => '50', 'y' => '80', 'z' => '1'],
                     ['x' => '50', 'y' => '50', 'z' => '2'],

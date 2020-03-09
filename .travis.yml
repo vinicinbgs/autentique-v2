@@ -13,7 +13,7 @@ before_script:
 # Commands you want to run that will verify your build.
 
 env:
-  CODECOV_TOKEN="6effcfa8-1979-4840-858b-8dc30b3f401e" AUTENTIQUE_TOKEN="1AAA95DCA22EAD45836A01A561BCE34B36DEF038CCC59B07A04670305F4834A6" AUTENTIQUE_URL="https://api.autentique.com.br/v2/graphql" AUTENTIQUE_DEV_MODE="true"
+  CODECOV_TOKEN="6effcfa8-1979-4840-858b-8dc30b3f401e" AUTENTIQUE_TOKEN="801a467bbd38cbdf152744362fbb51bfc27345ea7a5937f5241966cbea8e96dd" AUTENTIQUE_URL="https://api.autentique.com.br/v2/graphql" AUTENTIQUE_DEV_MODE="true"
 
 script:
   - phpunit tests

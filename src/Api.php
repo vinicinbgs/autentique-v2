@@ -8,6 +8,8 @@ class Api
             "Authorization: Bearer {$token}",
         ];
 
+        $postFields = null;
+
         switch ($contentType) {
             case 'json':
                 $postFields = '{"query":' . $query . '}';
@@ -20,9 +22,6 @@ class Api
                     'map' => '{"file": ["variables.file"]}',
                     'file' => new CURLFILE($pathFile),
                 ];
-                break;
-            default:
-                $postFields = null;
                 break;
         }
 
