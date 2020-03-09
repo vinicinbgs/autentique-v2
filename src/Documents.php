@@ -56,17 +56,15 @@ Class Documents
                 [
                     "email" => $attributes['signers']['email'],
                     "action" => "SIGN",
-                    "positions" => [
-                        [
-                            "x" => $attributes['signers']['x'], // x axis
-                            "y" => $attributes['signers']['y'], // y axis
-                            "z" => $attributes['signers']['z']  // page number
-                        ]
-                    ]
+                    "positions" => []
                 ]
             ],
             'file' => NULL,
         ];
+
+        foreach ($attributes['signers']['positions'] as $k => $position) {
+            array_push($variables['signers'][0]['positions'], $position);
+        }
 
         $graphMutation = $this->QUERY->setFile(__FUNCTION__)->query();
         $graphMutation = str_replace('$variables', json_encode($variables), $graphMutation);

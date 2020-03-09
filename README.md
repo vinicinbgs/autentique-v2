@@ -26,17 +26,26 @@ AUTENTIQUE_DEV_MODE=true || false
 
 #### 3 - Criar um Documento
 <pre>$attributes = [
-     'document' => [
-         'name' => 'Package Autentique V2'
-     ],
-     'signers' => [
-         'email' => 'dutra_morais@hotmail.com',
-         'x' => '50',
-         'y' => '80',
-         'z' => '1'
-     ],
-     'file' => '$filePath'
- ];
+         'document' => [
+             'name' => 'NOME DO DOCUMENTO'
+         ],
+         'signers' => [
+             'email' => 'EMAIL-QUEM-VAI-ASSINAR@hotmail.com',
+             'positions' => [
+                 [
+                    'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100) 
+                    'y' => '80', // Posição do Eixo Y da ASSINATURA (0 a 100)
+                    'z' => '1' // Página da ASSINATURA
+                 ],
+                 [
+                    'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100)
+                    'y' => '50', // Posição do Eixo Y da ASSINATURA (0 a 100)
+                    'z' => '2' // Página da ASSINATURA
+                 ]
+             ]
+         ],
+         'file' => 'C:\Users\vinicinbgs\Downloads\Arquivo.pdf'
+     ];
  
  $documents->create($attributes);
  </pre>
