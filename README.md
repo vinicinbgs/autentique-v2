@@ -22,10 +22,10 @@ AUTENTIQUE_DEV_MODE=true || false
 **Instance** <pre>$documents = new Documents($AUTENTIQUE_TOKEN);</pre>
 
 #### 1 - Listar todos os Documentos
-`$documents->listAll();`
+<pre>$documents->listAll();</pre>
 
 #### 2 - Listar um Documento
-`$documents->listById($documentId);`
+<pre>$documents->listById($documentId);</pre>
 
 #### 3 - Criar um Documento
 <pre>$attributes = [
@@ -54,7 +54,7 @@ AUTENTIQUE_DEV_MODE=true || false
  </pre>
 
 #### 4 - Assinar um Documento
-`$documents->signById($documentId);`
+<pre>$documents->signById($documentId);</pre>
 
 #### 5 - Deletar um Documento
-`$documents->deleteById($documentId);`
+<pre>$documents->deleteById($documentId);</pre>

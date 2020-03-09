@@ -32,7 +32,7 @@ class Api
 
         $curl = curl_init();
 
-        curl_setopt_array($curl, [
+        curl_setopt_array(/** @scrutinizer ignore-type */ $curl, [
             CURLOPT_URL => getenv('AUTENTIQUE_URL'),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
@@ -45,9 +45,9 @@ class Api
             CURLOPT_HTTPHEADER => $httpHeader,
         ]);
 
-        $response = curl_exec($curl);
+        $response = curl_exec(/** @scrutinizer ignore-type */ $curl);
 
-        curl_close($curl);
+        curl_close(/** @scrutinizer ignore-type */ $curl);
 
         if (!$response) {
             return json_encode([
