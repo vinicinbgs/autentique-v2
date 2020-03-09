@@ -15,7 +15,7 @@ class Query
      */
     public function __construct()
     {
-        $this->folder = __DIR__.'/resources/documents/';
+        $this->folder = __DIR__ . '/resources/documents/';
     }
 
     /**
@@ -23,12 +23,11 @@ class Query
      */
     public function query()
     {
-        $query = file_get_contents("$this->folder$this->file");
-
-        if (gettype($query) !== 'string') {
-            return 'This query is not a valid string';
+        if (!file_exists("$this->folder$this->file")) {
+            return 'File is not found';
         }
 
+        $query = file_get_contents("$this->folder$this->file");
         return $this->format($query);
     }
 
