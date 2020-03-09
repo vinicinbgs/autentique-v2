@@ -21,6 +21,8 @@ class Documents
     }
 
     /**
+     * List all documents
+     *
      * @return bool|string
      */
     public function listAll()
@@ -31,6 +33,8 @@ class Documents
     }
 
     /**
+     * List document by id
+     *
      * @param string $documentId
      *
      * @return bool|string
@@ -44,10 +48,10 @@ class Documents
     }
 
     /**
-     * @param array  $attributes
-     * @param string $pathPdf
+     * Create Document
      *
-     * @return string|string[]|null
+     * @param array $attributes
+     * @return bool|false|string
      */
     public function create(array $attributes)
     {
@@ -57,8 +61,8 @@ class Documents
             ],
             'signers' => [
                 [
-                    'email'     => $attributes['signers']['email'],
-                    'action'    => 'SIGN',
+                    'email' => $attributes['signers']['email'],
+                    'action' => 'SIGN',
                     'positions' => [],
                 ],
             ],
@@ -77,6 +81,8 @@ class Documents
     }
 
     /**
+     * Sign document by id
+     *
      * @param string $documentId
      *
      * @return bool|string
@@ -90,6 +96,8 @@ class Documents
     }
 
     /**
+     * Delete document by id
+     *
      * @param string $documentId
      *
      * @return bool|string
