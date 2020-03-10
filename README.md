@@ -22,7 +22,7 @@ AUTENTIQUE_DEV_MODE=true || false
 **Instance** <pre>$documents = new Documents($AUTENTIQUE_TOKEN);</pre>
 
 #### 1 - Listar todos os Documentos
-<pre>$documents->listAll();</pre>
+<pre>$documents->listAll($page); // if not isset $page is equal 1</pre>
 
 #### 2 - Listar um Documento
 <pre>$documents->listById($documentId);</pre>
