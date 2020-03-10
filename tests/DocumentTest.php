@@ -11,7 +11,7 @@ class DocumentTest extends PHPUnit\Framework\TestCase
     {
         $documents = new vinicinbgs\Autentique\Documents(getenv('AUTENTIQUE_TOKEN'));
 
-        $data = json_decode($documents->listAll(), true);
+        $data = json_decode($documents->listAll(2), true);
 
         $this->assertArrayHasKey('data', $data, 'Array doesn\'t contains "data" as key');
     }
