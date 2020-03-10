@@ -25,10 +25,12 @@ class Documents
      *
      * @return bool|string
      */
-    public function listAll()
-    {
+    public function listAll($page = 1)
+    {   
         $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
 
+        $graphQuery = str_replace('$page', $page, $graphQuery);
+        
         return Api::request($this->token, $graphQuery, 'json');
     }
 
