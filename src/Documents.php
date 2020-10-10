@@ -63,16 +63,24 @@ class Documents
             ],
             'signers' => [
                 [
-                    'email' => $attributes['signers']['email'],
-                    'action' => 'SIGN',
+                    'email' => '',
                     'positions' => [],
                 ],
             ],
             'file' => null,
         ];
 
-        foreach ($attributes['signers']['positions'] as $k => $position) {
-            array_push($variables['signers'][0]['positions'], $position);
+        foreach ($attributes['signers'] as $k => $signer) {
+            foreach ($signer['positions'] as $position) {
+                $variables['signers'][$k]['email'] = $signer['email'];
+
+                if (!isset($variables['signers'][$k]['positions']))
+                    $variables['signers'][$k]['positions'] = [];
+
+                array_push($variables['signers'][$k]['positions'], $position);
+                $variables['signers'][$k]['action'] = 'SIGN';
+
+            }
         }
 
         $graphMutation = $this->QUERY->setFile(__FUNCTION__)->query();
