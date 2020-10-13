@@ -8,7 +8,7 @@ class DocumentTest extends PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->token = getenv('AUTENTIQUE_TOKEN');
+        $this->token = $_ENV['AUTENTIQUE_TOKEN'];
     }
 
     /**

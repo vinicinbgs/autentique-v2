@@ -8,24 +8,30 @@ class ApiTest extends PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->token =  getenv('AUTENTIQUE_TOKEN');
+        $this->token = $_ENV['AUTENTIQUE_TOKEN'];
     }
 
     public function testPostFieldsNull()
     {
         $api = Api::request($this->token, '', 'notExist');
 
-        $this->assertStringMatchesFormat('The postfield field cannot be null', $api);
+        $this->assertStringMatchesFormat(
+            'The postfield field cannot be null',
+            $api
+        );
     }
 
     public function testCurlReturnFalse()
     {
-        putenv('AUTENTIQUE_URL=');
+        $_ENV['AUTENTIQUE_URL'] = '';
 
         $api = Api::request($this->token, '', 'json');
 
-        $this->assertStringMatchesFormat('{"message":"CURL return false"}', $api);
+        $this->assertStringMatchesFormat(
+            '{"message":"CURL return false"}',
+            $api
+        );
 
-        putenv('AUTENTIQUE_URL=https://api.autentique.com.br/v2/graphql');
+        $_ENV['AUTENTIQUE_URL'] = 'https://api.autentique.com.br/v2/graphql';
     }
 }

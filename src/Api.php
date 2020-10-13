@@ -6,11 +6,13 @@ use CURLFile;
 
 class Api
 {
-    public static function request(string $token, string $query, string $contentType, string $pathFile = null)
-    {
-        $httpHeader = [
-            "Authorization: Bearer {$token}",
-        ];
+    public static function request(
+        string $token,
+        string $query,
+        string $contentType,
+        string $pathFile = null
+    ) {
+        $httpHeader = ["Authorization: Bearer {$token}"];
 
         $postFields = null;
 
@@ -36,7 +38,7 @@ class Api
         $curl = curl_init();
 
         curl_setopt_array(/** @scrutinizer ignore-type */ $curl, [
-            CURLOPT_URL => getenv('AUTENTIQUE_URL'),
+            CURLOPT_URL => $_ENV['AUTENTIQUE_URL'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -54,7 +56,7 @@ class Api
 
         if (!$response) {
             return json_encode([
-                'message' => 'CURL return false'
+                'message' => 'CURL return false',
             ]);
         }
 

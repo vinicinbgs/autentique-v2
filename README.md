@@ -8,9 +8,9 @@
 [![License](https://poser.pugx.org/vinicinbgs/autentique-v2/license)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 # 🚀 Usage
 <pre>composer require vinicinbgs/autentique-v2</pre>
-##### IMPORTANT!
-- This library depends on **vlucas/phpdotenv** to get environments variables **(.env)** <br>
-- If you use a framework like **Laravel**, you don't need to download this library.
+##### IMPORTANT
+This library depends on **vlucas/phpdotenv** to get environments variables **(.env)** <br>
+If you use a framework like **Laravel**, you don't need to download this library.
 <pre>composer require vlucas/phpdotenv</pre>
 
 **Set file .env**
