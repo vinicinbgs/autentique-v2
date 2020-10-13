@@ -7,7 +7,11 @@
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/vinicinbgs/autentique-v2/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 [![License](https://poser.pugx.org/vinicinbgs/autentique-v2/license)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 # 🚀 Usage
-<pre>composer install vinicinbgs/autentique-v2</pre>
+<pre>composer require vinicinbgs/autentique-v2</pre>
+##### IMPORTANT!
+- This library depends on **vlucas/phpdotenv** to get environments variables **(.env)** <br>
+- If you use a framework like **Laravel**, you don't need to download this library.
+<pre>composer require vlucas/phpdotenv</pre>
 
 **Set file .env**
 <pre>
@@ -17,7 +21,8 @@ AUTENTIQUE_DEV_MODE=true || false
 # IF TRUE, DOCUMENT CREATE IN MODE SANDBOX
 </pre>
 
-**Import library** `use vinicinbgs\Autentique\Documents;`
+**Import library** 
+<pre>use vinicinbgs\Autentique\Documents;</pre>
 
 **Instance** <pre>$documents = new Documents($AUTENTIQUE_TOKEN);</pre>
 
