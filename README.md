@@ -1,4 +1,5 @@
 #### <span style="text-align: center">AUTENTIQUE Api v2</span>
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e96adb49b6ba42cc9cca1d7a1806eecf)](https://app.codacy.com/manual/vinicinbgs/autentique-v2?utm_source=github.com&utm_medium=referral&utm_content=vinicinbgs/autentique-v2&utm_campaign=Badge_Grade_Settings)
 [![Latest Stable Version](https://img.shields.io/packagist/v/vinicinbgs/autentique-v2)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 [![Total Downloads](https://poser.pugx.org/vinicinbgs/autentique-v2/downloads)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 [![Build Status](https://travis-ci.org/vinicinbgs/autentique-v2.svg?branch=master)](https://travis-ci.org/vinicinbgs/autentique-v2)
