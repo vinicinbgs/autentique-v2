@@ -1,5 +1,9 @@
 <?php
 
+namespace vinicinbgs\Autentique;
+
+use CURLFile;
+
 class Api
 {
     public static function request(string $token, string $query, string $contentType, string $pathFile = null)
@@ -20,7 +24,7 @@ class Api
                 $postFields = [
                     'operations' => $attributes,
                     'map' => '{"file": ["variables.file"]}',
-                    'file' => new CURLFILE($pathFile),
+                    'file' => new CURLFile($pathFile),
                 ];
                 break;
         }
