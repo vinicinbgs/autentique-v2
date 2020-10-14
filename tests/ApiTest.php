@@ -8,7 +8,7 @@ class ApiTest extends PHPUnit\Framework\TestCase
 
     public function setUp(): void
     {
-        $this->token = $_ENV['AUTENTIQUE_TOKEN'];
+        $this->token = getenv('AUTENTIQUE_TOKEN');
     }
 
     public function testPostFieldsNull()
@@ -19,19 +19,5 @@ class ApiTest extends PHPUnit\Framework\TestCase
             'The postfield field cannot be null',
             $api
         );
-    }
-
-    public function testCurlReturnFalse()
-    {
-        $_ENV['AUTENTIQUE_URL'] = '';
-
-        $api = Api::request($this->token, '', 'json');
-
-        $this->assertStringMatchesFormat(
-            '{"message":"CURL return false"}',
-            $api
-        );
-
-        $_ENV['AUTENTIQUE_URL'] = 'https://api.autentique.com.br/v2/graphql';
     }
 }

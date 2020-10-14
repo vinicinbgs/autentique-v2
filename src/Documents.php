@@ -17,7 +17,7 @@ class Documents
     {
         $this->query = new Query();
         $this->token = $token;
-        $this->sandbox = $_ENV['AUTENTIQUE_DEV_MODE'] ? 'true' : 'false';
+        $this->sandbox = getenv('AUTENTIQUE_DEV_MODE') ? 'true' : 'false';
     }
 
     /**

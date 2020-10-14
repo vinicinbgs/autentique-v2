@@ -35,10 +35,9 @@ class Api
             return 'The postfield field cannot be null';
         }
 
-        $curl = curl_init();
+        $curl = curl_init(getenv('AUTENTIQUE_URL'));
 
         curl_setopt_array(/** @scrutinizer ignore-type */ $curl, [
-            CURLOPT_URL => $_ENV['AUTENTIQUE_URL'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -52,11 +51,15 @@ class Api
 
         $response = curl_exec(/** @scrutinizer ignore-type */ $curl);
 
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);
+        }
+
         curl_close(/** @scrutinizer ignore-type */ $curl);
 
-        if (!$response) {
+        if (isset($error)) {
             return json_encode([
-                'message' => 'CURL return false',
+                'message' => !empty($error) ? $error : "CURL return false",
             ]);
         }
 

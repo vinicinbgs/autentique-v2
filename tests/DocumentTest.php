@@ -8,7 +8,7 @@ class DocumentTest extends PHPUnit\Framework\TestCase
 
     public function setUp(): void
     {
-        $this->token = $_ENV['AUTENTIQUE_TOKEN'];
+        $this->token = getenv('AUTENTIQUE_TOKEN');
     }
 
     /**
@@ -76,7 +76,7 @@ class DocumentTest extends PHPUnit\Framework\TestCase
                     ],
                 ],
             ],
-            'file' => './dummy.pdf',
+            'file' => './tests/resources/document_test.pdf',
         ];
 
         $data = json_decode($documents->create($attributes), true);
