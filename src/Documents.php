@@ -2,35 +2,36 @@
 
 namespace vinicinbgs\Autentique;
 
-use Api;
-
 class Documents
 {
-    private $QUERY;
+    private $query;
     private $token;
+    private $sandbox;
 
     /**
      * Documents constructor.
      *
      * @param $token
      */
-    public function __construct($token)
+    public function __construct(string $token)
     {
-        $this->QUERY = new Query();
+        $this->query = new Query();
         $this->token = $token;
+        $this->sandbox = getenv('AUTENTIQUE_DEV_MODE') ? 'true' : 'false';
     }
 
     /**
      * List all documents
      *
+     * @param  int  $page
      * @return bool|string
      */
-    public function listAll($page = 1)
-    {   
-        $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
+    public function listAll(int $page = 1)
+    {
+        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
 
         $graphQuery = str_replace('$page', $page, $graphQuery);
-        
+
         return Api::request($this->token, $graphQuery, 'json');
     }
 
@@ -43,7 +44,7 @@ class Documents
      */
     public function listById(string $documentId)
     {
-        $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
+        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
         return Api::request($this->token, $graphQuery, 'json');
@@ -61,25 +62,28 @@ class Documents
             'document' => [
                 'name' => $attributes['document']['name'],
             ],
-            'signers' => [
-                [
-                    'email' => $attributes['signers']['email'],
-                    'action' => 'SIGN',
-                    'positions' => [],
-                ],
-            ],
+            'signers' => $attributes['signers'],
             'file' => null,
         ];
 
-        foreach ($attributes['signers']['positions'] as $k => $position) {
-            array_push($variables['signers'][0]['positions'], $position);
-        }
+        $graphMutation = $this->query->setFile(__FUNCTION__)->query();
+        $graphMutation = str_replace(
+            '$variables',
+            json_encode($variables),
+            $graphMutation
+        );
+        $graphMutation = str_replace(
+            '$sandbox',
+            $this->sandbox,
+            $graphMutation
+        );
 
-        $graphMutation = $this->QUERY->setFile(__FUNCTION__)->query();
-        $graphMutation = str_replace('$variables', json_encode($variables), $graphMutation);
-        $graphMutation = str_replace('$sandbox', getenv('AUTENTIQUE_DEV_MODE') ? 'true' : 'false', $graphMutation);
-
-        return Api::request($this->token, $graphMutation, 'form', $attributes['file']);
+        return Api::request(
+            $this->token,
+            $graphMutation,
+            'form',
+            $attributes['file']
+        );
     }
 
     /**
@@ -91,7 +95,7 @@ class Documents
      */
     public function signById(string $documentId)
     {
-        $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
+        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
         return Api::request($this->token, $graphQuery, 'json');
@@ -106,7 +110,7 @@ class Documents
      */
     public function deleteById(string $documentId)
     {
-        $graphQuery = $this->QUERY->setFile(__FUNCTION__)->query();
+        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
         return Api::request($this->token, $graphQuery, 'json');

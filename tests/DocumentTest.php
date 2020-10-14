@@ -1,7 +1,16 @@
 <?php
 
+use vinicinbgs\Autentique\Documents;
+
 class DocumentTest extends PHPUnit\Framework\TestCase
 {
+    private $token;
+
+    public function setUp(): void
+    {
+        $this->token = getenv('AUTENTIQUE_TOKEN');
+    }
+
     /**
      * @test
      *
@@ -9,11 +18,15 @@ class DocumentTest extends PHPUnit\Framework\TestCase
      */
     public function testListAll(): void
     {
-        $documents = new vinicinbgs\Autentique\Documents(getenv('AUTENTIQUE_TOKEN'));
+        $documents = new Documents($this->token);
 
-        $data = json_decode($documents->listAll(2), true);
+        $data = json_decode($documents->listAll(1), true);
 
-        $this->assertArrayHasKey('data', $data, 'Array doesn\'t contains "data" as key');
+        $this->assertArrayHasKey(
+            'data',
+            $data,
+            'Array doesn\'t contains "data" as key'
+        );
     }
 
     /**
@@ -23,25 +36,56 @@ class DocumentTest extends PHPUnit\Framework\TestCase
      */
     public function testCreateDocument(): string
     {
-        $documents = new vinicinbgs\Autentique\Documents(getenv('AUTENTIQUE_TOKEN'));
+        $documents = new Documents($this->token);
 
         $attributes = [
             'document' => [
-                'name' => 'Package Autentique V2',
+                'name' => 'NOME DO DOCUMENTO',
             ],
             'signers' => [
-                'email' => 'vinicius.morais@liberfly.com.br',
-                'positions' => [
-                    ['x' => '50', 'y' => '80', 'z' => '1'],
-                    ['x' => '50', 'y' => '50', 'z' => '2'],
+                [
+                    'email' => 'email@email.com',
+                    'action' => 'SIGN',
+                    'positions' => [
+                        [
+                            'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100)
+                            'y' => '80', // Posição do Eixo Y da ASSINATURA (0 a 100)
+                            'z' => '1', // Página da ASSINATURA
+                        ],
+                        [
+                            'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100)
+                            'y' => '50', // Posição do Eixo Y da ASSINATURA (0 a 100)
+                            'z' => '2', // Página da ASSINATURA
+                        ],
+                    ],
+                ],
+                [
+                    'email' => 'email@email.com',
+                    'action' => 'SIGN',
+                    'positions' => [
+                        [
+                            'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100)
+                            'y' => '80', // Posição do Eixo Y da ASSINATURA (0 a 100)
+                            'z' => '1', // Página da ASSINATURA
+                        ],
+                        [
+                            'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100)
+                            'y' => '50', // Posição do Eixo Y da ASSINATURA (0 a 100)
+                            'z' => '2', // Página da ASSINATURA
+                        ],
+                    ],
                 ],
             ],
-            'file' => './tests/resources/document_test.pdf'
+            'file' => './tests/resources/document_test.pdf',
         ];
 
         $data = json_decode($documents->create($attributes), true);
 
-        $this->assertArrayHasKey('createDocument', $data['data'], 'Array doesn\'t contains "createDocument" as key');
+        $this->assertArrayHasKey(
+            'createDocument',
+            $data['data'],
+            'Array doesn\'t contains "createDocument" as key'
+        );
 
         return $data['data']['createDocument']['id'];
     }
@@ -55,13 +99,17 @@ class DocumentTest extends PHPUnit\Framework\TestCase
      */
     public function testListById($lastDocumentId): void
     {
-        $documents = new \vinicinbgs\Autentique\Documents(getenv('AUTENTIQUE_TOKEN'));
+        $documents = new Documents($this->token);
 
         $response = $documents->listById($lastDocumentId);
 
         $data = json_decode($response, true);
 
-        $this->assertArrayHasKey('data', $data, 'Array doesn\'t contains "data" as key');
+        $this->assertArrayHasKey(
+            'data',
+            $data,
+            'Array doesn\'t contains "data" as key'
+        );
     }
 
     /**
@@ -73,14 +121,21 @@ class DocumentTest extends PHPUnit\Framework\TestCase
      */
     public function testSignDocument($lastDocumentId): void
     {
-        $documents = new \vinicinbgs\Autentique\Documents(getenv('AUTENTIQUE_TOKEN'));
+        $documents = new Documents($this->token);
 
         $response = $documents->signById($lastDocumentId);
 
         $data = json_decode($response, true);
 
-        $this->assertArrayHasKey('signDocument', $data['data'], 'Array doesn\'t contains "data" as key');
-        $this->assertTrue($data['data']['signDocument'], 'Expected true but return false');
+        $this->assertArrayHasKey(
+            'signDocument',
+            $data['data'],
+            'Array doesn\'t contains "data" as key'
+        );
+        $this->assertTrue(
+            $data['data']['signDocument'],
+            'Expected true but return false'
+        );
     }
 
     /**
@@ -92,13 +147,21 @@ class DocumentTest extends PHPUnit\Framework\TestCase
      */
     public function testRemoveDocument($lastDocumentId): void
     {
-        $documents = new \vinicinbgs\Autentique\Documents(getenv('AUTENTIQUE_TOKEN'));
+        $documents = new Documents($this->token);
 
         $response = $documents->deleteById($lastDocumentId);
 
         $data = json_decode($response, true);
 
-        $this->assertArrayHasKey('deleteDocument', $data['data'], 'Array doesn\'t contains "data" as key');
-        $this->assertTrue($data['data']['deleteDocument'], 'Expected true but return false');
+        $this->assertArrayHasKey(
+            'deleteDocument',
+            $data['data'],
+            'Array doesn\'t contains "data" as key'
+        );
+
+        $this->assertTrue(
+            $data['data']['deleteDocument'],
+            'Expected true but return false'
+        );
     }
 }

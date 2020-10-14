@@ -1,12 +1,18 @@
 <?php
 
+namespace vinicinbgs\Autentique;
+
+use CURLFile;
+
 class Api
 {
-    public static function request(string $token, string $query, string $contentType, string $pathFile = null)
-    {
-        $httpHeader = [
-            "Authorization: Bearer {$token}",
-        ];
+    public static function request(
+        string $token,
+        string $query,
+        string $contentType,
+        string $pathFile = null
+    ) {
+        $httpHeader = ["Authorization: Bearer {$token}"];
 
         $postFields = null;
 
@@ -20,7 +26,7 @@ class Api
                 $postFields = [
                     'operations' => $attributes,
                     'map' => '{"file": ["variables.file"]}',
-                    'file' => new CURLFILE($pathFile),
+                    'file' => new CURLFile($pathFile),
                 ];
                 break;
         }
@@ -29,10 +35,9 @@ class Api
             return 'The postfield field cannot be null';
         }
 
-        $curl = curl_init();
+        $curl = curl_init(getenv('AUTENTIQUE_URL'));
 
         curl_setopt_array(/** @scrutinizer ignore-type */ $curl, [
-            CURLOPT_URL => getenv('AUTENTIQUE_URL'),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -46,11 +51,15 @@ class Api
 
         $response = curl_exec(/** @scrutinizer ignore-type */ $curl);
 
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);
+        }
+
         curl_close(/** @scrutinizer ignore-type */ $curl);
 
-        if (!$response) {
+        if (isset($error)) {
             return json_encode([
-                'message' => 'CURL return false'
+                'message' => !empty($error) ? $error : "CURL return false",
             ]);
         }
 

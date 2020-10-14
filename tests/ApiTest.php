@@ -1,22 +1,23 @@
 <?php
 
+use vinicinbgs\Autentique\Api;
+
 class ApiTest extends PHPUnit\Framework\TestCase
 {
-    public function testPostFieldsNull()
-    {
-        $api = Api::request(getenv('AUTENTIQUE_TOKEN'), '', 'notExist');
+    private $token;
 
-        $this->assertStringMatchesFormat('The postfield field cannot be null', $api);
+    public function setUp(): void
+    {
+        $this->token = getenv('AUTENTIQUE_TOKEN');
     }
 
-    public function testCurlReturnFalse()
+    public function testPostFieldsNull()
     {
-        putenv('AUTENTIQUE_URL=');
+        $api = Api::request($this->token, '', 'notExist');
 
-        $api = Api::request(getenv('AUTENTIQUE_TOKEN'), '', 'json');
-
-        $this->assertStringMatchesFormat('{"message":"CURL return false"}', $api);
-
-        putenv('AUTENTIQUE_URL=https://api.autentique.com.br/v2/graphql');
+        $this->assertStringMatchesFormat(
+            'The postfield field cannot be null',
+            $api
+        );
     }
 }
