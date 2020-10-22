@@ -37,6 +37,8 @@ AUTENTIQUE_DEV_MODE=true || false
 $attributes = [
          'document' => [
              'name' => 'NOME DO DOCUMENTO',
+             'refusable' => true,
+             '...' => '...',
          ],
          'signers' => [
              [
