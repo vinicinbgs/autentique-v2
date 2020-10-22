@@ -59,9 +59,7 @@ class Documents
     public function create(array $attributes)
     {
         $variables = [
-            'document' => [
-                'name' => $attributes['document']['name'],
-            ],
+            'document' => $attributes['document'],
             'signers' => $attributes['signers'],
             'file' => null,
         ];
