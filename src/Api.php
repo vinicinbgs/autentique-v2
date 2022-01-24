@@ -47,6 +47,7 @@ class Api
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => $postFields,
             CURLOPT_HTTPHEADER => $httpHeader,
+	    CURLOPT_CAINFO => realpath(sprintf('%s/%s', dirname(__FILE__), '/../ssl/ca-bundle.crt'))
         ]);
 
         $response = curl_exec(/** @scrutinizer ignore-type */ $curl);
@@ -63,6 +64,6 @@ class Api
             ]);
         }
 
-        return $response;
+        return json_decode($response);
     }
 }

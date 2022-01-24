@@ -15,7 +15,7 @@ class Documents
      */
     public function __construct(string $token)
     {
-        $this->query = new Query();
+        $this->query = new Query((new \ReflectionClass(get_called_class()))->getShortName());
         $this->token = $token;
         $this->sandbox = getenv('AUTENTIQUE_DEV_MODE') ? 'true' : 'false';
     }
@@ -113,4 +113,21 @@ class Documents
 
         return Api::request($this->token, $graphQuery, 'json');
     }
+
+	/**
+	 * Move document to folder
+	 *
+	 * @param string $documentId
+	 * @param string $folderId
+	 *
+	 * @return bool|string
+	 */
+	public function moveToFolder(string $documentId, string $folderId)
+	{
+		$graphQuery = $this->query->setFile(__FUNCTION__)->query();
+		$graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+		$graphQuery = str_replace('$folderId', $folderId, $graphQuery);
+
+		return Api::request($this->token, $graphQuery, 'json');
+	}
 }
