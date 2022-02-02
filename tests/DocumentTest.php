@@ -1,14 +1,16 @@
 <?php
 
-use vinicinbgs\Autentique\Documents;
+namespace vinicinbgs\Autentique\tests;
 
-class DocumentTest extends PHPUnit\Framework\TestCase
+use vinicinbgs\Autentique\tests\Base;
+use vinicinbgs\Autentique\Documents;
+class DocumentTest extends Base
 {
     private $token;
 
     public function setUp(): void
     {
-        $this->token = getenv('AUTENTIQUE_TOKEN');
+        $this->token = getenv("AUTENTIQUE_TOKEN");
     }
 
     /**
@@ -20,10 +22,12 @@ class DocumentTest extends PHPUnit\Framework\TestCase
     {
         $documents = new Documents($this->token);
 
-        $data = json_decode($documents->listAll(1), true);
+        $listAll = $documents->listAll(1);
+
+        $data = json_decode($listAll, true);
 
         $this->assertArrayHasKey(
-            'data',
+            "data",
             $data,
             'Array doesn\'t contains "data" as key'
         );
@@ -39,55 +43,55 @@ class DocumentTest extends PHPUnit\Framework\TestCase
         $documents = new Documents($this->token);
 
         $attributes = [
-            'document' => [
-                'name' => 'NOME DO DOCUMENTO',
+            "document" => [
+                "name" => "NOME DO DOCUMENTO",
             ],
-            'signers' => [
+            "signers" => [
                 [
-                    'email' => 'email@email.com',
-                    'action' => 'SIGN',
-                    'positions' => [
+                    "email" => "email@email.com",
+                    "action" => "SIGN",
+                    "positions" => [
                         [
-                            'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100)
-                            'y' => '80', // Posição do Eixo Y da ASSINATURA (0 a 100)
-                            'z' => '1', // Página da ASSINATURA
+                            "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
+                            "y" => "80", // Posição do Eixo Y da ASSINATURA (0 a 100)
+                            "z" => "1", // Página da ASSINATURA
                         ],
                         [
-                            'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100)
-                            'y' => '50', // Posição do Eixo Y da ASSINATURA (0 a 100)
-                            'z' => '2', // Página da ASSINATURA
+                            "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
+                            "y" => "50", // Posição do Eixo Y da ASSINATURA (0 a 100)
+                            "z" => "2", // Página da ASSINATURA
                         ],
                     ],
                 ],
                 [
-                    'email' => 'email@email.com',
-                    'action' => 'SIGN',
-                    'positions' => [
+                    "email" => "email@email.com",
+                    "action" => "SIGN",
+                    "positions" => [
                         [
-                            'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100)
-                            'y' => '80', // Posição do Eixo Y da ASSINATURA (0 a 100)
-                            'z' => '1', // Página da ASSINATURA
+                            "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
+                            "y" => "80", // Posição do Eixo Y da ASSINATURA (0 a 100)
+                            "z" => "1", // Página da ASSINATURA
                         ],
                         [
-                            'x' => '50', // Posição do Eixo X da ASSINATURA (0 a 100)
-                            'y' => '50', // Posição do Eixo Y da ASSINATURA (0 a 100)
-                            'z' => '2', // Página da ASSINATURA
+                            "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
+                            "y" => "50", // Posição do Eixo Y da ASSINATURA (0 a 100)
+                            "z" => "2", // Página da ASSINATURA
                         ],
                     ],
                 ],
             ],
-            'file' => './tests/resources/document_test.pdf',
+            "file" => "./tests/resources/document_test.pdf",
         ];
 
         $data = json_decode($documents->create($attributes), true);
 
         $this->assertArrayHasKey(
-            'createDocument',
-            $data['data'],
+            "createDocument",
+            $data["data"],
             'Array doesn\'t contains "createDocument" as key'
         );
 
-        return $data['data']['createDocument']['id'];
+        return $data["data"]["createDocument"]["id"];
     }
 
     /**
@@ -106,7 +110,7 @@ class DocumentTest extends PHPUnit\Framework\TestCase
         $data = json_decode($response, true);
 
         $this->assertArrayHasKey(
-            'data',
+            "data",
             $data,
             'Array doesn\'t contains "data" as key'
         );
@@ -128,13 +132,13 @@ class DocumentTest extends PHPUnit\Framework\TestCase
         $data = json_decode($response, true);
 
         $this->assertArrayHasKey(
-            'signDocument',
-            $data['data'],
+            "signDocument",
+            $data["data"],
             'Array doesn\'t contains "data" as key'
         );
         $this->assertTrue(
-            $data['data']['signDocument'],
-            'Expected true but return false'
+            $data["data"]["signDocument"],
+            "Expected true but return false"
         );
     }
 
@@ -154,14 +158,14 @@ class DocumentTest extends PHPUnit\Framework\TestCase
         $data = json_decode($response, true);
 
         $this->assertArrayHasKey(
-            'deleteDocument',
-            $data['data'],
+            "deleteDocument",
+            $data["data"],
             'Array doesn\'t contains "data" as key'
         );
 
         $this->assertTrue(
-            $data['data']['deleteDocument'],
-            'Expected true but return false'
+            $data["data"]["deleteDocument"],
+            "Expected true but return false"
         );
     }
 }
