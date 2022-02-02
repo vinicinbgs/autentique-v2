@@ -83,3 +83,17 @@ $attributes = [
 
 #### 5 - Deletar um Documento
 <pre>$documents->deleteById($documentId);</pre>
+
+# 🤔 Contribute
+### 💻 Setup
+```bash
+git clone git@github.com:vinicinbgs/autentique-v2.git
+cd autentique-v2
+composer install
+npm install
+echo 'AUTENTIQUE_URL=https://api.autentique.com.br/v2/graphql
+AUTENTIQUE_TOKEN="75ea2f9981ebfe6f44d252e6e525e0a97da43f9ad8ed100173fe873344aec48e"
+AUTENTIQUE_DEV_MODE="true"' > .env
+ ```
+
+
