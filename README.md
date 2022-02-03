@@ -24,7 +24,11 @@ AUTENTIQUE_DEV_MODE=true || false
 **Import library** 
 <pre>use vinicinbgs\Autentique\Documents;</pre>
 
-**Instance** <pre>$documents = new Documents($AUTENTIQUE_TOKEN);</pre>
+**Instance** 
+<pre>
+$AUTENTIQUE_TOKEN="xxxxxxxx"
+$documents = new Documents($AUTENTIQUE_TOKEN);
+</pre>
 
 #### 1 - Listar todos os Documentos
 <pre>$documents->listAll($page); // if not isset $page is equal 1</pre>
@@ -83,3 +87,18 @@ $attributes = [
 
 #### 5 - Deletar um Documento
 <pre>$documents->deleteById($documentId);</pre>
+
+# Contributing
+### 💻 Setup
+```sh
+git clone git@github.com:vinicinbgs/autentique-v2.git
+cd autentique-v2
+composer install
+npm install
+ ```
+ ### ⚙️ Configure .env
+ ```sh
+ ./contribute.sh
+ ```
+
+

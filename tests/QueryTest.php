@@ -1,15 +1,19 @@
 <?php
 
-use vinicinbgs\Autentique\Query;
+namespace vinicinbgs\Autentique\tests;
 
-class QueryTest extends PHPUnit\Framework\TestCase
+use vinicinbgs\Autentique\tests\Base;
+
+use vinicinbgs\Autentique\Query;
+use vinicinbgs\Autentique\Resources\ResourcesEnum;
+class QueryTest extends Base
 {
     public function testFileIsNotString()
     {
-        $query = new Query();
+        $query = new Query(ResourcesEnum::DOCUMENTS);
 
-        $resolve = $query->setFile('test')->query();
+        $resolve = $query->setFile("test")->query();
 
-        $this->assertStringMatchesFormat('File is not found', $resolve);
+        $this->assertStringMatchesFormat("File is not found", $resolve);
     }
 }

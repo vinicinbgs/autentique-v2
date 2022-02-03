@@ -1,0 +1,11 @@
+"query {
+    folders(limit: 60, page: $page) {
+        total
+        data {
+            id
+            name
+            type
+            created_at
+        }
+    }
+}"

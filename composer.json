@@ -8,6 +8,9 @@
     "autentique",
     "v2"
   ],
+  "scripts": {
+    "test": "vendor/bin/phpunit tests"
+  },
   "homepage": "https://github.com/vinicinbgs/autentique-v2",
   "license": "MIT",
   "authors": [
@@ -28,7 +31,8 @@
   },
   "autoload": {
     "classmap": [
-      "src"
+      "src",
+      "tests"
     ],
     "psr-4": {
       "vinicinbgs\\Autentique\\": "src/"

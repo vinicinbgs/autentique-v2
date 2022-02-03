@@ -2,11 +2,10 @@
 
 namespace vinicinbgs\Autentique;
 
-class Documents
+class Documents extends BaseResource
 {
     private $query;
     private $token;
-    private $sandbox;
 
     /**
      * Documents constructor.
@@ -15,9 +14,10 @@ class Documents
      */
     public function __construct(string $token)
     {
-        $this->query = new Query();
+        parent::__construct();
+
+        $this->query = new Query($this->resourcesEnum::DOCUMENTS);
         $this->token = $token;
-        $this->sandbox = getenv('AUTENTIQUE_DEV_MODE') ? 'true' : 'false';
     }
 
     /**
@@ -32,7 +32,7 @@ class Documents
 
         $graphQuery = str_replace('$page', $page, $graphQuery);
 
-        return Api::request($this->token, $graphQuery, 'json');
+        return Api::request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -47,7 +47,7 @@ class Documents
         $graphQuery = $this->query->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
-        return Api::request($this->token, $graphQuery, 'json');
+        return Api::request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -59,9 +59,9 @@ class Documents
     public function create(array $attributes)
     {
         $variables = [
-            'document' => $attributes['document'],
-            'signers' => $attributes['signers'],
-            'file' => null,
+            "document" => $attributes["document"],
+            "signers" => $attributes["signers"],
+            "file" => null,
         ];
 
         $graphMutation = $this->query->setFile(__FUNCTION__)->query();
@@ -79,8 +79,8 @@ class Documents
         return Api::request(
             $this->token,
             $graphMutation,
-            'form',
-            $attributes['file']
+            "form",
+            $attributes["file"]
         );
     }
 
@@ -96,7 +96,7 @@ class Documents
         $graphQuery = $this->query->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
-        return Api::request($this->token, $graphQuery, 'json');
+        return Api::request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -111,6 +111,23 @@ class Documents
         $graphQuery = $this->query->setFile(__FUNCTION__)->query();
         $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
 
-        return Api::request($this->token, $graphQuery, 'json');
+        return Api::request($this->token, $graphQuery, "json");
+    }
+
+    /**
+     * Move document to folder
+     *
+     * @param string $documentId
+     * @param string $folderId
+     *
+     * @return bool|string
+     */
+    public function moveToFolder(string $documentId, string $folderId)
+    {
+        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
+        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+        $graphQuery = str_replace('$folderId', $folderId, $graphQuery);
+
+        return Api::request($this->token, $graphQuery, "json");
     }
 }

@@ -1,0 +1,20 @@
+"query {
+    documentsByFolder(folder_id: \"$folderId\", limit: 60, page: $page) {
+        total
+        data {
+            id
+            name
+            created_at
+            files { original signed }
+            signatures {
+                public_id
+                name
+                email
+                action { name }
+                viewed { created_at }
+                signed { created_at }
+                rejected { created_at }
+            }
+        }
+    }
+}"
