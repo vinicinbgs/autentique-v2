@@ -9,7 +9,8 @@
     "v2"
   ],
   "scripts": {
-    "test": "vendor/bin/phpunit tests"
+    "test": "vendor/bin/phpunit tests",
+    "load": "composer dumpautoload"
   },
   "homepage": "https://github.com/vinicinbgs/autentique-v2",
   "license": "MIT",

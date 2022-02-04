@@ -2,7 +2,7 @@
 
 namespace vinicinbgs\Autentique;
 
-use vinicinbgs\Autentique\Resources\ResourcesEnum;
+use vinicinbgs\Autentique\Enums\ResourcesEnum;
 
 class BaseResource
 {
@@ -12,7 +12,7 @@ class BaseResource
 
     public function __construct()
     {
-        $this->sandbox = getenv("AUTENTIQUE_DEV_MODE") ? "true" : "false";
+        $this->sandbox = getenv("AUTENTIQUE_DEV_MODE") == "true" ? true : false;
 
         $this->resourcesEnum = ResourcesEnum::class;
     }

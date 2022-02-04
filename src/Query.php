@@ -4,10 +4,12 @@ namespace vinicinbgs\Autentique;
 
 class Query
 {
-    /**
-     * @var string
-     */
+    const DIR = "resources/";
+
+    /** @var string */
     protected $resource;
+
+    /** @var string */
     protected $file;
 
     /**
@@ -15,7 +17,7 @@ class Query
      */
     public function __construct(string $resource)
     {
-        $this->resource = __DIR__ . "/resources/" . strtolower($resource);
+        $this->resource = __DIR__ . "/" . self::DIR . strtolower($resource);
     }
 
     /**
@@ -37,10 +39,10 @@ class Query
     /**
      * Format query to remove LF (line feed \n) and CR (carriege return \r)
      *
-     * @param $query
+     * @param string $query
      * @return string|string[]|null
      */
-    private function formatQueryRemoveBrokenLine($query)
+    private function formatQueryRemoveBrokenLine(string $query)
     {
         return preg_replace("/[\n\r]/", "", $query);
     }
@@ -48,10 +50,10 @@ class Query
     /**
      * Set file query
      *
-     * @param $file
+     * @param string $file
      * @return $this
      */
-    public function setFile($file)
+    public function setFile(string $file)
     {
         $this->file = $file;
 

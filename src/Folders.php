@@ -2,7 +2,6 @@
 
 namespace vinicinbgs\Autentique;
 
-use vinicinbgs\Autentique\Resources\ResourcesEnum;
 class Folders extends BaseResource
 {
     private $query;
@@ -15,7 +14,7 @@ class Folders extends BaseResource
      */
     public function __construct(string $token)
     {
-        $this->query = new Query(ResourcesEnum::FOLDERS);
+        $this->query = new Query($this->resourcesEnum::FOLDERS);
         $this->token = $token;
     }
 
