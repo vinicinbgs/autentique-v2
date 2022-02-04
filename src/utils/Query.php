@@ -1,10 +1,10 @@
 <?php
 
-namespace vinicinbgs\Autentique;
+namespace vinicinbgs\Autentique\Utils;
 
 class Query
 {
-    const DIR = "resources/";
+    const DIR = "queries/";
 
     /** @var string */
     protected $resource;
@@ -17,7 +17,7 @@ class Query
      */
     public function __construct(string $resource)
     {
-        $this->resource = __DIR__ . "/" . self::DIR . strtolower($resource);
+        $this->resource = __DIR__ . "/../" . self::DIR . strtolower($resource);
     }
 
     /**
@@ -53,10 +53,20 @@ class Query
      * @param string $file
      * @return $this
      */
-    public function setFile(string $file)
+    public function setQuery(string $file)
     {
         $this->file = $file;
 
         return $this;
+    }
+
+    public function setVariables(
+        string $variableName,
+        $value,
+        string $graphQuery
+    ): string {
+        $variableName = "$" . $variableName;
+
+        return str_replace($variableName, $value, $graphQuery);
     }
 }

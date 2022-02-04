@@ -17,7 +17,7 @@ class DocumentTest extends Base
     {
         return [
             "document" => [
-                "name" => "NOME DO DOCUMENTO",
+                "name" => "DOC. TEST",
             ],
             "signers" => [
                 [
@@ -53,7 +53,7 @@ class DocumentTest extends Base
                     ],
                 ],
             ],
-            "file" => "./tests/resources/document_test.pdf",
+            "file" => __DIR__ . "/resources/document_test.pdf",
         ];
     }
 
@@ -82,6 +82,8 @@ class DocumentTest extends Base
      */
     public function testListAll(): void
     {
+        $this->createDocument();
+
         $listAll = $this->documents->listAll(1);
 
         $data = json_decode($listAll, true);

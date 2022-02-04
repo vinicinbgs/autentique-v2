@@ -2,6 +2,9 @@
 
 namespace vinicinbgs\Autentique;
 
+use vinicinbgs\Autentique\Utils\Query;
+use vinicinbgs\Autentique\Utils\Api;
+
 class Documents extends BaseResource
 {
     private $query;
@@ -28,9 +31,9 @@ class Documents extends BaseResource
      */
     public function listAll(int $page = 1)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
+        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
 
-        $graphQuery = str_replace('$page', $page, $graphQuery);
+        $graphQuery = $this->query->setVariables("page", $page, $graphQuery);
 
         return Api::request($this->token, $graphQuery, "json");
     }
@@ -44,8 +47,12 @@ class Documents extends BaseResource
      */
     public function listById(string $documentId)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
+        $graphQuery = $this->query->setVariables(
+            "documentId",
+            $documentId,
+            $graphQuery
+        );
 
         return Api::request($this->token, $graphQuery, "json");
     }
@@ -64,14 +71,15 @@ class Documents extends BaseResource
             "file" => null,
         ];
 
-        $graphMutation = $this->query->setFile(__FUNCTION__)->query();
-        $graphMutation = str_replace(
-            '$variables',
+        $graphMutation = $this->query->setQuery(__FUNCTION__)->query();
+        $graphMutation = $this->query->setVariables(
+            "variables",
             json_encode($variables),
             $graphMutation
         );
-        $graphMutation = str_replace(
-            '$sandbox',
+
+        $graphMutation = $this->query->setVariables(
+            "sandbox",
             $this->sandbox,
             $graphMutation
         );
@@ -93,8 +101,12 @@ class Documents extends BaseResource
      */
     public function signById(string $documentId)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
+        $graphQuery = $this->query->setVariables(
+            "documentId",
+            $documentId,
+            $graphQuery
+        );
 
         return Api::request($this->token, $graphQuery, "json");
     }
@@ -108,8 +120,12 @@ class Documents extends BaseResource
      */
     public function deleteById(string $documentId)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
+        $graphQuery = $this->query->setVariables(
+            "documentId",
+            $documentId,
+            $graphQuery
+        );
 
         return Api::request($this->token, $graphQuery, "json");
     }
@@ -124,9 +140,17 @@ class Documents extends BaseResource
      */
     public function moveToFolder(string $documentId, string $folderId)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
-        $graphQuery = str_replace('$folderId', $folderId, $graphQuery);
+        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
+        $graphQuery = $this->query->setVariables(
+            "documentId",
+            $documentId,
+            $graphQuery
+        );
+        $graphQuery = $this->query->setVariables(
+            "folderId",
+            $folderId,
+            $graphQuery
+        );
 
         return Api::request($this->token, $graphQuery, "json");
     }

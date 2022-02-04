@@ -1,34 +1,40 @@
 <?php
 
-namespace vinicinbgs\Autentique;
+namespace vinicinbgs\Autentique\Utils;
 
 use CURLFile;
 
 class Api
 {
+    const ACCEPT_CONTENTS = ["json", "form"];
+
     public static function request(
         string $token,
         string $query,
         string $contentType,
         string $pathFile = null
     ) {
+        if (!in_array($contentType, self::ACCEPT_CONTENTS)) {
+            return "The postfield field cannot be null";
+        }
+
         $httpHeader = ["Authorization: Bearer {$token}"];
 
-        $postFields = null;
+        $content =
+            $contentType == "json"
+                ? self::requestJson()
+                : self::requestFormData();
 
-        switch ($contentType) {
-            case "json":
-                $postFields = '{"query":' . $query . "}";
-                array_push($httpHeader, "Content-Type: application/json");
-                break;
-            case "form":
-                $attributes = '{"query":' . $query . "}";
-                $postFields = [
-                    "operations" => $attributes,
-                    "map" => '{"file": ["variables.file"]}',
-                    "file" => new CURLFile($pathFile),
-                ];
-                break;
+        array_push($httpHeader, $content);
+
+        $postFields = '{"query":' . $query . "}";
+
+        if ($contentType == "form") {
+            $postFields = [
+                "operations" => $postFields,
+                "map" => '{"file": ["variables.file"]}',
+                "file" => new CURLFile($pathFile),
+            ];
         }
 
         if (is_null($postFields)) {
@@ -50,7 +56,7 @@ class Api
                 CURLOPT_CUSTOMREQUEST => "POST",
                 CURLOPT_POSTFIELDS => $postFields,
                 CURLOPT_HTTPHEADER => $httpHeader,
-                CURLOPT_CAINFO => __DIR__ . "/../ssl/ca-bundle.crt",
+                CURLOPT_CAINFO => __DIR__ . "/../../ssl/ca-bundle.crt",
             ]
         );
 
@@ -78,5 +84,15 @@ class Api
         }
 
         return $response;
+    }
+
+    private static function requestJson()
+    {
+        return "Content-Type: application/json";
+    }
+
+    private static function requestFormData()
+    {
+        return "Content-Type: multipart/form-data";
     }
 }

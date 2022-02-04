@@ -4,7 +4,7 @@ namespace vinicinbgs\Autentique\tests;
 
 use vinicinbgs\Autentique\tests\Base;
 
-use vinicinbgs\Autentique\Query;
+use vinicinbgs\Autentique\Utils\Query;
 use vinicinbgs\Autentique\Enums\ResourcesEnum;
 
 class QueryTest extends Base
@@ -13,7 +13,7 @@ class QueryTest extends Base
     {
         $query = new Query(ResourcesEnum::DOCUMENTS);
 
-        $resolve = $query->setFile("test")->query();
+        $resolve = $query->setQuery("test")->query();
 
         $this->assertStringMatchesFormat("File is not found", $resolve);
     }
