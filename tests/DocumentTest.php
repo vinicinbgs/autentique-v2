@@ -4,45 +4,18 @@ namespace vinicinbgs\Autentique\tests;
 
 use vinicinbgs\Autentique\tests\Base;
 use vinicinbgs\Autentique\Documents;
+
 class DocumentTest extends Base
 {
-    private $token;
+    const ERROR_ARRAY_DOESNT_CONTAINS_DATA = 'Array doesn\'t contains "data" as key';
 
-    public function setUp(): void
+    private $documents;
+
+    private $autentiqueDocumentCreated;
+
+    private function mockDocument()
     {
-        $this->token = getenv("AUTENTIQUE_TOKEN");
-    }
-
-    /**
-     * @test
-     *
-     * Test List All Documents in Autentique
-     */
-    public function testListAll(): void
-    {
-        $documents = new Documents($this->token);
-
-        $listAll = $documents->listAll(1);
-
-        $data = json_decode($listAll, true);
-
-        $this->assertArrayHasKey(
-            "data",
-            $data,
-            'Array doesn\'t contains "data" as key'
-        );
-    }
-
-    /**
-     * @test
-     *
-     * Test Create Document in Autentique
-     */
-    public function testCreateDocument(): string
-    {
-        $documents = new Documents($this->token);
-
-        $attributes = [
+        return [
             "document" => [
                 "name" => "NOME DO DOCUMENTO",
             ],
@@ -82,16 +55,58 @@ class DocumentTest extends Base
             ],
             "file" => "./tests/resources/document_test.pdf",
         ];
+    }
 
-        $data = json_decode($documents->create($attributes), true);
+    private function createDocument()
+    {
+        if ($this->autentiqueDocumentCreated) {
+            return $this->autentiqueDocumentCreated;
+        }
+
+        $this->autentiqueDocumentCreated = $this->documents->create(
+            $this->mockDocument()
+        );
+
+        return json_decode($this->autentiqueDocumentCreated, true);
+    }
+
+    public function setup(): void
+    {
+        $this->documents = new Documents($this->token());
+    }
+
+    /**
+     * @test
+     *
+     * Test List All Documents in Autentique
+     */
+    public function testListAll(): void
+    {
+        $listAll = $this->documents->listAll(1);
+
+        $data = json_decode($listAll, true);
+
+        $this->assertArrayHasKey(
+            "data",
+            $data,
+            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
+        );
+    }
+
+    /**
+     * @test
+     *
+     * Test Create Document in Autentique
+     */
+    public function testCreateDocument(): void
+    {
+        $data = $this->createDocument();
 
         $this->assertArrayHasKey(
             "createDocument",
             $data["data"],
-            'Array doesn\'t contains "createDocument" as key'
+            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
         );
-
-        return $data["data"]["createDocument"]["id"];
     }
 
     /**
@@ -101,18 +116,20 @@ class DocumentTest extends Base
      * Test List Document by Id in Autentique
      * @param $lastDocumentId
      */
-    public function testListById($lastDocumentId): void
+    public function testListById(): void
     {
-        $documents = new Documents($this->token);
+        $attributes = $this->createDocument($this->mockDocument());
 
-        $response = $documents->listById($lastDocumentId);
+        $data = $this->documents->listById(
+            $attributes["data"]["createDocument"]["id"]
+        );
 
-        $data = json_decode($response, true);
+        $response = json_decode($data, true);
 
         $this->assertArrayHasKey(
             "data",
-            $data,
-            'Array doesn\'t contains "data" as key'
+            $response,
+            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
         );
     }
 
@@ -121,23 +138,22 @@ class DocumentTest extends Base
      *
      * Test sign document by id in Autentique
      * @depends testCreateDocument
-     * @param $lastDocumentId
      */
-    public function testSignDocument($lastDocumentId): void
+    public function testSignDocument(): void
     {
-        $documents = new Documents($this->token);
+        $data = $this->documents->signById(
+            $this->createDocument()["data"]["createDocument"]["id"]
+        );
 
-        $response = $documents->signById($lastDocumentId);
-
-        $data = json_decode($response, true);
+        $dataArray = json_decode($data, true);
 
         $this->assertArrayHasKey(
             "signDocument",
-            $data["data"],
-            'Array doesn\'t contains "data" as key'
+            $dataArray["data"],
+            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
         );
         $this->assertTrue(
-            $data["data"]["signDocument"],
+            $dataArray["data"]["signDocument"],
             "Expected true but return false"
         );
     }
@@ -147,20 +163,19 @@ class DocumentTest extends Base
      *
      * Test remove document by id in Autentique
      * @depends testCreateDocument
-     * @param $lastDocumentId
      */
-    public function testRemoveDocument($lastDocumentId): void
+    public function testRemoveDocument(): void
     {
-        $documents = new Documents($this->token);
-
-        $response = $documents->deleteById($lastDocumentId);
+        $response = $this->documents->deleteById(
+            $this->createDocument()["data"]["createDocument"]["id"]
+        );
 
         $data = json_decode($response, true);
 
         $this->assertArrayHasKey(
             "deleteDocument",
             $data["data"],
-            'Array doesn\'t contains "data" as key'
+            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
         );
 
         $this->assertTrue(

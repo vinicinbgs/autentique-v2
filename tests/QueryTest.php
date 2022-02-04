@@ -5,7 +5,8 @@ namespace vinicinbgs\Autentique\tests;
 use vinicinbgs\Autentique\tests\Base;
 
 use vinicinbgs\Autentique\Query;
-use vinicinbgs\Autentique\Resources\ResourcesEnum;
+use vinicinbgs\Autentique\Enums\ResourcesEnum;
+
 class QueryTest extends Base
 {
     public function testFileIsNotString()
