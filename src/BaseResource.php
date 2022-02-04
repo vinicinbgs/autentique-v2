@@ -12,7 +12,7 @@ class BaseResource
 
     public function __construct()
     {
-        $this->sandbox = getenv("AUTENTIQUE_DEV_MODE") == "true" ? true : false;
+        $this->sandbox = getenv("AUTENTIQUE_DEV_MODE") ?? "false";
 
         $this->resourcesEnum = ResourcesEnum::class;
     }
