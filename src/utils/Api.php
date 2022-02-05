@@ -30,6 +30,7 @@ class Api
 
         if ($contentType == "json") {
             $contentType = self::requestJson();
+            array_push($httpHeader, $contentType);
         } else {
             $contentType = self::requestFormData();
             $fields = [
@@ -39,23 +40,22 @@ class Api
             ];
         }
 
-        array_push($httpHeader, $contentType);
-
         return self::connect($httpHeader, $fields);
     }
 
     private static function connect(array $httpHeader, $fields)
     {
-        $curl = curl_init(self::url());
+        $curl = curl_init();
 
         curl_setopt_array(
             /** @scrutinizer ignore-type */
             $curl,
             [
+                CURLOPT_URL => self::url(),
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
+                CURLOPT_TIMEOUT => 60,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
@@ -70,7 +70,16 @@ class Api
             $curl
         );
 
-        if ($error = curl_errno($curl)) {
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);
+        }
+
+        curl_close(
+            /** @scrutinizer ignore-type */
+            $curl
+        );
+
+        if (!empty($error)) {
             $response = json_encode([
                 "status" => 400,
                 "message" => !empty($error)
@@ -78,11 +87,6 @@ class Api
                     : "CURL return false, maybe you need to check the ssl cert",
             ]);
         }
-
-        curl_close(
-            /** @scrutinizer ignore-type */
-            $curl
-        );
 
         return $response;
     }

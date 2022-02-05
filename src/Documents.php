@@ -31,7 +31,7 @@ class Documents extends BaseResource
      */
     public function listAll(int $page = 1)
     {
-        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
+        $graphQuery = $this->query->query(__FUNCTION__);
 
         $graphQuery = $this->query->setVariables("page", $page, $graphQuery);
 
@@ -47,7 +47,7 @@ class Documents extends BaseResource
      */
     public function listById(string $documentId)
     {
-        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
+        $graphQuery = $this->query->query(__FUNCTION__);
         $graphQuery = $this->query->setVariables(
             "documentId",
             $documentId,
@@ -71,16 +71,10 @@ class Documents extends BaseResource
             "file" => null,
         ];
 
-        $graphMutation = $this->query->setQuery(__FUNCTION__)->query();
+        $graphMutation = $this->query->query(__FUNCTION__);
         $graphMutation = $this->query->setVariables(
-            "variables",
-            json_encode($variables),
-            $graphMutation
-        );
-
-        $graphMutation = $this->query->setVariables(
-            "sandbox",
-            $this->sandbox,
+            ["variables", "sandbox"],
+            [json_encode($variables), $this->sandbox],
             $graphMutation
         );
 
@@ -101,7 +95,7 @@ class Documents extends BaseResource
      */
     public function signById(string $documentId)
     {
-        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
+        $graphQuery = $this->query->query(__FUNCTION__);
         $graphQuery = $this->query->setVariables(
             "documentId",
             $documentId,
@@ -120,7 +114,7 @@ class Documents extends BaseResource
      */
     public function deleteById(string $documentId)
     {
-        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
+        $graphQuery = $this->query->query(__FUNCTION__);
         $graphQuery = $this->query->setVariables(
             "documentId",
             $documentId,
@@ -140,15 +134,11 @@ class Documents extends BaseResource
      */
     public function moveToFolder(string $documentId, string $folderId)
     {
-        $graphQuery = $this->query->setQuery(__FUNCTION__)->query();
+        $graphQuery = $this->query->query(__FUNCTION__);
+
         $graphQuery = $this->query->setVariables(
-            "documentId",
-            $documentId,
-            $graphQuery
-        );
-        $graphQuery = $this->query->setVariables(
-            "folderId",
-            $folderId,
+            ["documentId", "folderId"],
+            [$documentId, $folderId],
             $graphQuery
         );
 

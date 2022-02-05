@@ -4,12 +4,14 @@ namespace vinicinbgs\Autentique\tests;
 
 use vinicinbgs\Autentique\tests\Base;
 use vinicinbgs\Autentique\Documents;
+use vinicinbgs\Autentique\Folders;
 
 class DocumentTest extends Base
 {
     const ERROR_ARRAY_DOESNT_CONTAINS_DATA = 'Array doesn\'t contains "data" as key';
 
     private $documents;
+    private $folders;
 
     private $autentiqueDocumentCreated;
 
@@ -73,6 +75,7 @@ class DocumentTest extends Base
     public function setup(): void
     {
         $this->documents = new Documents($this->token());
+        $this->folders = new Folders($this->token());
     }
 
     /**
@@ -184,5 +187,26 @@ class DocumentTest extends Base
             $data["data"]["deleteDocument"],
             "Expected true but return false"
         );
+    }
+
+    public function testMoveDocumentToFolder()
+    {
+        $folder = $this->folders->create([
+            "folder" => [
+                "name" => "test",
+            ],
+        ]);
+
+        $folderId = json_decode($folder, true)["data"]["createFolder"]["id"];
+
+        $documentId = $this->createDocument()["data"]["createDocument"]["id"];
+
+        $move = $this->documents->moveToFolder($documentId, $folderId);
+
+        $response = json_decode($move, true);
+
+        $this->assertArrayHasKey("moveDocumentToFolder", $response["data"]);
+
+        $this->assertTrue($response["data"]["moveDocumentToFolder"]);
     }
 }

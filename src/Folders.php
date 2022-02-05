@@ -17,6 +17,8 @@ class Folders extends BaseResource
      */
     public function __construct(string $token)
     {
+        parent::__construct();
+
         $this->query = new Query($this->resourcesEnum::FOLDERS);
         $this->token = $token;
     }
@@ -29,9 +31,9 @@ class Folders extends BaseResource
      */
     public function listAll(int $page = 1)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
+        $graphQuery = $this->query->query(__FUNCTION__);
 
-        $graphQuery = str_replace('$page', $page, $graphQuery);
+        $graphQuery = $this->query->setVariables("page", $page, $graphQuery);
 
         return Api::request($this->token, $graphQuery, "json");
     }
@@ -45,8 +47,12 @@ class Folders extends BaseResource
      */
     public function listById(string $folderId)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$folderId', $folderId, $graphQuery);
+        $graphQuery = $this->query->query(__FUNCTION__);
+        $graphQuery = $this->query->setVariables(
+            "folderId",
+            $folderId,
+            $graphQuery
+        );
 
         return Api::request($this->token, $graphQuery, "json");
     }
@@ -60,9 +66,12 @@ class Folders extends BaseResource
      */
     public function listContentsById(string $folderId, int $page = 1)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$folderId', $folderId, $graphQuery);
-        $graphQuery = str_replace('$page', $page, $graphQuery);
+        $graphQuery = $this->query->query(__FUNCTION__);
+        $graphQuery = $this->query->setVariables(
+            ["folderId", "page"],
+            [$folderId, $page],
+            $graphQuery
+        );
 
         return Api::request($this->token, $graphQuery, "json");
     }
@@ -70,26 +79,15 @@ class Folders extends BaseResource
     /**
      * Create folder
      *
-     * @param array $fodlerName
+     * @param array $variables
      * @return bool|false|string
      */
-    public function create(string $fodlerName)
+    public function create(array $variables)
     {
-        $variables = [
-            "folder" => [
-                "name" => $fodlerName,
-            ],
-        ];
-
-        $graphMutation = $this->query->setFile(__FUNCTION__)->query();
-        $graphMutation = str_replace(
-            '$variables',
-            json_encode($variables),
-            $graphMutation
-        );
-        $graphMutation = str_replace(
-            '$sandbox',
-            $this->sandbox,
+        $graphMutation = $this->query->query(__FUNCTION__);
+        $graphMutation = $this->query->setVariables(
+            ["variables", "sandbox"],
+            [json_encode($variables), $this->sandbox],
             $graphMutation
         );
 
@@ -105,8 +103,12 @@ class Folders extends BaseResource
      */
     public function deleteById(string $folderId)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$folderId', $folderId, $graphQuery);
+        $graphQuery = $this->query->query(__FUNCTION__);
+        $graphQuery = $this->query->setVariables(
+            "folderId",
+            $folderId,
+            $graphQuery
+        );
 
         return Api::request($this->token, $graphQuery, "json");
     }

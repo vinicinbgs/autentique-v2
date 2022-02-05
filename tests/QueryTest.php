@@ -9,11 +9,11 @@ use vinicinbgs\Autentique\Enums\ResourcesEnum;
 
 class QueryTest extends Base
 {
-    public function testFileIsNotString()
+    public function testFileIsNotFound()
     {
         $query = new Query(ResourcesEnum::DOCUMENTS);
 
-        $resolve = $query->setQuery("test")->query();
+        $resolve = $query->query("");
 
         $this->assertStringMatchesFormat("File is not found", $resolve);
     }

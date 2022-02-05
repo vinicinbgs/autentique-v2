@@ -25,13 +25,13 @@ class Query
      *
      * @return string|string[]|null
      */
-    public function query()
+    public function query(string $file)
     {
-        if (!file_exists("$this->resource/$this->file")) {
+        if (!file_exists("$this->resource/$file") || empty($file)) {
             return "File is not found";
         }
 
-        $query = file_get_contents("$this->resource/$this->file");
+        $query = file_get_contents("$this->resource/$file");
 
         return $this->formatQueryRemoveBrokenLine($query);
     }
@@ -48,25 +48,31 @@ class Query
     }
 
     /**
-     * Set file query
+     * Undocumented function
      *
-     * @param string $file
-     * @return $this
+     * @param string|array $variableName
+     * @param string|array $value
+     * @param string $graphQuery
+     * @return string
      */
-    public function setQuery(string $file)
-    {
-        $this->file = $file;
-
-        return $this;
-    }
-
     public function setVariables(
-        string $variableName,
+        $variableName,
         $value,
         string $graphQuery
     ): string {
-        $variableName = "$" . $variableName;
+        if (is_array($variableName) && is_array($value)) {
+            for ($i = 0; $i < count($variableName); $i++) {
+                $variable = "\$" . $variableName[$i];
+                $graphQuery = str_replace($variable, $value[$i], $graphQuery);
+            }
+        } else {
+            $graphQuery = str_replace(
+                "\$" . $variableName,
+                $value,
+                $graphQuery
+            );
+        }
 
-        return str_replace($variableName, $value, $graphQuery);
+        return $graphQuery;
     }
 }
