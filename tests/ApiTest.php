@@ -11,9 +11,6 @@ class ApiTest extends Base
     {
         $api = Api::request($this->token(), "", "notExist");
 
-        $this->assertStringMatchesFormat(
-            "The postfield field cannot be null",
-            $api
-        );
+        $this->assertStringMatchesFormat(Api::CONTENT_TYPE_ERROR_MSG, $api);
     }
 }
