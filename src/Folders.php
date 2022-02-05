@@ -2,6 +2,9 @@
 
 namespace vinicinbgs\Autentique;
 
+use vinicinbgs\Autentique\Utils\Api;
+use vinicinbgs\Autentique\Utils\Query;
+
 class Folders extends BaseResource
 {
     private $query;

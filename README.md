@@ -96,9 +96,21 @@ cd autentique-v2
 composer install
 npm install
  ```
- ### ⚙️ Configure .env
+ ### ⚙️ Configure  
+#### Create .env with variables
  ```sh
  ./contribute.sh
  ```
-
+#### Configure prettier php in vscode
+(CTRL + P) > Preferences: Open Setting (JSON)
+```json
+ "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "\\.php$",
+                "cmd": "npm run prettier -- ${relativeFile} --write",
+            },
+        ]
+    }
+```
 
