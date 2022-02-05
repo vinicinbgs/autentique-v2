@@ -7,6 +7,8 @@ use CURLFile;
 class Api
 {
     const ACCEPT_CONTENTS = ["json", "form"];
+    const CONTENT_TYPE_ERROR_MSG = "This content-type not exist";
+    const EMPTY_QUERY_ERROR_MSG = "Query cannot be empty string";
 
     public static function request(
         string $token,
@@ -15,33 +17,36 @@ class Api
         string $pathFile = null
     ) {
         if (!in_array($contentType, self::ACCEPT_CONTENTS)) {
-            return "The postfield field cannot be null";
+            return self::CONTENT_TYPE_ERROR_MSG;
+        }
+
+        if (empty($query)) {
+            return self::EMPTY_QUERY_ERROR_MSG;
         }
 
         $httpHeader = ["Authorization: Bearer {$token}"];
 
-        $content =
-            $contentType == "json"
-                ? self::requestJson()
-                : self::requestFormData();
+        $fields = '{"query":' . $query . "}";
 
-        array_push($httpHeader, $content);
-
-        $postFields = '{"query":' . $query . "}";
-
-        if ($contentType == "form") {
-            $postFields = [
-                "operations" => $postFields,
+        if ($contentType == "json") {
+            $contentType = self::requestJson();
+        } else {
+            $contentType = self::requestFormData();
+            $fields = [
+                "operations" => $fields,
                 "map" => '{"file": ["variables.file"]}',
                 "file" => new CURLFile($pathFile),
             ];
         }
 
-        if (is_null($postFields)) {
-            return "The postfield field cannot be null";
-        }
+        array_push($httpHeader, $contentType);
 
-        $curl = curl_init(getenv("AUTENTIQUE_URL"));
+        return self::connect($httpHeader, $fields);
+    }
+
+    private static function connect(array $httpHeader, $fields)
+    {
+        $curl = curl_init(self::url());
 
         curl_setopt_array(
             /** @scrutinizer ignore-type */
@@ -54,7 +59,7 @@ class Api
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $postFields,
+                CURLOPT_POSTFIELDS => $fields,
                 CURLOPT_HTTPHEADER => $httpHeader,
                 CURLOPT_CAINFO => __DIR__ . "/../../ssl/ca-bundle.crt",
             ]
@@ -65,17 +70,8 @@ class Api
             $curl
         );
 
-        if (curl_errno($curl)) {
-            $error = curl_error($curl);
-        }
-
-        curl_close(
-            /** @scrutinizer ignore-type */
-            $curl
-        );
-
-        if (isset($error)) {
-            return json_encode([
+        if ($error = curl_errno($curl)) {
+            $response = json_encode([
                 "status" => 400,
                 "message" => !empty($error)
                     ? $error
@@ -83,15 +79,25 @@ class Api
             ]);
         }
 
+        curl_close(
+            /** @scrutinizer ignore-type */
+            $curl
+        );
+
         return $response;
     }
 
-    private static function requestJson()
+    private static function url(): ?string
+    {
+        return getenv("AUTENTIQUE_URL") ?? null;
+    }
+
+    private static function requestJson(): string
     {
         return "Content-Type: application/json";
     }
 
-    private static function requestFormData()
+    private static function requestFormData(): string
     {
         return "Content-Type: multipart/form-data";
     }
