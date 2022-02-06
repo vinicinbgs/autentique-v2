@@ -12,6 +12,7 @@ php:
 before_script:
   - composer install --no-interaction
   - composer dump-autoload
+  - cp .env.example .env
 
 # Commands you want to run that will verify your build.
 
