@@ -9,9 +9,9 @@ class ApiTest extends _Base
 {
     private $api;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->api = new Api(getenv("AUTENTIQUE_URL"));
+        $this->api = new Api($this->autentiqueUrl());
     }
 
     public function testContentTypeNotExist()

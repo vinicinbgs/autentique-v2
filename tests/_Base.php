@@ -19,4 +19,9 @@ class _Base extends TestCase
     {
         return getenv("AUTENTIQUE_TOKEN");
     }
+
+    protected function autentiqueUrl()
+    {
+        return getenv("AUTENTIQUE_URL");
+    }
 }
