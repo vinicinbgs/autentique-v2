@@ -92,12 +92,10 @@ class Api
 
         $errorNo = curl_errno($curl);
 
-        if ($errorNo) {
-            $error = curl_error($curl);
-
+        if ($errorNo || $response == "[]") {
             $response = [
                 "status" => 400,
-                "message" => !empty($error) ? $error : self::ERR_CURL,
+                "message" => self::ERR_CURL,
             ];
         }
 
@@ -106,7 +104,7 @@ class Api
             $curl
         );
 
-        return is_bool($response) ? $response : json_decode($response, true);
+        return is_array($response) ? $response : json_decode($response, true);
     }
 
     private function setUrl(string $url)

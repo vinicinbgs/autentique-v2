@@ -41,6 +41,16 @@ class ApiTest extends _Base
 
     public function testCurlError()
     {
+        $response = $this->api->request($this->token(), "test", "json");
+
+        $this->assertArrayHasKey("status", $response);
+        $this->assertArrayHasKey("message", $response);
+
+        $this->assertEquals(Api::ERR_CURL, $response["message"]);
+    }
+
+    public function testUrlMalformed()
+    {
         $mockApi = new Api("htt");
         $response = $mockApi->request($this->token(), "query", "json");
 
