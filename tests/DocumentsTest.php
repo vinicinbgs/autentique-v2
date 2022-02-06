@@ -7,7 +7,7 @@ use vinicinbgs\Autentique\tests\_Base;
 use vinicinbgs\Autentique\Documents;
 use vinicinbgs\Autentique\Folders;
 
-class DocumentTest extends _Base
+class DocumentsTest extends _Base
 {
     const ERROR_ARRAY_DOESNT_CONTAINS_DATA = 'Array doesn\'t contains "data" as key';
 

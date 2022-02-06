@@ -1,7 +1,10 @@
 language: php
 
-# Versions of PHP you want your project run with.
+env:
+  global:
+    - XDEBUG_MODE=coverage
 
+# Versions of PHP you want your project run with.
 php:
   - 7.3
 # Commands to be run before your environment runs.
@@ -13,10 +16,9 @@ before_script:
 # Commands you want to run that will verify your build.
 
 script:
-  - phpunit tests
+  - phpunit --coverage-clover=coverage.xml
 
-after_script:
-  - bash <(curl -s https://codecov.io/bash)
+after_success: bash <(curl -s https://codecov.io/bash)
 
 # allow_failures: Allow this build to fail under the specified environments.
 
