@@ -17,8 +17,10 @@ if [ -z "$autentique_token" ]; then
 fi
 
 # Write in file
-echo "AUTENTIQUE_URL=https://api.autentique.com.br/v2/graphql
+echo "AUTENTIQUE_URL=\"https://api.autentique.com.br/v2/graphql\"
 AUTENTIQUE_TOKEN=\"${autentique_token}\"
 AUTENTIQUE_DEV_MODE=\"true\"" >> $filename
+
+cp phpunit.xml.dist phpunit.xml
 
 echo '✅ Done'

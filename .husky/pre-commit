@@ -4,4 +4,4 @@
 npm run prettier -- ./src --write
 npm run prettier -- ./tests --write
 
-#composer test
+composer test

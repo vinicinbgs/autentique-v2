@@ -4,6 +4,7 @@
     <testsuites>
         <testsuite name="Unit">
             <directory suffix=".php">./tests</directory>
+            <exclude>./tests/_Base.php</exclude>
         </testsuite>
     </testsuites>
 

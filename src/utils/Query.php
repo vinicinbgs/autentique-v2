@@ -48,29 +48,26 @@ class Query
     }
 
     /**
-     * Undocumented function
+     * set Variables in query adding value
      *
-     * @param string|array $variableName
+     * @param string|array $variables
      * @param string|array $value
      * @param string $graphQuery
      * @return string
      */
-    public function setVariables(
-        $variableName,
-        $value,
-        string $graphQuery
-    ): string {
-        if (is_array($variableName) && is_array($value)) {
-            for ($i = 0; $i < count($variableName); $i++) {
-                $variable = "\$" . $variableName[$i];
+    public function setVariables($variables, $value, string $graphQuery): string
+    {
+        if (is_array($variables) && is_array($value)) {
+            $variablesLength = count($variables);
+
+            for ($i = 0; $i < $variablesLength; $i++) {
+                $variable = "\$" . $variables[$i];
                 $graphQuery = str_replace($variable, $value[$i], $graphQuery);
             }
-        } else {
-            $graphQuery = str_replace(
-                "\$" . $variableName,
-                $value,
-                $graphQuery
-            );
+        }
+
+        if (is_string($variables)) {
+            $graphQuery = str_replace("\$" . $variables, $value, $graphQuery);
         }
 
         return $graphQuery;

@@ -4,7 +4,7 @@ namespace vinicinbgs\Autentique\tests;
 
 use PHPUnit\Framework\TestCase;
 
-class Base extends TestCase
+class _Base extends TestCase
 {
     /** @var string */
     protected $token;

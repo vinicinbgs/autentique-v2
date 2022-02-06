@@ -3,7 +3,6 @@
 namespace vinicinbgs\Autentique;
 
 use vinicinbgs\Autentique\Utils\Query;
-use vinicinbgs\Autentique\Utils\Api;
 
 class Documents extends BaseResource
 {
@@ -35,7 +34,7 @@ class Documents extends BaseResource
 
         $graphQuery = $this->query->setVariables("page", $page, $graphQuery);
 
-        return Api::request($this->token, $graphQuery, "json");
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -54,7 +53,7 @@ class Documents extends BaseResource
             $graphQuery
         );
 
-        return Api::request($this->token, $graphQuery, "json");
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -78,7 +77,7 @@ class Documents extends BaseResource
             $graphMutation
         );
 
-        return Api::request(
+        return $this->api->request(
             $this->token,
             $graphMutation,
             "form",
@@ -102,7 +101,7 @@ class Documents extends BaseResource
             $graphQuery
         );
 
-        return Api::request($this->token, $graphQuery, "json");
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -121,7 +120,7 @@ class Documents extends BaseResource
             $graphQuery
         );
 
-        return Api::request($this->token, $graphQuery, "json");
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -142,6 +141,6 @@ class Documents extends BaseResource
             $graphQuery
         );
 
-        return Api::request($this->token, $graphQuery, "json");
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 }

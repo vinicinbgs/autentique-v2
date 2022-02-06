@@ -2,7 +2,6 @@
 
 namespace vinicinbgs\Autentique;
 
-use vinicinbgs\Autentique\Utils\Api;
 use vinicinbgs\Autentique\Utils\Query;
 
 class Folders extends BaseResource
@@ -35,7 +34,7 @@ class Folders extends BaseResource
 
         $graphQuery = $this->query->setVariables("page", $page, $graphQuery);
 
-        return Api::request($this->token, $graphQuery, "json");
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -54,7 +53,7 @@ class Folders extends BaseResource
             $graphQuery
         );
 
-        return Api::request($this->token, $graphQuery, "json");
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -73,7 +72,7 @@ class Folders extends BaseResource
             $graphQuery
         );
 
-        return Api::request($this->token, $graphQuery, "json");
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -91,7 +90,7 @@ class Folders extends BaseResource
             $graphMutation
         );
 
-        return Api::request($this->token, $graphMutation, "json");
+        return $this->api->request($this->token, $graphMutation, "json");
     }
 
     /**
@@ -110,6 +109,6 @@ class Folders extends BaseResource
             $graphQuery
         );
 
-        return Api::request($this->token, $graphQuery, "json");
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 }

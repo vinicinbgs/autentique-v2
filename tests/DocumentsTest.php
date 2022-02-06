@@ -2,11 +2,12 @@
 
 namespace vinicinbgs\Autentique\tests;
 
-use vinicinbgs\Autentique\tests\Base;
+use vinicinbgs\Autentique\tests\_Base;
+
 use vinicinbgs\Autentique\Documents;
 use vinicinbgs\Autentique\Folders;
 
-class DocumentTest extends Base
+class DocumentTest extends _Base
 {
     const ERROR_ARRAY_DOESNT_CONTAINS_DATA = 'Array doesn\'t contains "data" as key';
 
@@ -69,10 +70,10 @@ class DocumentTest extends Base
             $this->mockDocument()
         );
 
-        return json_decode($this->autentiqueDocumentCreated, true);
+        return $this->autentiqueDocumentCreated;
     }
 
-    public function setup(): void
+    public function setUp(): void
     {
         $this->documents = new Documents($this->token());
         $this->folders = new Folders($this->token());
@@ -82,18 +83,17 @@ class DocumentTest extends Base
      * @test
      *
      * Test List All Documents in Autentique
+     * @return void
      */
     public function testListAll(): void
     {
         $this->createDocument();
 
-        $listAll = $this->documents->listAll(1);
-
-        $data = json_decode($listAll, true);
+        $response = $this->documents->listAll(1);
 
         $this->assertArrayHasKey(
             "data",
-            $data,
+            $response,
             self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
         );
     }
@@ -102,6 +102,7 @@ class DocumentTest extends Base
      * @test
      *
      * Test Create Document in Autentique
+     * @return void
      */
     public function testCreateDocument(): void
     {
@@ -117,19 +118,16 @@ class DocumentTest extends Base
     /**
      * @test
      *
-     * @depends testCreateDocument
      * Test List Document by Id in Autentique
-     * @param $lastDocumentId
+     * @return void
      */
     public function testListById(): void
     {
         $attributes = $this->createDocument($this->mockDocument());
 
-        $data = $this->documents->listById(
+        $response = $this->documents->listById(
             $attributes["data"]["createDocument"]["id"]
         );
-
-        $response = json_decode($data, true);
 
         $this->assertArrayHasKey(
             "data",
@@ -142,23 +140,21 @@ class DocumentTest extends Base
      * @test
      *
      * Test sign document by id in Autentique
-     * @depends testCreateDocument
+     * @return void
      */
     public function testSignDocument(): void
     {
-        $data = $this->documents->signById(
+        $response = $this->documents->signById(
             $this->createDocument()["data"]["createDocument"]["id"]
         );
 
-        $dataArray = json_decode($data, true);
-
         $this->assertArrayHasKey(
             "signDocument",
-            $dataArray["data"],
+            $response["data"],
             self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
         );
         $this->assertTrue(
-            $dataArray["data"]["signDocument"],
+            $response["data"]["signDocument"],
             "Expected true but return false"
         );
     }
@@ -167,7 +163,7 @@ class DocumentTest extends Base
      * @test
      *
      * Test remove document by id in Autentique
-     * @depends testCreateDocument
+     * @return void
      */
     public function testRemoveDocument(): void
     {
@@ -175,21 +171,25 @@ class DocumentTest extends Base
             $this->createDocument()["data"]["createDocument"]["id"]
         );
 
-        $data = json_decode($response, true);
-
         $this->assertArrayHasKey(
             "deleteDocument",
-            $data["data"],
+            $response["data"],
             self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
         );
 
         $this->assertTrue(
-            $data["data"]["deleteDocument"],
+            $response["data"]["deleteDocument"],
             "Expected true but return false"
         );
     }
 
-    public function testMoveDocumentToFolder()
+    /**
+     * @test
+     *
+     * Test move document to folder
+     * @return void
+     */
+    public function testMoveDocumentToFolder(): void
     {
         $folder = $this->folders->create([
             "folder" => [
@@ -197,13 +197,11 @@ class DocumentTest extends Base
             ],
         ]);
 
-        $folderId = json_decode($folder, true)["data"]["createFolder"]["id"];
+        $folderId = $folder["data"]["createFolder"]["id"];
 
         $documentId = $this->createDocument()["data"]["createDocument"]["id"];
 
-        $move = $this->documents->moveToFolder($documentId, $folderId);
-
-        $response = json_decode($move, true);
+        $response = $this->documents->moveToFolder($documentId, $folderId);
 
         $this->assertArrayHasKey("moveDocumentToFolder", $response["data"]);
 

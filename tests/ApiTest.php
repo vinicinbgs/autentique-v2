@@ -2,15 +2,52 @@
 
 namespace vinicinbgs\Autentique\tests;
 
-use vinicinbgs\Autentique\tests\Base;
+use vinicinbgs\Autentique\tests\_Base;
 use vinicinbgs\Autentique\Utils\Api;
 
-class ApiTest extends Base
+class ApiTest extends _Base
 {
-    public function testPostFieldsNull()
+    public function instanceApi()
     {
-        $api = Api::request($this->token(), "", "notExist");
+        return new Api(getenv("AUTENTIQUE_URL"));
+    }
 
-        $this->assertStringMatchesFormat(Api::CONTENT_TYPE_ERROR_MSG, $api);
+    public function testContentTypeNotExist()
+    {
+        $api = $this->instanceApi()->request($this->token(), "", "notExist");
+
+        $this->assertStringMatchesFormat(Api::ERR_CONTENT_TYPE, $api);
+    }
+
+    public function testQueryEmpty()
+    {
+        $api = $this->instanceApi()->request($this->token(), "", "json");
+
+        $this->assertStringMatchesFormat(Api::ERR_EMPTY_QUERY, $api);
+    }
+
+    public function testAutentiqueUrlException()
+    {
+        $factory = function () {
+            return new Api("");
+        };
+
+        $this->expectExceptionMessage(Api::ERR_AUTENTIQUE_URL);
+
+        $factory();
+    }
+
+    public function testCurlError()
+    {
+        $stub = $this->createPartialMock(Api::class, ["requestJson"]);
+
+        $stub->method("requestJson")->willReturn("error");
+
+        $api = $stub->request($this->token(), "query", "json");
+
+        $this->assertArrayHasKey("status", $api);
+        $this->assertArrayHasKey("message", $api);
+
+        $this->assertEquals(Api::ERR_CURL, $api["message"]);
     }
 }

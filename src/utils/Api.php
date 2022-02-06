@@ -3,25 +3,36 @@
 namespace vinicinbgs\Autentique\Utils;
 
 use CURLFile;
+use Exception;
 
 class Api
 {
     const ACCEPT_CONTENTS = ["json", "form"];
-    const CONTENT_TYPE_ERROR_MSG = "This content-type not exist";
-    const EMPTY_QUERY_ERROR_MSG = "Query cannot be empty string";
 
-    public static function request(
+    const ERR_CONTENT_TYPE = "This content-type not exist";
+    const ERR_EMPTY_QUERY = "Query cannot be empty string";
+    const ERR_AUTENTIQUE_URL = "AUTENTIQUE_URL cannot be empty";
+    const ERR_CURL = "curl_exec return false, check the ssl cert or CURLOPT params";
+
+    private $url;
+
+    public function __construct(string $url)
+    {
+        $this->url = $this->setUrl($url);
+    }
+
+    public function request(
         string $token,
         string $query,
         string $contentType,
         string $pathFile = null
     ) {
         if (!in_array($contentType, self::ACCEPT_CONTENTS)) {
-            return self::CONTENT_TYPE_ERROR_MSG;
+            return self::ERR_CONTENT_TYPE;
         }
 
         if (empty($query)) {
-            return self::EMPTY_QUERY_ERROR_MSG;
+            return self::ERR_EMPTY_QUERY;
         }
 
         $httpHeader = ["Authorization: Bearer {$token}"];
@@ -29,10 +40,9 @@ class Api
         $fields = '{"query":' . $query . "}";
 
         if ($contentType == "json") {
-            $contentType = self::requestJson();
-            array_push($httpHeader, $contentType);
+            $contentType = $this->requestJson();
         } else {
-            $contentType = self::requestFormData();
+            $contentType = $this->requestFormData();
             $fields = [
                 "operations" => $fields,
                 "map" => '{"file": ["variables.file"]}',
@@ -40,10 +50,12 @@ class Api
             ];
         }
 
-        return self::connect($httpHeader, $fields);
+        array_push($httpHeader, $contentType);
+
+        return $this->connect($httpHeader, $fields);
     }
 
-    private static function connect(array $httpHeader, $fields)
+    private function connect(array $httpHeader, $fields)
     {
         $curl = curl_init();
 
@@ -51,7 +63,7 @@ class Api
             /** @scrutinizer ignore-type */
             $curl,
             [
-                CURLOPT_URL => self::url(),
+                CURLOPT_URL => $this->url,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -70,8 +82,15 @@ class Api
             $curl
         );
 
-        if (curl_errno($curl)) {
+        $errorNo = curl_errno($curl);
+
+        if ($errorNo) {
             $error = curl_error($curl);
+
+            $response = json_encode([
+                "status" => 400,
+                "message" => !empty($error) ? $error : self::ERR_CURL,
+            ]);
         }
 
         curl_close(
@@ -79,29 +98,24 @@ class Api
             $curl
         );
 
-        if (!empty($error)) {
-            $response = json_encode([
-                "status" => 400,
-                "message" => !empty($error)
-                    ? $error
-                    : "CURL return false, maybe you need to check the ssl cert",
-            ]);
+        return is_bool($response) ? $response : json_decode($response, true);
+    }
+
+    private function setUrl(string $url)
+    {
+        if (empty($url)) {
+            throw new Exception(self::ERR_AUTENTIQUE_URL, 400);
         }
 
-        return $response;
+        return $url;
     }
 
-    private static function url(): ?string
-    {
-        return getenv("AUTENTIQUE_URL") ?? null;
-    }
-
-    private static function requestJson(): string
+    public function requestJson(): string
     {
         return "Content-Type: application/json";
     }
 
-    private static function requestFormData(): string
+    public function requestFormData(): string
     {
         return "Content-Type: multipart/form-data";
     }

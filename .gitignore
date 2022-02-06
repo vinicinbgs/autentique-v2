@@ -8,3 +8,6 @@ index.php
 /node_modules
 package-lock.json
 /tests/Bootstrap.php
+phpunit.xml
+.phpunit.result.cache
+coverage/
