@@ -2,11 +2,12 @@
 
 namespace vinicinbgs\Autentique;
 
-class Documents
+use vinicinbgs\Autentique\Utils\Query;
+
+class Documents extends BaseResource
 {
     private $query;
     private $token;
-    private $sandbox;
 
     /**
      * Documents constructor.
@@ -15,9 +16,10 @@ class Documents
      */
     public function __construct(string $token)
     {
-        $this->query = new Query();
+        parent::__construct();
+
+        $this->query = new Query($this->resourcesEnum::DOCUMENTS);
         $this->token = $token;
-        $this->sandbox = getenv('AUTENTIQUE_DEV_MODE') ? 'true' : 'false';
     }
 
     /**
@@ -28,11 +30,11 @@ class Documents
      */
     public function listAll(int $page = 1)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
+        $graphQuery = $this->query->query(__FUNCTION__);
 
-        $graphQuery = str_replace('$page', $page, $graphQuery);
+        $graphQuery = $this->query->setVariables("page", $page, $graphQuery);
 
-        return Api::request($this->token, $graphQuery, 'json');
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -44,10 +46,14 @@ class Documents
      */
     public function listById(string $documentId)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+        $graphQuery = $this->query->query(__FUNCTION__);
+        $graphQuery = $this->query->setVariables(
+            "documentId",
+            $documentId,
+            $graphQuery
+        );
 
-        return Api::request($this->token, $graphQuery, 'json');
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -59,28 +65,23 @@ class Documents
     public function create(array $attributes)
     {
         $variables = [
-            'document' => $attributes['document'],
-            'signers' => $attributes['signers'],
-            'file' => null,
+            "document" => $attributes["document"],
+            "signers" => $attributes["signers"],
+            "file" => null,
         ];
 
-        $graphMutation = $this->query->setFile(__FUNCTION__)->query();
-        $graphMutation = str_replace(
-            '$variables',
-            json_encode($variables),
-            $graphMutation
-        );
-        $graphMutation = str_replace(
-            '$sandbox',
-            $this->sandbox,
+        $graphMutation = $this->query->query(__FUNCTION__);
+        $graphMutation = $this->query->setVariables(
+            ["variables", "sandbox"],
+            [json_encode($variables), $this->sandbox],
             $graphMutation
         );
 
-        return Api::request(
+        return $this->api->request(
             $this->token,
             $graphMutation,
-            'form',
-            $attributes['file']
+            "form",
+            $attributes["file"]
         );
     }
 
@@ -93,10 +94,14 @@ class Documents
      */
     public function signById(string $documentId)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+        $graphQuery = $this->query->query(__FUNCTION__);
+        $graphQuery = $this->query->setVariables(
+            "documentId",
+            $documentId,
+            $graphQuery
+        );
 
-        return Api::request($this->token, $graphQuery, 'json');
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
@@ -108,9 +113,34 @@ class Documents
      */
     public function deleteById(string $documentId)
     {
-        $graphQuery = $this->query->setFile(__FUNCTION__)->query();
-        $graphQuery = str_replace('$documentId', $documentId, $graphQuery);
+        $graphQuery = $this->query->query(__FUNCTION__);
+        $graphQuery = $this->query->setVariables(
+            "documentId",
+            $documentId,
+            $graphQuery
+        );
 
-        return Api::request($this->token, $graphQuery, 'json');
+        return $this->api->request($this->token, $graphQuery, "json");
+    }
+
+    /**
+     * Move document to folder
+     *
+     * @param string $documentId
+     * @param string $folderId
+     *
+     * @return bool|string
+     */
+    public function moveToFolder(string $documentId, string $folderId)
+    {
+        $graphQuery = $this->query->query(__FUNCTION__);
+
+        $graphQuery = $this->query->setVariables(
+            ["documentId", "folderId"],
+            [$documentId, $folderId],
+            $graphQuery
+        );
+
+        return $this->api->request($this->token, $graphQuery, "json");
     }
 }

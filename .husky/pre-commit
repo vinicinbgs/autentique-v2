@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run prettier -- ./src --write
+npm run prettier -- ./tests --write
+
+composer test

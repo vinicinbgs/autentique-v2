@@ -8,6 +8,11 @@
     "autentique",
     "v2"
   ],
+  "scripts": {
+    "test": "vendor/bin/phpunit tests",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage/",
+    "load": "composer dumpautoload"
+  },
   "homepage": "https://github.com/vinicinbgs/autentique-v2",
   "license": "MIT",
   "authors": [
@@ -24,11 +29,12 @@
   },
   "require-dev": {
     "vlucas/phpdotenv": "^4.1",
-    "phpunit/phpunit": "^7"
+    "phpunit/phpunit": "^9.5"
   },
   "autoload": {
     "classmap": [
-      "src"
+      "src",
+      "tests"
     ],
     "psr-4": {
       "vinicinbgs\\Autentique\\": "src/"

@@ -1,0 +1,21 @@
+{
+  "name": "autentique-v2",
+  "version": "2.0.1",
+  "scripts": {
+    "prettier": "prettier",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinicinbgs/autentique-v2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vinicinbgs/autentique-v2/issues"
+  },
+  "homepage": "https://github.com/vinicinbgs/autentique-v2#readme",
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.17.6",
+    "husky": "^7.0.4",
+    "prettier": "^2.5.1"
+  }
+}
