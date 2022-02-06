@@ -43,10 +43,12 @@ class ApiTest extends _Base
     {
         $stub = $this->createPartialMock(Api::class, ["requestJson"]);
 
-        $stub->method("requestJson")->willReturn("error");
+        $stub
+            ->method("requestJson")
+            ->willReturn("Content-Type: application/pdf");
 
         $response = $stub->request($this->token(), "query", "json");
-
+        var_dump($response);
         $this->assertArrayHasKey("status", $response);
         $this->assertArrayHasKey("message", $response);
 
