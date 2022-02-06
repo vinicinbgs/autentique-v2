@@ -7,23 +7,25 @@ use vinicinbgs\Autentique\Utils\Api;
 
 class ApiTest extends _Base
 {
-    public function instanceApi()
+    private $api;
+
+    public function setUp()
     {
-        return new Api(getenv("AUTENTIQUE_URL"));
+        $this->api = new Api(getenv("AUTENTIQUE_URL"));
     }
 
     public function testContentTypeNotExist()
     {
-        $api = $this->instanceApi()->request($this->token(), "", "notExist");
+        $response = $this->api->request($this->token(), "", "notExist");
 
-        $this->assertStringMatchesFormat(Api::ERR_CONTENT_TYPE, $api);
+        $this->assertStringMatchesFormat(Api::ERR_CONTENT_TYPE, $response);
     }
 
     public function testQueryEmpty()
     {
-        $api = $this->instanceApi()->request($this->token(), "", "json");
+        $response = $this->api->request($this->token(), "", "json");
 
-        $this->assertStringMatchesFormat(Api::ERR_EMPTY_QUERY, $api);
+        $this->assertStringMatchesFormat(Api::ERR_EMPTY_QUERY, $response);
     }
 
     public function testAutentiqueUrlException()
@@ -43,11 +45,11 @@ class ApiTest extends _Base
 
         $stub->method("requestJson")->willReturn("error");
 
-        $api = $stub->request($this->token(), "query", "json");
+        $response = $stub->request($this->token(), "query", "json");
 
-        $this->assertArrayHasKey("status", $api);
-        $this->assertArrayHasKey("message", $api);
+        $this->assertArrayHasKey("status", $response);
+        $this->assertArrayHasKey("message", $response);
 
-        $this->assertEquals(Api::ERR_CURL, $api["message"]);
+        $this->assertEquals(Api::ERR_CURL, $response["message"]);
     }
 }
