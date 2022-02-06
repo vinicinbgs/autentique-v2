@@ -13,6 +13,7 @@ class Api
     const ERR_EMPTY_QUERY = "Query cannot be empty string";
     const ERR_AUTENTIQUE_URL = "AUTENTIQUE_URL cannot be empty";
     const ERR_CURL = "curl_exec return false, check the ssl cert or CURLOPT params";
+    const ERR_URL_INVALID = "Invalid url";
 
     private $url;
 
@@ -33,6 +34,13 @@ class Api
 
         if (empty($query)) {
             return self::ERR_EMPTY_QUERY;
+        }
+
+        if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
+            return [
+                "status" => 400,
+                "message" => self::ERR_URL_INVALID,
+            ];
         }
 
         $httpHeader = ["Authorization: Bearer {$token}"];
@@ -87,10 +95,10 @@ class Api
         if ($errorNo) {
             $error = curl_error($curl);
 
-            $response = json_encode([
+            $response = [
                 "status" => 400,
                 "message" => !empty($error) ? $error : self::ERR_CURL,
-            ]);
+            ];
         }
 
         curl_close(
