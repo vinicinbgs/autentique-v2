@@ -149,7 +149,7 @@ $folder = $folders->create($attributes);
 ### 4 - List the folder contents by id
 
 ```php
-php$folderContents = $documents->listContentsById($folderId, $page = 1);
+$folderContents = $folders->listContentsById($folderId, $page = 1);
 ```
 
 ### 5 - Delete a folder
