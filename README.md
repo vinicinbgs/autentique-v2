@@ -10,28 +10,32 @@
 
 # 🚀 Usage
 
-<pre>composer require vinicinbgs/autentique-v2</pre>
+```bash
+phpcomposer require vinicinbgs/autentique-v2
+```
 
 ## ⚠️ IMPORTANT
 
 This library depends on **vlucas/phpdotenv** to get environments variables **(.env)** <br>
 If you use a framework like **Laravel**, you don't need to download this library.
 
-<pre>composer require vlucas/phpdotenv</pre>
+```bash
+composer require vlucas/phpdotenv
+```
 
 **Set in file .env**
 
-<pre>
+```env
 AUTENTIQUE_URL=https://api.autentique.com.br/v2/graphql
 AUTENTIQUE_TOKEN="YOUR_TOKEN"
 AUTENTIQUE_DEV_MODE="true" || "false"
 # if TRUE, document will be created in mode sandbox
-</pre>
+```
 
 # Instance
 **Import library**
 
-<pre>
+```php
 use vinicinbgs\Autentique\Documents;
 
 $AUTENTIQUE_TOKEN="xxxxxxxx" (set or will be take in .env)
@@ -39,27 +43,27 @@ $AUTENTIQUE_TOKEN="xxxxxxxx" (set or will be take in .env)
 $documents = new Documents($AUTENTIQUE_TOKEN);
 
 $folders = new Folders($AUTENTIQUE_TOKEN);
-</pre>
+```
 
-Why documents receive token?
+Why documents/folders receive token?
 - Easily to manage Documents in multiples accounts (token)
 
 # 📝 Documents
 ### 1 - List all documents with pagination
 
-<pre>
+```php
 $documentsPaginated = documents->listAll($page); // if not isset $page is equal 1
-</pre>
+```
 
 ### 2 - List the document by id
 
-<pre>
+```php
 $document = $documents->listById($documentId);
-</pre>
+```
 
 ### 3 - Create a document
 
-<pre>
+```php
 $attributes = [
          'document' => [
              'name' => 'NOME DO DOCUMENTO',
@@ -102,33 +106,37 @@ $attributes = [
      ];
  
  $documentCreated = $documents->create($attributes);
- </pre>
+ ```
 
 ### 4 - Sign the document by id
 
-<pre>$documentSign = $documents->signById($documentId);</pre>
+```php
+$documentSign = $documents->signById($documentId);
+```
 
 ### 5 - Delete the document by id
 
-<pre>$documentDeleted = $documents->deleteById($documentId);</pre>
+```php
+$documentDeleted = $documents->deleteById($documentId);
+```
 
 
 # 📁 Folders
 ### 1 - List all folders
 
-<pre>
+```php
 $foldersPaginated = folders->listAll($page); // if not isset $page is equal 1
-</pre>
+```
 
 ### 2 - List the folder by id
 
-<pre>
+```php
 $folder = $folders->listById($folderId);
-</pre>
+```
 
 ### 3 - Create a folder
 
-<pre>
+```php
 $attributes = [
     "folder" => [
                 "name" => "folder name",
@@ -136,15 +144,19 @@ $attributes = [
 ];
  
 $folder = $folders->create($attributes);
- </pre>
+ ```
 
 ### 4 - List the folder contents by id
 
-<pre>$folderContents = $documents->listContentsById($folderId, $page = 1);</pre>
+```php
+php$folderContents = $documents->listContentsById($folderId, $page = 1);
+```
 
 ### 5 - Delete a folder
 
-<pre>$folderDeleted = $folders->deleteById($folderId);</pre>
+```php
+$folderDeleted = $folders->deleteById($folderId);
+```
 # 🔧 Contributing
 
 ### 💻 Setup
