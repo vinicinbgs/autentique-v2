@@ -1,4 +1,4 @@
-#### <span style="text-align: center">AUTENTIQUE Api v2</span>
+#### AUTENTIQUE Api v2
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/vinicinbgs/autentique-v2)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 [![Total Downloads](https://poser.pugx.org/vinicinbgs/autentique-v2/downloads)](https://packagist.org/packages/vinicinbgs/autentique-v2)
@@ -9,6 +9,8 @@
 [![License](https://poser.pugx.org/vinicinbgs/autentique-v2/license)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 
 # 🚀 Usage
+
+## This package is so simple to use then will save your time.
 
 ```bash
 phpcomposer require vinicinbgs/autentique-v2
@@ -154,7 +156,7 @@ $folderContents = $folders->listContentsById($folderId, $page = 1);
 
 ### 5 - Delete a folder
 
-```php
+```php 
 $folderDeleted = $folders->deleteById($folderId);
 ```
 # 🔧 Contributing
