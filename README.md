@@ -154,7 +154,7 @@ $folderContents = $folders->listContentsById($folderId, $page = 1);
 
 ### 5 - Delete a folder
 
-```php
+```php 
 $folderDeleted = $folders->deleteById($folderId);
 ```
 # 🔧 Contributing
