@@ -10,7 +10,7 @@
 
 # 🚀 Usage
 
-## This package is so simple to use then will save your time.
+## This package is so simple to use that it will save your time.
 
 ```bash
 phpcomposer require vinicinbgs/autentique-v2
