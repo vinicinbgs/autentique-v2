@@ -13,7 +13,7 @@
 ## This package is so simple to use that it will save your time.
 
 ```bash
-phpcomposer require vinicinbgs/autentique-v2
+composer require vinicinbgs/autentique-v2
 ```
 
 ## ⚠️ IMPORTANT
