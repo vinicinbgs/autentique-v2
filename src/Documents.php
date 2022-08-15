@@ -14,12 +14,12 @@ class Documents extends BaseResource
      *
      * @param $token
      */
-    public function __construct(string $token)
+    public function __construct(string $token = null)
     {
         parent::__construct();
 
         $this->query = new Query($this->resourcesEnum::DOCUMENTS);
-        $this->token = $token;
+        $this->token = $token ?? getenv("AUTENTIQUE_TOKEN");
     }
 
     /**

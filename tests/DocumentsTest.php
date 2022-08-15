@@ -75,7 +75,7 @@ class DocumentsTest extends _Base
 
     public function setUp(): void
     {
-        $this->documents = new Documents($this->token());
+        $this->documents = new Documents();
         $this->folders = new Folders($this->token());
     }
 
