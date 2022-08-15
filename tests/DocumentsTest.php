@@ -24,19 +24,14 @@ class DocumentsTest extends _Base
             ],
             "signers" => [
                 [
-                    "email" => "email@email.com",
+                    "email" => "dutra_morais@hotmail.com",
                     "action" => "SIGN",
                     "positions" => [
                         [
                             "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
                             "y" => "80", // Posição do Eixo Y da ASSINATURA (0 a 100)
                             "z" => "1", // Página da ASSINATURA
-                        ],
-                        [
-                            "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
-                            "y" => "50", // Posição do Eixo Y da ASSINATURA (0 a 100)
-                            "z" => "2", // Página da ASSINATURA
-                        ],
+                        ]
                     ],
                 ],
                 [
@@ -47,12 +42,7 @@ class DocumentsTest extends _Base
                             "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
                             "y" => "80", // Posição do Eixo Y da ASSINATURA (0 a 100)
                             "z" => "1", // Página da ASSINATURA
-                        ],
-                        [
-                            "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
-                            "y" => "50", // Posição do Eixo Y da ASSINATURA (0 a 100)
-                            "z" => "2", // Página da ASSINATURA
-                        ],
+                        ]
                     ],
                 ],
             ],
