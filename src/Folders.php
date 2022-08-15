@@ -26,7 +26,7 @@ class Folders extends BaseResource
      * List all folders
      *
      * @param int $page
-     * @return bool|string
+     * @return bool|array
      */
     public function listAll(int $page = 1)
     {
@@ -42,7 +42,7 @@ class Folders extends BaseResource
      *
      * @param string $folderId
      *
-     * @return bool|string
+     * @return bool|array
      */
     public function listById(string $folderId)
     {
@@ -61,7 +61,7 @@ class Folders extends BaseResource
      *
      * @param string $folderId
      *
-     * @return bool|string
+     * @return bool|array
      */
     public function listContentsById(string $folderId, int $page = 1)
     {
@@ -98,7 +98,7 @@ class Folders extends BaseResource
      *
      * @param string $folderId
      *
-     * @return bool|string
+     * @return bool|array
      */
     public function deleteById(string $folderId)
     {
