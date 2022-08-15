@@ -19,7 +19,7 @@ class Folders extends BaseResource
         parent::__construct();
 
         $this->query = new Query($this->resourcesEnum::FOLDERS);
-        $this->token = $token ?? getenv("AUTENTIQUE_TOKEN");
+        $this->token = $token ?? $_ENV["AUTENTIQUE_TOKEN"];
     }
 
     /**
