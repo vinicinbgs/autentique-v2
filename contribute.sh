@@ -23,4 +23,6 @@ AUTENTIQUE_DEV_MODE=\"true\"" >> $filename
 
 cp phpunit.xml.dist phpunit.xml
 
+composer install
+
 echo '✅ Done'
