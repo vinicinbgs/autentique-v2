@@ -26,7 +26,7 @@ class Documents extends BaseResource
      * List all documents
      *
      * @param  int  $page
-     * @return bool|array
+     * @return array
      */
     public function listAll(int $page = 1)
     {
@@ -42,7 +42,7 @@ class Documents extends BaseResource
      *
      * @param string $documentId
      *
-     * @return bool|array
+     * @return array
      */
     public function listById(string $documentId)
     {
@@ -60,7 +60,7 @@ class Documents extends BaseResource
      * Create Document
      *
      * @param array $attributes
-     * @return bool|array
+     * @return array
      */
     public function create(array $attributes)
     {
@@ -90,7 +90,7 @@ class Documents extends BaseResource
      *
      * @param string $documentId
      *
-     * @return bool|array
+     * @return array
      */
     public function signById(string $documentId)
     {
@@ -109,7 +109,7 @@ class Documents extends BaseResource
      *
      * @param string $documentId
      *
-     * @return bool|array
+     * @return array
      */
     public function deleteById(string $documentId)
     {
@@ -129,7 +129,7 @@ class Documents extends BaseResource
      * @param string $documentId
      * @param string $folderId
      *
-     * @return bool|array
+     * @return array
      */
     public function moveToFolder(string $documentId, string $folderId)
     {
