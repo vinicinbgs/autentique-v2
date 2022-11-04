@@ -143,4 +143,26 @@ class Documents extends BaseResource
 
         return $this->api->request($this->token, $graphQuery, "json");
     }
+
+    /**
+     * Move document from folder to folder
+     *
+     * @param string $documentId
+     * @param string $folderId
+     * @param string $currentFolderId
+     *
+     * @return bool|array
+     */
+    public function moveToFolderByFolder(string $documentId, string $folderId, string $currentFolderId)
+    {
+        $graphQuery = $this->query->query(__FUNCTION__);
+
+        $graphQuery = $this->query->setVariables(
+            ["documentId", "folderId", "currentFolderId"],
+            [$documentId, $folderId, $currentFolderId],
+            $graphQuery
+        );
+
+        return $this->api->request($this->token, $graphQuery, "json");
+    }
 }

@@ -1,0 +1,7 @@
+"mutation {
+    moveDocumentToFolder(
+        document_id: \"$documentId\",
+        folder_id: \"$folderId\",
+        current_folder_id: \"$currentFolderId\"
+    )
+}"
