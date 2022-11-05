@@ -12,7 +12,7 @@ class Api
     const ERR_CONTENT_TYPE = "This content-type not exist";
     const ERR_EMPTY_QUERY = "Query cannot be empty string";
     const ERR_AUTENTIQUE_URL = "AUTENTIQUE_URL cannot be empty";
-    const ERR_CURL = "curl_exec return false, check the ssl cert or CURLOPT params";
+    const ERR_CURL = "Check your file path";
     const ERR_URL_INVALID = "Invalid url";
 
     private $url;
@@ -22,26 +22,20 @@ class Api
         $this->url = $this->setUrl($url);
     }
 
+    /**
+     * @param string $token
+     * @param string $query
+     * @param string $contentType
+     * @param string|null $pathFile
+     * @return array
+     */
     public function request(
         string $token,
         string $query,
         string $contentType,
         string $pathFile = null
-    ) {
-        if (!in_array($contentType, self::ACCEPT_CONTENTS)) {
-            return self::ERR_CONTENT_TYPE;
-        }
-
-        if (empty($query)) {
-            return self::ERR_EMPTY_QUERY;
-        }
-
-        if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
-            return [
-                "status" => 400,
-                "message" => self::ERR_URL_INVALID,
-            ];
-        }
+    ): array {
+        $this->validateParams($contentType, $query);
 
         $httpHeader = ["Authorization: Bearer {$token}"];
 
@@ -63,7 +57,12 @@ class Api
         return $this->connect($httpHeader, $fields);
     }
 
-    private function connect(array $httpHeader, $fields)
+    /**
+     * @param array $httpHeader
+     * @param string|array $fields
+     * @return array
+     */
+    private function connect(array $httpHeader, $fields): array
     {
         $curl = curl_init();
 
@@ -93,10 +92,7 @@ class Api
         $errorNo = curl_errno($curl);
 
         if ($errorNo || $response == "[]") {
-            $response = [
-                "status" => 400,
-                "message" => self::ERR_CURL,
-            ];
+            throw new Exception(self::ERR_CURL);
         }
 
         curl_close(
@@ -107,7 +103,7 @@ class Api
         return is_array($response) ? $response : json_decode($response, true);
     }
 
-    private function setUrl(string $url)
+    private function setUrl(string $url): string
     {
         if (empty($url)) {
             throw new Exception(self::ERR_AUTENTIQUE_URL, 400);
@@ -116,12 +112,27 @@ class Api
         return $url;
     }
 
-    public function requestJson(): string
+    private function validateParams(string $contentType, string $query): void
+    {
+        if (!in_array($contentType, self::ACCEPT_CONTENTS)) {
+            throw new Exception(self::ERR_CONTENT_TYPE);
+        }
+
+        if (empty($query)) {
+            throw new Exception(self::ERR_EMPTY_QUERY);
+        }
+
+        if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
+            throw new Exception(self::ERR_URL_INVALID);
+        }
+    }
+
+    private function requestJson(): string
     {
         return "Content-Type: application/json";
     }
 
-    public function requestFormData(): string
+    private function requestFormData(): string
     {
         return "Content-Type: multipart/form-data";
     }

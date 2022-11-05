@@ -6,7 +6,14 @@ use vinicinbgs\Autentique\Utils\Query;
 
 class Folders extends BaseResource
 {
+    /**
+     * @var Query
+     */
     private $query;
+
+    /**
+     * @var string
+     */
     private $token;
 
     /**
@@ -26,7 +33,7 @@ class Folders extends BaseResource
      * List all folders
      *
      * @param int $page
-     * @return bool|array
+     * @return array
      */
     public function listAll(int $page = 1)
     {
@@ -42,7 +49,7 @@ class Folders extends BaseResource
      *
      * @param string $folderId
      *
-     * @return bool|array
+     * @return array
      */
     public function listById(string $folderId)
     {
@@ -61,7 +68,7 @@ class Folders extends BaseResource
      *
      * @param string $folderId
      *
-     * @return bool|array
+     * @return array
      */
     public function listContentsById(string $folderId, int $page = 1)
     {
@@ -79,7 +86,7 @@ class Folders extends BaseResource
      * Create folder
      *
      * @param array $variables
-     * @return bool|false|string
+     * @return array
      */
     public function create(array $variables)
     {
@@ -98,7 +105,7 @@ class Folders extends BaseResource
      *
      * @param string $folderId
      *
-     * @return bool|array
+     * @return array
      */
     public function deleteById(string $folderId)
     {

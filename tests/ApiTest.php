@@ -16,16 +16,16 @@ class ApiTest extends _Base
 
     public function testContentTypeNotExist()
     {
-        $response = $this->api->request($this->token(), "", "notExist");
+        $this->expectExceptionMessage(Api::ERR_CONTENT_TYPE);
 
-        $this->assertStringMatchesFormat(Api::ERR_CONTENT_TYPE, $response);
+        $this->api->request($this->token(), "", "notExist");
     }
 
     public function testQueryEmpty()
     {
-        $response = $this->api->request($this->token(), "", "json");
+        $this->expectExceptionMessage(Api::ERR_EMPTY_QUERY);
 
-        $this->assertStringMatchesFormat(Api::ERR_EMPTY_QUERY, $response);
+        $this->api->request($this->token(), "", "json");
     }
 
     public function testAutentiqueUrlException()
@@ -41,22 +41,17 @@ class ApiTest extends _Base
 
     public function testCurlError()
     {
-        $response = $this->api->request($this->token(), "test", "json");
+        $this->expectExceptionMessage(Api::ERR_CURL);
 
-        $this->assertArrayHasKey("status", $response);
-        $this->assertArrayHasKey("message", $response);
-
-        $this->assertEquals(Api::ERR_CURL, $response["message"]);
+        $this->api->request($this->token(), "test", "json");
     }
 
     public function testUrlMalformed()
     {
+        $this->expectExceptionMessage(Api::ERR_URL_INVALID);
+
         $mockApi = new Api("htt");
-        $response = $mockApi->request($this->token(), "query", "json");
 
-        $this->assertArrayHasKey("status", $response);
-        $this->assertArrayHasKey("message", $response);
-
-        $this->assertEquals(Api::ERR_URL_INVALID, $response["message"]);
+        $mockApi->request($this->token(), "query", "json");
     }
 }

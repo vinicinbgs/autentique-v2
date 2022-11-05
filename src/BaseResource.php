@@ -7,10 +7,19 @@ use vinicinbgs\Autentique\Utils\Api;
 
 class BaseResource
 {
+    /**
+     * @var Api
+     */
     protected $api;
 
+    /**
+     * @var string
+     */
     protected $sandbox;
 
+    /**
+     * @var string
+     */
     protected $resourcesEnum;
 
     public function __construct()
