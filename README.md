@@ -34,7 +34,14 @@ AUTENTIQUE_DEV_MODE="true" || "false"
 # if TRUE, document will be created in mode sandbox
 ```
 
-# Instance
+## Summary
+1. [Instance](#instance)
+2. [Documents](#documents)
+3. [Folders](#folders)
+4. [Contributing :cowboy_hat_face:](#contributing)
+
+<h2 id="instance">1. Instance</h2>
+
 **Import library**
 
 ```php
@@ -50,20 +57,21 @@ $folders = new Folders($AUTENTIQUE_TOKEN);
 Why documents/folders receive token?
 - Easily to manage Documents in multiples accounts (token)
 
-# 📝 Documents
-### 1 - List all documents with pagination
+<h2 id="documents">📝 2. Documents</h2>
+
+#### 1 - List all documents with pagination
 
 ```php
 $documentsPaginated = documents->listAll($page); // if not isset $page is equal 1
 ```
 
-### 2 - List the document by id
+#### 2 - List the document by id
 
 ```php
 $document = $documents->listById($documentId);
 ```
 
-### 3 - Create a document
+#### 3 - Create a document
 
 ```php
 $attributes = [
@@ -116,27 +124,46 @@ $attributes = [
 $documentSign = $documents->signById($documentId);
 ```
 
-### 5 - Delete the document by id
+#### 5 - Delete the document by id
 
 ```php
 $documentDeleted = $documents->deleteById($documentId);
 ```
 
-
-# 📁 Folders
-### 1 - List all folders
+#### 6 - Move the document to a folder
 
 ```php
-$foldersPaginated = folders->listAll($page); // if not isset $page is equal 1
+$attributes = [
+    "folder" => [
+                "name" => "folder name",
+            ],
+];
+ 
+$folder = $folders->create($attributes);
+$documentDeleted = $documents->moveToFolder($documentId, $folder["data"]["createFolder"]["id"]);
 ```
 
-### 2 - List the folder by id
+#### 7 - Move the document from current folder to target folder
+
+```php
+$documentDeleted = $documents->moveToFolder($documentId, $targetFolderId, $currentFolderId);
+```
+---
+<h2 id="folders">📁 3. Folders</h2>
+
+#### 1 - List all folders
+
+```php
+$foldersPaginated = $folders->listAll($page); // if not isset $page is equal 1
+```
+
+#### 2 - List the folder by id
 
 ```php
 $folder = $folders->listById($folderId);
 ```
 
-### 3 - Create a folder
+#### 3 - Create a folder
 
 ```php
 $attributes = [
@@ -148,18 +175,19 @@ $attributes = [
 $folder = $folders->create($attributes);
  ```
 
-### 4 - List the folder contents by id
+#### 4 - List the folder contents by id
 
 ```php
 $folderContents = $folders->listContentsById($folderId, $page = 1);
 ```
 
-### 5 - Delete a folder
+#### 5 - Delete a folder
 
 ```php 
 $folderDeleted = $folders->deleteById($folderId);
 ```
-# 🔧 Contributing
+---
+<h2 id="contributing">🔧 Contributing</h2>
 
 ### 💻 Setup
 

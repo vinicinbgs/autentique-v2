@@ -11,7 +11,14 @@ class DocumentsTest extends _Base
 {
     const ERROR_ARRAY_DOESNT_CONTAINS_DATA = 'Array doesn\'t contains "data" as key';
 
+    /**
+     * @var Documents
+     */
     private $documents;
+
+    /**
+     * @var Folders
+     */
     private $folders;
 
     private $autentiqueDocumentCreated;
@@ -192,6 +199,40 @@ class DocumentsTest extends _Base
         $documentId = $this->createDocument()["data"]["createDocument"]["id"];
 
         $response = $this->documents->moveToFolder($documentId, $folderId);
+
+        $this->assertArrayHasKey("moveDocumentToFolder", $response["data"]);
+
+        $this->assertTrue($response["data"]["moveDocumentToFolder"]);
+    }
+
+     /**
+     * @test
+     *
+     * Test move document from folder to another folder
+     * @return void
+     */
+    public function testMoveToFolderByFolder(): void
+    {
+        $firstFolder = $this->folders->create([
+            "folder" => [
+                "name" => "test_1",
+            ],
+        ]);
+
+        $secondFolder = $this->folders->create([
+            "folder" => [
+                "name" => "test_2",
+            ],
+        ]);
+
+        $firstFolderId = $firstFolder["data"]["createFolder"]["id"];
+        $secondFolderId = $secondFolder["data"]["createFolder"]["id"];
+
+        $documentId = $this->createDocument()["data"]["createDocument"]["id"];
+
+        $this->documents->moveToFolder($documentId, $firstFolderId);
+
+        $response = $this->documents->moveToFolderByFolder($documentId, $secondFolderId, $firstFolderId);
 
         $this->assertArrayHasKey("moveDocumentToFolder", $response["data"]);
 

@@ -1,4 +1,5 @@
 {
+  "version": "3.1.1",
   "name": "vinicinbgs/autentique-v2",
   "type": "library",
   "description": "Api Autentique V2",
@@ -9,8 +10,8 @@
     "v2"
   ],
   "scripts": {
-    "test": "vendor/bin/phpunit tests --coverage-text",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage/",
+    "test": "XDEBUG_MODE=coverage vendor/bin/phpunit tests --coverage-text",
+    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage/",
     "load": "composer dumpautoload"
   },
   "homepage": "https://github.com/vinicinbgs/autentique-v2",

@@ -6,7 +6,14 @@ use vinicinbgs\Autentique\Utils\Query;
 
 class Folders extends BaseResource
 {
+    /**
+     * @var Query
+     */
     private $query;
+
+    /**
+     * @var string
+     */
     private $token;
 
     /**
