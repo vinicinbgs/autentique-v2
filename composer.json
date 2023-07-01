@@ -26,10 +26,10 @@
   "require": {
     "php": ">=7.3",
     "ext-curl": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "vlucas/phpdotenv": "^4.1"
   },
   "require-dev": {
-    "vlucas/phpdotenv": "^4.1",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {
