@@ -16,15 +16,6 @@
 composer require vinicinbgs/autentique-v2
 ```
 
-## ⚠️ IMPORTANT
-
-This library depends on **vlucas/phpdotenv** to get environments variables **(.env)** <br>
-If you use a framework like **Laravel**, you don't need to download this library.
-
-```bash
-composer require vlucas/phpdotenv
-```
-
 **Set in file .env**
 
 ```env
