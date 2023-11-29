@@ -24,9 +24,9 @@ class BaseResource
 
     public function __construct()
     {
-        $this->api = new Api(getenv("AUTENTIQUE_URL") ?? "");
+        $this->api = new Api($_ENV["AUTENTIQUE_URL"] ?? "");
 
-        $this->sandbox = getenv("AUTENTIQUE_DEV_MODE") ?? "false";
+        $this->sandbox = $_ENV["AUTENTIQUE_DEV_MODE"] ?? "false";
 
         $this->resourcesEnum = ResourcesEnum::class;
     }
