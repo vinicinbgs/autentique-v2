@@ -11,17 +11,21 @@ class _Base extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
-        $dotenv->load();
+        try{
+            $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
+            $dotenv->load();
+        }catch(\Exception $e){
+            echo $e->getMessage();
+        }
     }
 
     protected function token()
     {
-        return getenv("AUTENTIQUE_TOKEN");
+        return $_ENV["AUTENTIQUE_TOKEN"];
     }
 
     protected function autentiqueUrl()
     {
-        return getenv("AUTENTIQUE_URL");
+        return $_ENV["AUTENTIQUE_URL"];
     }
 }
