@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# PHP Dependencies (composer.json)
+composer install
+
+# Node Dependencies (package.json)
+npm install
+
 # Set .env filename
 echo 'What is the name of the file (press enter to .env)?'
 read filename

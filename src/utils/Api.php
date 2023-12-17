@@ -5,15 +5,16 @@ namespace vinicinbgs\Autentique\Utils;
 use CURLFile;
 use Exception;
 
+use vinicinbgs\Autentique\exceptions\EmptyTokenException;
+use vinicinbgs\Autentique\exceptions\EmptyQueryException;
+use vinicinbgs\Autentique\exceptions\ContentTypeException;
+use vinicinbgs\Autentique\exceptions\EmptyAutentiqueResponseException;
+use vinicinbgs\Autentique\exceptions\EmptyAutentiqueUrlException;
+use vinicinbgs\Autentique\exceptions\InvalidAutentiqueUrlException;
+
 class Api
 {
     const ACCEPT_CONTENTS = ["json", "form"];
-
-    const ERR_CONTENT_TYPE = "This content-type not exist";
-    const ERR_EMPTY_QUERY = "Query cannot be empty string";
-    const ERR_AUTENTIQUE_URL = "AUTENTIQUE_URL cannot be empty";
-    const ERR_CURL = "Check your file path";
-    const ERR_URL_INVALID = "Invalid url";
 
     private $url;
 
@@ -35,6 +36,10 @@ class Api
         string $contentType,
         string $pathFile = null
     ): array {
+        if (empty($token)) {
+            throw new EmptyTokenException();
+        }
+
         $this->validateParams($contentType, $query);
 
         $httpHeader = ["Authorization: Bearer {$token}"];
@@ -60,7 +65,7 @@ class Api
     /**
      * @param array $httpHeader
      * @param string|array $fields
-     * @return array
+     * @return array $response
      */
     private function connect(array $httpHeader, $fields): array
     {
@@ -91,8 +96,12 @@ class Api
 
         $errorNo = curl_errno($curl);
 
-        if ($errorNo || $response == "[]") {
-            throw new Exception(self::ERR_CURL);
+        if ($response == "[]") {
+            throw new EmptyAutentiqueResponseException();
+        }
+
+        if ($errorNo) {
+            throw new Exception(curl_error($curl));
         }
 
         curl_close(
@@ -100,13 +109,13 @@ class Api
             $curl
         );
 
-        return is_array($response) ? $response : json_decode($response, true);
+        return json_decode($response, true);
     }
 
     private function setUrl(string $url): string
     {
         if (empty($url)) {
-            throw new Exception(self::ERR_AUTENTIQUE_URL, 400);
+            throw new EmptyAutentiqueUrlException();
         }
 
         return $url;
@@ -115,15 +124,15 @@ class Api
     private function validateParams(string $contentType, string $query): void
     {
         if (!in_array($contentType, self::ACCEPT_CONTENTS)) {
-            throw new Exception(self::ERR_CONTENT_TYPE);
+            throw new ContentTypeException();
         }
 
         if (empty($query)) {
-            throw new Exception(self::ERR_EMPTY_QUERY);
+            throw new EmptyQueryException();
         }
 
         if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
-            throw new Exception(self::ERR_URL_INVALID);
+            throw new InvalidAutentiqueUrlException();
         }
     }
 

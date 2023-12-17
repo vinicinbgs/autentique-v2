@@ -2,39 +2,43 @@ name: PHP Composer
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+      - name: PHP Version
+        run: php -v
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
 
-    - name: 'Create env file'
-      run: |
-        touch .env
-        echo AUTENTIQUE_TOKEN=${{ secrets.AUTENTIQUE_TOKEN }} >> .env
-        echo AUTENTIQUE_URL=${{ vars.AUTENTIQUE_URL }} >> .env
-        echo AUTENTIQUE_DEV_MODE=${{ vars.AUTENTIQUE_DEV_MODE }} >> .env
+      - name: Validate composer.json and composer.lock
+        run: composer validate
 
-    - name: Run test suite
-      run: composer run-script test
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: "Create env file"
+        run: |
+          touch .env
+          echo AUTENTIQUE_TOKEN=${{ secrets.AUTENTIQUE_TOKEN }} >> .env
+          echo AUTENTIQUE_URL=${{ vars.AUTENTIQUE_URL }} >> .env
+          echo AUTENTIQUE_DEV_MODE=${{ vars.AUTENTIQUE_DEV_MODE }} >> .env
+
+      - name: Run test suite
+        run: composer run-script test

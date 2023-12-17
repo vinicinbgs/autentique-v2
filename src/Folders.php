@@ -12,21 +12,15 @@ class Folders extends BaseResource
     private $query;
 
     /**
-     * @var string
-     */
-    private $token;
-
-    /**
      * Documents constructor.
      *
-     * @param $token
+     * @param string|null $token
      */
     public function __construct(string $token)
     {
-        parent::__construct();
+        parent::__construct($token);
 
         $this->query = new Query($this->resourcesEnum::FOLDERS);
-        $this->token = $token ?? $_ENV["AUTENTIQUE_TOKEN"];
     }
 
     /**
@@ -54,11 +48,7 @@ class Folders extends BaseResource
     public function listById(string $folderId)
     {
         $graphQuery = $this->query->query(__FUNCTION__);
-        $graphQuery = $this->query->setVariables(
-            "folderId",
-            $folderId,
-            $graphQuery
-        );
+        $graphQuery = $this->query->setVariables("folderId", $folderId, $graphQuery);
 
         return $this->api->request($this->token, $graphQuery, "json");
     }
@@ -110,11 +100,7 @@ class Folders extends BaseResource
     public function deleteById(string $folderId)
     {
         $graphQuery = $this->query->query(__FUNCTION__);
-        $graphQuery = $this->query->setVariables(
-            "folderId",
-            $folderId,
-            $graphQuery
-        );
+        $graphQuery = $this->query->setVariables("folderId", $folderId, $graphQuery);
 
         return $this->api->request($this->token, $graphQuery, "json");
     }

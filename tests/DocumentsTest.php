@@ -38,7 +38,7 @@ class DocumentsTest extends _Base
                             "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
                             "y" => "80", // Posição do Eixo Y da ASSINATURA (0 a 100)
                             "z" => "1", // Página da ASSINATURA
-                        ]
+                        ],
                     ],
                 ],
                 [
@@ -49,7 +49,7 @@ class DocumentsTest extends _Base
                             "x" => "50", // Posição do Eixo X da ASSINATURA (0 a 100)
                             "y" => "80", // Posição do Eixo Y da ASSINATURA (0 a 100)
                             "z" => "1", // Página da ASSINATURA
-                        ]
+                        ],
                     ],
                 ],
             ],
@@ -63,9 +63,7 @@ class DocumentsTest extends _Base
             return $this->autentiqueDocumentCreated;
         }
 
-        $this->autentiqueDocumentCreated = $this->documents->create(
-            $this->mockDocument()
-        );
+        $this->autentiqueDocumentCreated = $this->documents->create($this->mockDocument());
 
         return $this->autentiqueDocumentCreated;
     }
@@ -88,11 +86,7 @@ class DocumentsTest extends _Base
 
         $response = $this->documents->listAll(1);
 
-        $this->assertArrayHasKey(
-            "data",
-            $response,
-            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
-        );
+        $this->assertArrayHasKey("data", $response, self::ERROR_ARRAY_DOESNT_CONTAINS_DATA);
     }
 
     /**
@@ -122,15 +116,9 @@ class DocumentsTest extends _Base
     {
         $attributes = $this->createDocument($this->mockDocument());
 
-        $response = $this->documents->listById(
-            $attributes["data"]["createDocument"]["id"]
-        );
+        $response = $this->documents->listById($attributes["data"]["createDocument"]["id"]);
 
-        $this->assertArrayHasKey(
-            "data",
-            $response,
-            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
-        );
+        $this->assertArrayHasKey("data", $response, self::ERROR_ARRAY_DOESNT_CONTAINS_DATA);
     }
 
     /**
@@ -150,10 +138,7 @@ class DocumentsTest extends _Base
             $response["data"],
             self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
         );
-        $this->assertTrue(
-            $response["data"]["signDocument"],
-            "Expected true but return false"
-        );
+        $this->assertTrue($response["data"]["signDocument"], "Expected true but return false");
     }
 
     /**
@@ -174,10 +159,7 @@ class DocumentsTest extends _Base
             self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
         );
 
-        $this->assertTrue(
-            $response["data"]["deleteDocument"],
-            "Expected true but return false"
-        );
+        $this->assertTrue($response["data"]["deleteDocument"], "Expected true but return false");
     }
 
     /**
@@ -205,7 +187,7 @@ class DocumentsTest extends _Base
         $this->assertTrue($response["data"]["moveDocumentToFolder"]);
     }
 
-     /**
+    /**
      * @test
      *
      * Test move document from folder to another folder
@@ -232,7 +214,11 @@ class DocumentsTest extends _Base
 
         $this->documents->moveToFolder($documentId, $firstFolderId);
 
-        $response = $this->documents->moveToFolderByFolder($documentId, $secondFolderId, $firstFolderId);
+        $response = $this->documents->moveToFolderByFolder(
+            $documentId,
+            $secondFolderId,
+            $firstFolderId
+        );
 
         $this->assertArrayHasKey("moveDocumentToFolder", $response["data"]);
 

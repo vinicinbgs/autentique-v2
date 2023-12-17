@@ -11,10 +11,16 @@ class QueryTest extends _Base
 {
     public function testFileIsNotFound()
     {
+        // Arrange
+        $fileName = "file-not-found";
         $query = new Query(ResourcesEnum::DOCUMENTS);
 
-        $resolve = $query->query("");
+        // Assert
+        $this->expectException(\Exception::class);
+        $this->expectExceptionCode(404);
+        $this->expectExceptionMessage("File '$fileName' is not found");
 
-        $this->assertStringMatchesFormat("File is not found", $resolve);
+        // Act
+        $query->query($fileName);
     }
 }

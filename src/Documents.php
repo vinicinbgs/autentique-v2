@@ -12,21 +12,15 @@ class Documents extends BaseResource
     private $query;
 
     /**
-     * @var string
-     */
-    private $token;
-
-    /**
      * Documents constructor.
      *
-     * @param $token
+     * @param string|null $token
      */
     public function __construct(string $token = null)
     {
-        parent::__construct();
+        parent::__construct($token);
 
         $this->query = new Query($this->resourcesEnum::DOCUMENTS);
-        $this->token = $token ?? $_ENV["AUTENTIQUE_TOKEN"];
     }
 
     /**
@@ -54,18 +48,15 @@ class Documents extends BaseResource
     public function listById(string $documentId)
     {
         $graphQuery = $this->query->query(__FUNCTION__);
-        $graphQuery = $this->query->setVariables(
-            "documentId",
-            $documentId,
-            $graphQuery
-        );
+        $graphQuery = $this->query->setVariables("documentId", $documentId, $graphQuery);
 
         return $this->api->request($this->token, $graphQuery, "json");
     }
 
     /**
      * Create Document
-     *
+     * @link https://beadev.net/autentique-v2/documents#3---create-a-document
+     * @link https://docs.autentique.com.br/api/mutations/criando-um-documento
      * @param array $attributes
      * @return array
      */
@@ -84,12 +75,7 @@ class Documents extends BaseResource
             $graphMutation
         );
 
-        return $this->api->request(
-            $this->token,
-            $graphMutation,
-            "form",
-            $attributes["file"]
-        );
+        return $this->api->request($this->token, $graphMutation, "form", $attributes["file"]);
     }
 
     /**
@@ -102,11 +88,7 @@ class Documents extends BaseResource
     public function signById(string $documentId)
     {
         $graphQuery = $this->query->query(__FUNCTION__);
-        $graphQuery = $this->query->setVariables(
-            "documentId",
-            $documentId,
-            $graphQuery
-        );
+        $graphQuery = $this->query->setVariables("documentId", $documentId, $graphQuery);
 
         return $this->api->request($this->token, $graphQuery, "json");
     }
@@ -121,11 +103,7 @@ class Documents extends BaseResource
     public function deleteById(string $documentId)
     {
         $graphQuery = $this->query->query(__FUNCTION__);
-        $graphQuery = $this->query->setVariables(
-            "documentId",
-            $documentId,
-            $graphQuery
-        );
+        $graphQuery = $this->query->setVariables("documentId", $documentId, $graphQuery);
 
         return $this->api->request($this->token, $graphQuery, "json");
     }
@@ -160,8 +138,11 @@ class Documents extends BaseResource
      *
      * @return bool|array
      */
-    public function moveToFolderByFolder(string $documentId, string $folderId, string $currentFolderId)
-    {
+    public function moveToFolderByFolder(
+        string $documentId,
+        string $folderId,
+        string $currentFolderId
+    ) {
         $graphQuery = $this->query->query(__FUNCTION__);
 
         $graphQuery = $this->query->setVariables(

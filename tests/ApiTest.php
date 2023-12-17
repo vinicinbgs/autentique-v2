@@ -4,9 +4,14 @@ namespace vinicinbgs\Autentique\tests;
 
 use vinicinbgs\Autentique\tests\_Base;
 use vinicinbgs\Autentique\Utils\Api;
+use vinicinbgs\Autentique\Enums\ErrorMessagesEnum;
+use vinicinbgs\Autentique\exceptions\ContentTypeException;
 
 class ApiTest extends _Base
 {
+    /**
+     * @var Api
+     */
     private $api;
 
     public function setUp(): void
@@ -16,16 +21,23 @@ class ApiTest extends _Base
 
     public function testContentTypeNotExist()
     {
-        $this->expectExceptionMessage(Api::ERR_CONTENT_TYPE);
+        $this->expectException(ContentTypeException::class);
 
         $this->api->request($this->token(), "", "notExist");
     }
 
     public function testQueryEmpty()
     {
-        $this->expectExceptionMessage(Api::ERR_EMPTY_QUERY);
+        $this->expectExceptionMessage(ErrorMessagesEnum::ERR_EMPTY_QUERY);
 
         $this->api->request($this->token(), "", "json");
+    }
+
+    public function testTokenEmpty()
+    {
+        $this->expectExceptionMessage(ErrorMessagesEnum::ERR_TOKEN_EMPTY);
+
+        $this->api->request("", "", "json");
     }
 
     public function testAutentiqueUrlException()
@@ -34,21 +46,28 @@ class ApiTest extends _Base
             return new Api("");
         };
 
-        $this->expectExceptionMessage(Api::ERR_AUTENTIQUE_URL);
+        $this->expectExceptionMessage(ErrorMessagesEnum::ERR_AUTENTIQUE_URL);
 
         $factory();
     }
 
-    public function testCurlError()
+    public function testAutentiqueEmptyResponse()
     {
-        $this->expectExceptionMessage(Api::ERR_CURL);
+        $this->expectExceptionMessage(ErrorMessagesEnum::ERR_AUTENTIQUE_RESPONSE);
 
-        $this->api->request($this->token(), "test", "json");
+        $this->api->request($this->token(), "teste", "json");
+    }
+
+    public function testAutentiqueValidationError()
+    {
+        $sut = $this->api->request($this->token(), "[]", "json");
+
+        $this->assertArrayHasKey("errors", $sut);
     }
 
     public function testUrlMalformed()
     {
-        $this->expectExceptionMessage(Api::ERR_URL_INVALID);
+        $this->expectExceptionMessage(ErrorMessagesEnum::ERR_URL_INVALID);
 
         $mockApi = new Api("htt");
 

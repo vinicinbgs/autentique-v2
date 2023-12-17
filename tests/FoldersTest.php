@@ -40,37 +40,37 @@ class FoldersTest extends _Base
         $response = $this->createFolder();
 
         $this->assertArrayHasKey("createFolder", $response["data"]);
+
+        $this->folders->deleteById($response["data"]["createFolder"]["id"]);
     }
 
     public function testListById(): void
     {
         $folder = $this->createFolder();
 
-        $response = $this->folders->listById(
-            $folder["data"]["createFolder"]["id"]
-        );
+        $response = $this->folders->listById($folder["data"]["createFolder"]["id"]);
 
         $this->assertArrayHasKey("data", $response);
+
+        $this->folders->deleteById($folder["data"]["createFolder"]["id"]);
     }
 
     public function testContentsById(): void
     {
         $folder = $this->createFolder();
 
-        $response = $this->folders->listContentsById(
-            $folder["data"]["createFolder"]["id"]
-        );
+        $response = $this->folders->listContentsById($folder["data"]["createFolder"]["id"]);
 
         $this->assertArrayHasKey("data", $response);
+
+        $this->folders->deleteById($folder["data"]["createFolder"]["id"]);
     }
 
     public function testDeleteById(): void
     {
         $folder = $this->createFolder();
 
-        $response = $this->folders->deleteById(
-            $folder["data"]["createFolder"]["id"]
-        );
+        $response = $this->folders->deleteById($folder["data"]["createFolder"]["id"]);
 
         $this->assertArrayHasKey("data", $response);
     }

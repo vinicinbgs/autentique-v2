@@ -2,6 +2,8 @@
 
 namespace vinicinbgs\Autentique\Utils;
 
+use Exception;
+
 class Query
 {
     const DIR = "queries/";
@@ -28,7 +30,7 @@ class Query
     public function query(string $file)
     {
         if (!file_exists("$this->resource/$file") || empty($file)) {
-            return "File is not found";
+            throw new Exception("File '$file' is not found", 404);
         }
 
         $query = file_get_contents("$this->resource/$file");
