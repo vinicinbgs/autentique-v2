@@ -7,7 +7,8 @@ filename: documents
 ```php
 use vinicinbgs\Autentique\Documents;
 
-$AUTENTIQUE_TOKEN="xxxxxxxx" (set or will be take in .env)
+# Set token as variable or in .env
+$AUTENTIQUE_TOKEN="xxxxxxxx"
 
 $documents = new Documents($AUTENTIQUE_TOKEN);
 ```
