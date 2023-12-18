@@ -15,33 +15,32 @@ filename: index
 
 # 🚀 Usage
 
-## This package is so simple to use that will save your time.
+This package is so simple to use that will save your time!
 
 ```bash
 phpcomposer require vinicinbgs/autentique-v2
 ```
 
-## ⚠️ IMPORTANT
+### 1) Set `.env`
 
-This library depends on **vlucas/phpdotenv** to get environments variables **(.env)** <br>
-If you use a framework like **Laravel**, you don't need to download this library.
-
-```bash
-composer require vlucas/phpdotenv
-```
-
-**Set in file .env**
-
-```env
-AUTENTIQUE_URL=https://api.autentique.com.br/v2/graphql
+```sh
+AUTENTIQUE_URL="https://api.autentique.com.br/v2/graphql"
 AUTENTIQUE_TOKEN="YOUR_TOKEN"
-AUTENTIQUE_DEV_MODE="true" || "false"
-# if TRUE, document will be created in mode sandbox
+AUTENTIQUE_DEV_MODE="true" # set "true" for SANDBOX MODE or "false" to PRODUCTION MODE
 ```
+
+### 2) API's
+
+- [Documents](/documents)
+  - [Create](/documents#1-List-all-documents-with-pagination)
+- [Folders](/folders)
+
+
+---
 
 # 🔧 Contributing
 
-### 💻 Setup
+### 1) Setup
 
 ```sh
 git clone git@github.com:vinicinbgs/autentique-v2.git
@@ -50,17 +49,16 @@ composer install
 npm install
 ```
 
-### ⚙️ Configure
-
-#### Create .env with variables
+### 2) Configure
 
 ```sh
 ./contribute.sh
 ```
 
-#### Configure prettier php in vscode
+### 3) Configure prettier php in vscode
 
-(CTRL + P) > Preferences: Open Setting (JSON)
+1. `(CTRL + P)` 
+2. `> Preferences: Open Setting (JSON)`
 
 ```json
  "emeraldwalk.runonsave": {
