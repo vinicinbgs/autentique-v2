@@ -13,7 +13,7 @@ filename: index
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/vinicinbgs/autentique-v2/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 [![License](https://poser.pugx.org/vinicinbgs/autentique-v2/license)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 
-# 🚀 Usage
+# Getting Started
 
 This package is so simple to use that will save your time!
 
@@ -21,7 +21,7 @@ This package is so simple to use that will save your time!
 phpcomposer require vinicinbgs/autentique-v2
 ```
 
-### 1) Set `.env`
+### 1) Set `.env` file
 
 ```sh
 AUTENTIQUE_URL="https://api.autentique.com.br/v2/graphql"
@@ -32,7 +32,7 @@ AUTENTIQUE_DEV_MODE="true" # set "true" for SANDBOX MODE or "false" to PRODUCTIO
 ### 2) API's
 
 - [1) Documents](./documents)
-  - [List pagination](./documents#1---cist-all-documents-with-pagination)
+  - [List pagination](./documents#1---list-all-documents-with-pagination)
   - [List by id](./documents#2---list-the-document-by-id)
   - [Create](./documents#3---create-a-document)
   - [Sign](./documents#4---sign-a-document)
@@ -48,24 +48,22 @@ AUTENTIQUE_DEV_MODE="true" # set "true" for SANDBOX MODE or "false" to PRODUCTIO
 
 ---
 
-# 🔧 Contributing
+# Contribute
 
 ### 1) Setup
 
 ```sh
 git clone git@github.com:vinicinbgs/autentique-v2.git
-cd autentique-v2
-composer install
-npm install
 ```
 
 ### 2) Configure
 
 ```sh
-./contribute.sh
+cd autentique-v2
+sh ./contribute.sh
 ```
 
-### 3) Configure prettier php in vscode
+### 3) Configure prettier php in vscode (optional)
 
 1. `(CTRL + P)` 
 2. `> Preferences: Open Setting (JSON)`
