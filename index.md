@@ -31,9 +31,19 @@ AUTENTIQUE_DEV_MODE="true" # set "true" for SANDBOX MODE or "false" to PRODUCTIO
 
 ### 2) API's
 
-- [Documents](/documents)
-  - [Create](/documents#1-List-all-documents-with-pagination)
-- [Folders](/folders)
+- [1) Documents](./documents)
+  - [List pagination](./documents#1-List-all-documents-with-pagination)
+  - [List by id](./documents#2-List-the-document-by-id)
+  - [Create](./documents#3-Create-a-document)
+  - [Sign](./documents#4-Sign-a-document)
+  - [Delete](./documents#5-Delete-the-document-by-id)
+  
+- [2) Folders](./folders)
+  - [List pagination](./folders#1-List-all-folders)
+  - [List by id](./folders#2-List-the-folder-by-id)
+  - [Create](./folders#3-Create-a-folder)
+  - [List contents](./folders#4-List-the-folder-contents-by-id)
+  - [Delete](./folders#5-Delete-a-folder)
 
 
 ---
