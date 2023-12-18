@@ -32,18 +32,18 @@ AUTENTIQUE_DEV_MODE="true" # set "true" for SANDBOX MODE or "false" to PRODUCTIO
 ### 2) API's
 
 - [1) Documents](./documents)
-  - [List pagination](./documents#1---List-all-documents-with-pagination)
-  - [List by id](./documents#2---List-the-document-by-id)
-  - [Create](./documents#3---Create-a-document)
-  - [Sign](./documents#4---Sign-a-document)
-  - [Delete](./documents#5---Delete-the-document-by-id)
+  - [List pagination](./documents#1---cist-all-documents-with-pagination)
+  - [List by id](./documents#2---list-the-document-by-id)
+  - [Create](./documents#3---create-a-document)
+  - [Sign](./documents#4---sign-a-document)
+  - [Delete](./documents#5---delete-the-document-by-id)
   
 - [2) Folders](./folders)
-  - [List pagination](./folders#1---List-all-folders)
-  - [List by id](./folders#2---List-the-folder-by-id)
-  - [Create](./folders#3---Create-a-folder)
-  - [List contents](./folders#4---List-the-folder-contents-by-id)
-  - [Delete](./folders#5---Delete-a-folder)
+  - [List pagination](./folders#1---list-all-folders)
+  - [List by id](./folders#2---list-the-folder-by-id)
+  - [Create](./folders#3---create-a-folder)
+  - [List contents](./folders#4---list-the-folder-contents-by-id)
+  - [Delete](./folders#5---delete-a-folder)
 
 
 ---
