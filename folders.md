@@ -3,18 +3,17 @@ title: Folders
 layout: index
 filename: folders
 --- 
-# Import and Instance
+### Import and Instance
 ```php
-use vinicinbgs\Autentique\Documents;
+use vinicinbgs\Autentique\Folders;
 
-$AUTENTIQUE_TOKEN="xxxxxxxx" (set or will be take in .env)
+$documents = new Folders(); // AUTENTIQUE_TOKEN in .env
 
-$folders = new Folders($AUTENTIQUE_TOKEN);
+// or
+
+$token = "YOUR_ALTERNATIVE_TOKEN";
+$documents = new Folders($token); // Alternative token
 ```
-
-Why documents/folders receive token?
-- Easily to manage Documents in multiples accounts (token)
-
 
 # 📁 Folders
 ### 1 - List all folders
@@ -29,13 +28,15 @@ $foldersPaginated = folders->listAll($page); // if not isset $page is equal 1
 $folder = $folders->listById($folderId);
 ```
 
+---
+
 ### 3 - Create a folder
 
 ```php
 $attributes = [
     "folder" => [
-                "name" => "folder name",
-            ],
+        "name" => "folder name",
+    ],
 ];
  
 $folder = $folders->create($attributes);
@@ -46,6 +47,8 @@ $folder = $folders->create($attributes);
 ```php
 $folderContents = $folders->listContentsById($folderId, $page = 1);
 ```
+
+---
 
 ### 5 - Delete a folder
 
