@@ -10,7 +10,7 @@ class BaseResource
     /**
      * @var Api
      */
-            protected $api;
+    protected $api;
 
     /**
      * @var string

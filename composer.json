@@ -1,43 +1,43 @@
 {
-  "name": "vinicinbgs/autentique-v2",
-  "type": "library",
-  "description": "Api Autentique V2",
-  "minimum-stability": "dev",
-  "keywords": [
-    "api",
-    "autentique",
-    "v2"
-  ],
-  "scripts": {
-    "test": "XDEBUG_MODE=coverage vendor/bin/phpunit tests --coverage-text",
-    "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage/",
-    "load": "composer dumpautoload"
-  },
-  "homepage": "https://github.com/vinicinbgs/autentique-v2",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Vinicius Morais Dutra",
-      "email": "dutra_morais@hotmail.com",
-      "role": "Developer"
-    }
-  ],
-  "require": {
-    "php": ">=7.3",
-    "ext-curl": "*",
-    "ext-json": "*"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^9.5",
-    "vlucas/phpdotenv": "^4.1"
-  },
-  "autoload": {
-    "classmap": [
-      "src",
-      "tests"
+    "name": "vinicinbgs/autentique-v2",
+    "type": "library",
+    "description": "Api Autentique V2",
+    "minimum-stability": "dev",
+    "keywords": [
+        "api",
+        "autentique",
+        "v2"
     ],
-    "psr-4": {
-      "vinicinbgs\\Autentique\\": "src/"
+    "scripts": {
+        "test": "XDEBUG_MODE=coverage vendor/bin/phpunit tests --coverage-text",
+        "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage/",
+        "load": "composer dumpautoload"
+    },
+    "homepage": "https://github.com/vinicinbgs/autentique-v2",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vinicius Morais Dutra",
+            "email": "dutra_morais@hotmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "vlucas/phpdotenv": "^5.4.1"
+    },
+    "autoload": {
+        "classmap": [
+            "src",
+            "tests"
+        ],
+        "psr-4": {
+            "vinicinbgs\\Autentique\\": "src/"
+        }
     }
-  }
 }

@@ -1,7 +1,12 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+files=$(git diff --name-only --cached)
+
 npm run prettier -- ./src --write
 npm run prettier -- ./tests --write
 
-composer test
+if [ ! -z $(echo "$files" | grep -E '\.(php)$') ]; then
+    git add $(echo "$files" | grep -E '\.(php)$')
+    composer test
+fi
