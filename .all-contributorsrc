@@ -1,0 +1,28 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "vinicinbgs",
+      "name": "Vinicius Morais Dutra",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16025055?v=4",
+      "profile": "http://beadev.net",
+      "contributions": [
+        "infra",
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "autentique-v2",
+  "projectOwner": "vinicinbgs"
+}
