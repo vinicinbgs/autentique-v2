@@ -18,7 +18,7 @@ filename: index
 This package is so simple to use that will save your time!
 
 ```bash
-phpcomposer require vinicinbgs/autentique-v2
+composer require vinicinbgs/autentique-v2
 ```
 
 ### 1) Set `.env` file
