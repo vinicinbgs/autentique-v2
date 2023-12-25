@@ -1,11 +1,5 @@
 #!/bin/sh
 
-# PHP Dependencies (composer.json)
-composer install
-
-# Node Dependencies (package.json)
-npm install
-
 # Set .env filename
 echo 'What is the name of the file (press enter to .env)?'
 read filename
@@ -29,6 +23,16 @@ AUTENTIQUE_DEV_MODE=\"true\"" >> $filename
 
 cp phpunit.xml.dist phpunit.xml
 
+# Node Dependencies (package.json)
+npm install
+
+# PHP Dependencies (composer.json)
 composer install
+
+# Ruby Dependencies (Gemfile)
+bundle install
+
+# PHP Documentor
+curl https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.4.3/phpDocumentor.phar -o phpDocumentor.phar
 
 echo '✅ Done'

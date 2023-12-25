@@ -3,10 +3,17 @@
 namespace vinicinbgs\Autentique;
 
 use vinicinbgs\Autentique\Utils\Query;
+use vinicinbgs\Autentique\BaseResource;
 
+/**
+ * Class Documents
+ * @package vinicinbgs\Autentique
+ * @see https://beadev.net/autentique-v2/documents
+ */
 class Documents extends BaseResource
 {
     /**
+     * GraphQL Query
      * @var Query
      */
     private $query;
@@ -14,7 +21,7 @@ class Documents extends BaseResource
     /**
      * Documents constructor.
      *
-     * @param string|null $token
+     * @param string|null $token Autentique API Token
      */
     public function __construct(string $token = null)
     {
@@ -25,11 +32,11 @@ class Documents extends BaseResource
 
     /**
      * List all documents
-     *
-     * @param  int  $page
+     * @api
+     * @param  int  $page Page number (starts at 1)
      * @return array
      */
-    public function listAll(int $page = 1)
+    public function listAll(int $page = 1): array
     {
         $graphQuery = $this->query->query(__FUNCTION__);
 
@@ -40,12 +47,12 @@ class Documents extends BaseResource
 
     /**
      * List document by id
-     *
-     * @param string $documentId
-     *
+     * @api
+     * @see https://docs.autentique.com.br/api/queries/resgatando-documentos#resgatando-um-documento-especifico
+     * @param string $documentId Document UUID
      * @return array
      */
-    public function listById(string $documentId)
+    public function listById(string $documentId): array
     {
         $graphQuery = $this->query->query(__FUNCTION__);
         $graphQuery = $this->query->setVariables("documentId", $documentId, $graphQuery);
@@ -55,12 +62,12 @@ class Documents extends BaseResource
 
     /**
      * Create Document
-     * @link https://beadev.net/autentique-v2/documents#3---create-a-document
-     * @link https://docs.autentique.com.br/api/mutations/criando-um-documento
-     * @param array $attributes
+     * @api
+     * @see https://docs.autentique.com.br/api/mutations/criando-um-documento
+     * @param array $attributes ["document", "signers", "file", "organization_id"]
      * @return array
      */
-    public function create(array $attributes)
+    public function create(array $attributes): array
     {
         $variables = [
             "document" => $attributes["document"],
@@ -68,7 +75,14 @@ class Documents extends BaseResource
             "file" => null,
         ];
 
-        $graphMutation = $this->query->query(__FUNCTION__);
+        $queryFile = __FUNCTION__;
+
+        if (isset($attributes["organization_id"]) && !empty($attributes["organization_id"])) {
+            $variables["organization_id"] = $attributes["organization_id"];
+            $queryFile = __FUNCTION__ . "WithOrganization";
+        }
+
+        $graphMutation = $this->query->query($queryFile);
         $graphMutation = $this->query->setVariables(
             ["variables", "sandbox"],
             [json_encode($variables), $this->sandbox],
@@ -79,13 +93,38 @@ class Documents extends BaseResource
     }
 
     /**
-     * Sign document by id
-     *
-     * @param string $documentId
-     *
+     * Update Document
+     * @api
+     * @see https://docs.autentique.com.br/api/mutations/editando-um-documento Attributes
+     * @param string $id        Document UUID
+     * @param array $attributes ["document"]
      * @return array
      */
-    public function signById(string $documentId)
+    public function update(string $id, array $attributes): array
+    {
+        $variables = [
+            "id" => $id,
+            "document" => $attributes["document"],
+        ];
+
+        $graphMutation = $this->query->query(__FUNCTION__);
+        $graphMutation = $this->query->setVariables(
+            ["variables", "sandbox"],
+            [json_encode($variables), $this->sandbox],
+            $graphMutation
+        );
+
+        return $this->api->request($this->token, $graphMutation, "json");
+    }
+
+    /**
+     * Sign document by id
+     * @api
+     * @see https://docs.autentique.com.br/api/mutations/assinando-um-documento
+     * @param string $documentId Document UUID
+     * @return array
+     */
+    public function signById(string $documentId): array
     {
         $graphQuery = $this->query->query(__FUNCTION__);
         $graphQuery = $this->query->setVariables("documentId", $documentId, $graphQuery);
@@ -95,9 +134,8 @@ class Documents extends BaseResource
 
     /**
      * Delete document by id
-     *
-     * @param string $documentId
-     *
+     * @api
+     * @param string $documentId Document UUID
      * @return array
      */
     public function deleteById(string $documentId)
@@ -110,13 +148,13 @@ class Documents extends BaseResource
 
     /**
      * Move document to folder
-     *
-     * @param string $documentId
-     * @param string $folderId
-     *
+     * @api
+     * @see https://docs.autentique.com.br/api/mutations/movendo-documento-para-pasta
+     * @param string $documentId Document UUID
+     * @param string $folderId Folder UUID
      * @return array
      */
-    public function moveToFolder(string $documentId, string $folderId)
+    public function moveToFolder(string $documentId, string $folderId): array
     {
         $graphQuery = $this->query->query(__FUNCTION__);
 
@@ -131,18 +169,18 @@ class Documents extends BaseResource
 
     /**
      * Move document from folder to folder
-     *
-     * @param string $documentId
-     * @param string $folderId
-     * @param string $currentFolderId
-     *
-     * @return bool|array
+     * @api
+     * @see https://docs.autentique.com.br/api/mutations/movendo-documento-para-pasta
+     * @param string $documentId Document UUID
+     * @param string $folderId Folder UUID
+     * @param string $currentFolderId Current Folder UUID
+     * @return array
      */
     public function moveToFolderByFolder(
         string $documentId,
         string $folderId,
         string $currentFolderId
-    ) {
+    ): array {
         $graphQuery = $this->query->query(__FUNCTION__);
 
         $graphQuery = $this->query->setVariables(

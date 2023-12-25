@@ -24,7 +24,9 @@ composer require vinicinbgs/autentique-v2
 
 # Tests
 The tests are _**integrated directly with Autentique API**_, so you need to set your `.env` file based on `.env.example` Make sure you have set the `AUTENTIQUE_TOKEN`, `AUTENTIQUE_URL` and `AUTENTIQUE_DEV_MODE` to `true` for `SANDBOX MODE` or `false` to `PRODUCTION MODE`.
+
 ```bash
 composer test
+composer test -- --filter ApiTest
 ```
 

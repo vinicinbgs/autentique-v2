@@ -10,8 +10,10 @@
     ],
     "scripts": {
         "test": "XDEBUG_MODE=coverage vendor/bin/phpunit tests --coverage-text",
+        "test-filter": "XDEBUG_CONFIG=\"idekey=VSCODE\" vendor/bin/phpunit --filter",
         "test-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage/",
-        "load": "composer dumpautoload"
+        "load": "composer dumpautoload",
+        "phpdoc": "php phpDocumentor.phar run -d ./src -t phpdoc --setting=graphs.enabled=true"
     },
     "homepage": "https://github.com/vinicinbgs/autentique-v2",
     "license": "MIT",
@@ -29,7 +31,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "vlucas/phpdotenv": "^5.4.1"
+        "vlucas/phpdotenv": "^5.4.1",
+        "mockery/mockery": "2.0.x-dev"
     },
     "autoload": {
         "classmap": [

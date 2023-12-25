@@ -8,22 +8,26 @@ use vinicinbgs\Autentique\Utils\Api;
 class BaseResource
 {
     /**
+     * Autentique API
      * @var Api
      */
     protected $api;
 
     /**
+     * Autentique API Token
      * @var string
      */
     protected $token;
 
     /**
-     * @var string
+     * Autentique Sandbox Mode
+     * @var "true"|"false"
      */
     protected $sandbox;
 
     /**
-     * @var string
+     * Autentique Resources Enum
+     * @var ResourcesEnum
      */
     protected $resourcesEnum;
 
