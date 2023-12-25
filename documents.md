@@ -2,12 +2,15 @@
 title: Documents
 layout: index
 filename: documents
---- 
-# 📝 Documents
+---
 
-> To use `SANDBOX Documents` is necessary set the environment variable `AUTENTIQUE_SANDBOX=true` in `.env` file.
+# 📄 Documents
+
+> To use SANDBOX Documents is necessary set the environment variable 
+> `AUTENTIQUE_SANDBOX=true` in `.env` file.
 
 ### Import and Instance
+
 ```php
 use vinicinbgs\Autentique\Documents;
 
@@ -19,13 +22,10 @@ $token = "YOUR_ALTERNATIVE_TOKEN";
 $documents = new Documents($token); // Alternative token
 ```
 
-> **Why documents/folders receive token?**  
-> Easily to manage Documents in multiples autentique accounts (tokens) in same project.
-
 ### 1 - List all documents with pagination
 
 ```php
-$documentsPaginated = documents->listAll($page); 
+$documentsPaginated = $documents->listAll($page);
 // if not isset $page is equal 1
 ```
 
@@ -35,110 +35,112 @@ $documentsPaginated = documents->listAll($page);
 $document = $documents->listById($documentId);
 ```
 
----
-
 ### 3 - Create a document
+
 Fields required/optional
-```php
-    $attributes = [
-         'document' => [ // Document (required)
-             'name' => '(string)',
-         ],
-         'signers' => [
-             [ // Signer 1 (required)
-                 'email' => '(string)',
-                 'action' => 'SIGN',
-                 'positions' => [
-                     [
-                         'x' => '(string)', // Position of Axios X of Signature (0 a 100)
-                         'y' => '(string)', // Position of Axios Y of Signature (0 a 100)
-                         'z' => '(string)', // Page of Signature
-                     ],
-                     [
-                         'x' => '(string)',  // Position of Axios X of Signature (0 a 100)
-                         'y' => '(string)',  // Position of Axios X of Signature (0 a 100)
-                         'z' => '(string)',  // Page of Signature
-                     ],
-                 ],
-             ],
-             [ // Other Signer (optional)
-                 'email' => '(string)',
-                 'action' => 'SIGN',
-                 'positions' => [
-                     [
-                         'x' => '(string)', // Position of Axios X of Signature (0 a 100)
-                         'y' => '(string)', // Position of Axios Y of Signature (0 a 100)
-                         'z' => '(string)', // Page of Signature
-                     ],
-                     [
-                         'x' => '(string)',  // Position of Axios X of Signature (0 a 100)
-                         'y' => '(string)',  // Position of Axios X of Signature (0 a 100)
-                         'z' => '(string)', // Page of Signature
-                     ],
-                 ],
-             ],
-         ],
-         'file' => '(string)' // Path of file (required),
-     ];
-```
 
-
-**Usage:**
 ```php
 $attributes = [
-         'document' => [
-             'name' => 'Rent Contract',
-         ],
-         'signers' => [
-             [
-                 'email' => 'landlord@email.com',
-                 'action' => 'SIGN',
-                 'positions' => [
-                     [
-                         'x' => '50',
-                         'y' => '80',
-                         'z' => '1',
-                     ],
-                     [
-                         'x' => '50',
-                         'y' => '50',
-                         'z' => '2',
-                     ],
-                 ],
-             ],
-             [
-                 'email' => 'tentant@email.com',
-                 'action' => 'SIGN',
-                 'positions' => [
-                     [
-                         'x' => '50',
-                         'y' => '80',
-                         'z' => '1',
-                     ],
-                     [
-                         'x' => '50',
-                         'y' => '50',
-                         'z' => '2',
-                     ],
-                 ],
-             ],
-         ],
-         'file' => './dummy.pdf',
-     ];
- 
+    "organization_id" => "1000", // (optional, remove the field if you not using)
+    "document" => [
+        // Document (required)
+        "name" => "(string)",
+    ],
+    "signers" => [
+        [
+            // Signer 1 (required)
+            "email" => "(string)",
+            "action" => "SIGN",
+            "positions" => [
+                [
+                    "x" => "50", // Position of Axios X of Signature (0 a 100)
+                    "y" => "85", // Position of Axios Y of Signature (0 a 100)
+                    "z" => "1", // Page of Signature
+                ],
+                [
+                    "x" => "50", // Position of Axios X of Signature (0 a 100)
+                    "y" => "85", // Position of Axios X of Signature (0 a 100)
+                    "z" => "2", // Page of Signature
+                ],
+            ],
+        ],
+        [
+            // Other Signer (optional)
+            "email" => "(string)",
+            "action" => "SIGN",
+            "positions" => [
+                [
+                    "x" => "50", // Position of Axios X of Signature (0 a 100)
+                    "y" => "80", // Position of Axios Y of Signature (0 a 100)
+                    "z" => "1", // Page of Signature
+                ],
+                [
+                    "x" => "50", // Position of Axios X of Signature (0 a 100)
+                    "y" => "80", // Position of Axios X of Signature (0 a 100)
+                    "z" => "2", // Page of Signature
+                ],
+            ],
+        ],
+    ],
+    "file" => "./dummy.pdf", // Path of file (required),
+];
+
 $documentCreated = $documents->create($attributes);
 ```
 
-### 4 - Sign the document by id
+### 4 - Update document
+
+```php
+$attributes = [
+    "document" => [
+      "name" => "NOME_DOCUMENTO",
+      "message" => "Mensagem customizada enviada para os emails dos signatários",
+      "reminder" => "WEEKLY",
+      "sortable" => true,
+      "footer" => "BOTTOM",
+      "refusable" => true,
+      "new_signature_style" => true,
+      "show_audit_page" => false,
+      "ignore_cpf" => true,
+      "email_template_id" => 1234,
+      "deadline_at" => "2023-11-24T02:59:59.999Z",
+      "cc" => [
+        [ "email" => "email-cc-1@tuamaeaquelaursa.com" ],
+        [ "email" => "email-cc-2@tuamaeaquelaursa.com" ]
+      ],
+      "expiration" => {
+        "days_before" => 7,
+        "notify_at" => "20/01/2026"
+    }
+]
+
+$documentUpdated = $document->update($documentId, $attributes);
+```
+
+### 5 - Sign the document by id
 
 ```php
 $documentSign = $documents->signById($documentId);
 ```
 
----
-
-### 5 - Delete the document by id
+### 6 - Delete the document by id
 
 ```php
 $documentDeleted = $documents->deleteById($documentId);
+```
+
+### 7 - Move document to folder
+
+Move a document to inside folder
+
+```php
+$documents->moveToFolder($documentId, $folderId);
+```
+
+### 8 - Move document between folders
+
+Move a document between folders
+
+```php
+$documents->moveToFolderByFolder($documentId, $targetFolderId, $currentFolderId);
 ```
