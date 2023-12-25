@@ -1,0 +1,28 @@
+"mutation (
+  $id: UUID!,
+  $document: UpdateDocumentInput! 
+){
+  updateDocument(id: $id, document: $document){
+    id
+    name
+    message
+    reminder
+    refusable
+    sortable
+    stop_on_rejected
+    new_signature_style
+    show_audit_page
+    expiration_at
+    deadline_at
+    email_template_id
+    footer
+    cc
+    configs {
+      notification_finished
+      notification_signed
+      signature_appearance
+    }
+    created_at
+   }
+}",
+"variables": $variables

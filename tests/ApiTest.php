@@ -2,10 +2,13 @@
 
 namespace vinicinbgs\Autentique\tests;
 
+use Exception;
 use vinicinbgs\Autentique\tests\_Base;
 use vinicinbgs\Autentique\Utils\Api;
 use vinicinbgs\Autentique\Enums\ErrorMessagesEnum;
 use vinicinbgs\Autentique\exceptions\ContentTypeException;
+
+use Mockery;
 
 class ApiTest extends _Base
 {
@@ -72,5 +75,19 @@ class ApiTest extends _Base
         $mockApi = new Api("htt");
 
         $mockApi->request($this->token(), "query", "json");
+    }
+
+    public function testAutentiqueError()
+    {
+        // Arrange
+        $stub = Mockery::mock(Api::class, [$this->autentiqueUrl()])->makePartial();
+        $stub->shouldReceive("executeCurl")->andReturn("foo");
+        $stub->shouldReceive("getErrorNo")->andReturn(1);
+
+        // Assert
+        $this->expectException(Exception::class);
+
+        // Act
+        $stub->request($this->token(), "[]", "json");
     }
 }

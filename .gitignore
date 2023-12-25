@@ -10,3 +10,9 @@ package-lock.json
 phpunit.xml
 .phpunit.result.cache
 coverage/
+.phpdoc
+Gemfile.lock
+_site
+.jekyll-cache
+phpDocumentor.phar
+phpdoc/

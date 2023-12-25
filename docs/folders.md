@@ -3,6 +3,8 @@ title: Folders
 layout: index
 filename: folders
 --- 
+# 📁 Folders
+
 ### Import and Instance
 ```php
 use vinicinbgs\Autentique\Folders;
@@ -15,7 +17,6 @@ $token = "YOUR_ALTERNATIVE_TOKEN";
 $documents = new Folders($token); // Alternative token
 ```
 
-# 📁 Folders
 ### 1 - List all folders
 
 ```php
@@ -27,8 +28,6 @@ $foldersPaginated = folders->listAll($page); // if not isset $page is equal 1
 ```php
 $folder = $folders->listById($folderId);
 ```
-
----
 
 ### 3 - Create a folder
 
@@ -47,8 +46,6 @@ $folder = $folders->create($attributes);
 ```php
 $folderContents = $folders->listContentsById($folderId, $page = 1);
 ```
-
----
 
 ### 5 - Delete a folder
 

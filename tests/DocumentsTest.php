@@ -23,9 +23,10 @@ class DocumentsTest extends _Base
 
     private $autentiqueDocumentCreated;
 
-    private function mockDocument()
+    private function mockDocument(?int $organizationId = null)
     {
         return [
+            "organization_id" => $organizationId,
             "document" => [
                 "name" => "DOC. TEST",
             ],
@@ -42,7 +43,7 @@ class DocumentsTest extends _Base
                     ],
                 ],
                 [
-                    "email" => "email@email.com",
+                    "email" => "email@hotmail.com",
                     "action" => "SIGN",
                     "positions" => [
                         [
@@ -57,13 +58,15 @@ class DocumentsTest extends _Base
         ];
     }
 
-    private function createDocument()
+    private function createDocument(?int $organizationId = null)
     {
         if ($this->autentiqueDocumentCreated) {
             return $this->autentiqueDocumentCreated;
         }
 
-        $this->autentiqueDocumentCreated = $this->documents->create($this->mockDocument());
+        $this->autentiqueDocumentCreated = $this->documents->create(
+            $this->mockDocument($organizationId)
+        );
 
         return $this->autentiqueDocumentCreated;
     }
@@ -109,12 +112,29 @@ class DocumentsTest extends _Base
     /**
      * @test
      *
+     * Test Create Document in Autentique inside Organization
+     * @return void
+     */
+    public function testCreateDocumentInsideOrganization(): void
+    {
+        $data = $this->createDocument(6390354);
+
+        $this->assertArrayHasKey(
+            "createDocument",
+            $data["data"],
+            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
+        );
+    }
+
+    /**
+     * @test
+     *
      * Test List Document by Id in Autentique
      * @return void
      */
     public function testListById(): void
     {
-        $attributes = $this->createDocument($this->mockDocument());
+        $attributes = $this->createDocument();
 
         $response = $this->documents->listById($attributes["data"]["createDocument"]["id"]);
 
@@ -223,5 +243,36 @@ class DocumentsTest extends _Base
         $this->assertArrayHasKey("moveDocumentToFolder", $response["data"]);
 
         $this->assertTrue($response["data"]["moveDocumentToFolder"]);
+    }
+
+    /**
+     * @test
+     *
+     * Test update document by id in Autentique
+     * @return void
+     */
+    public function testUpdateDocument(): void
+    {
+        $id = $this->createDocument()["data"]["createDocument"]["id"];
+
+        $name = "DOC. TEST UPDATED";
+        $deadline = "2023-11-24T02:59:59.999Z";
+
+        $response = $this->documents->update($id, [
+            "document" => [
+                "name" => $name,
+                "deadline_at" => $deadline,
+            ],
+        ]);
+
+        $this->assertArrayHasKey(
+            "updateDocument",
+            $response["data"],
+            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
+        );
+        $this->assertTrue($response["data"]["updateDocument"]["name"] === $name);
+        $this->assertTrue(
+            $response["data"]["updateDocument"]["deadline_at"] === "2023-11-24T02:59:59.000000Z"
+        );
     }
 }

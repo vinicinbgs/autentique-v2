@@ -4,6 +4,11 @@ namespace vinicinbgs\Autentique;
 
 use vinicinbgs\Autentique\Utils\Query;
 
+/**
+ * Class Folders
+ * @package vinicinbgs\Autentique
+ * @see https://beadev.net/autentique-v2/folders
+ */
 class Folders extends BaseResource
 {
     /**
@@ -29,7 +34,7 @@ class Folders extends BaseResource
      * @param int $page
      * @return array
      */
-    public function listAll(int $page = 1)
+    public function listAll(int $page = 1): array
     {
         $graphQuery = $this->query->query(__FUNCTION__);
 
@@ -45,7 +50,7 @@ class Folders extends BaseResource
      *
      * @return array
      */
-    public function listById(string $folderId)
+    public function listById(string $folderId): array
     {
         $graphQuery = $this->query->query(__FUNCTION__);
         $graphQuery = $this->query->setVariables("folderId", $folderId, $graphQuery);
@@ -60,7 +65,7 @@ class Folders extends BaseResource
      *
      * @return array
      */
-    public function listContentsById(string $folderId, int $page = 1)
+    public function listContentsById(string $folderId, int $page = 1): array
     {
         $graphQuery = $this->query->query(__FUNCTION__);
         $graphQuery = $this->query->setVariables(
@@ -78,7 +83,7 @@ class Folders extends BaseResource
      * @param array $variables
      * @return array
      */
-    public function create(array $variables)
+    public function create(array $variables): array
     {
         $graphMutation = $this->query->query(__FUNCTION__);
         $graphMutation = $this->query->setVariables(
@@ -97,7 +102,7 @@ class Folders extends BaseResource
      *
      * @return array
      */
-    public function deleteById(string $folderId)
+    public function deleteById(string $folderId): array
     {
         $graphQuery = $this->query->query(__FUNCTION__);
         $graphQuery = $this->query->setVariables("folderId", $folderId, $graphQuery);
