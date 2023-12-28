@@ -66,9 +66,7 @@ class Query
                 $variable = "\$" . $variables[$i];
                 $graphQuery = str_replace($variable, $value[$i], $graphQuery);
             }
-        }
-
-        if (is_string($variables)) {
+        } elseif (is_string($variables)) {
             $graphQuery = str_replace("\$" . $variables, $value, $graphQuery);
         }
 

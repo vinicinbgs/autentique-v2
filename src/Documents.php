@@ -191,4 +191,49 @@ class Documents extends BaseResource
 
         return $this->api->request($this->token, $graphQuery, "json");
     }
+
+    /**
+     * Delete signer from document
+     * @api
+     * @param string $documentId Document UUID
+     * @param string $signerPublicId Signer Public UUID
+     * @return array
+     */
+    public function deleteSigner(string $documentId, string $signerPublicId): array
+    {
+        $graphQuery = $this->query->query(__FUNCTION__);
+
+        $graphQuery = $this->query->setVariables(
+            ["documentId", "signerPublicId"],
+            [$documentId, $signerPublicId],
+            $graphQuery
+        );
+
+        return $this->api->request($this->token, $graphQuery, "json");
+    }
+
+    /**
+     * Add signer from document
+     * @api
+     * @param string $documentId Document UUID
+     * @param array $signer Signer attributes
+     * @return array
+     */
+    public function createSigner(string $documentId, array $attributes): array
+    {
+        $variables = [
+            "document_id" => $documentId,
+            "signer" => $attributes["signer"],
+        ];
+
+        $graphMutation = $this->query->query(__FUNCTION__);
+
+        $graphMutation = $this->query->setVariables(
+            ["variables"],
+            [json_encode($variables)],
+            $graphMutation
+        );
+
+        return $this->api->request($this->token, $graphMutation, "json");
+    }
 }
