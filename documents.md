@@ -143,7 +143,7 @@ $documents->moveToFolderByFolder($documentId, $targetFolderId, $currentFolderId)
 
 ### 9 - Create Signer to document
 
-**Check fields on:** https://docs.autentique.com.br/api/mutations/adicionar-signatario
+Check fields [here](https://docs.autentique.com.br/api/mutations/adicionar-signatario)
 
 ```php
 $attributes = [
