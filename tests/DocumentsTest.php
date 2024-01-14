@@ -275,4 +275,59 @@ class DocumentsTest extends _Base
             $response["data"]["updateDocument"]["deadline_at"] === "2023-11-24T02:59:59.000000Z"
         );
     }
+
+    /**
+     * @test
+     *
+     * Test Add signer on document in Autentique
+     * @return void
+     */
+    public function testAddSignerOnDocument(): void
+    {
+        $data = $this->createDocument();
+
+        $sut = $this->documents->createSigner($data["data"]["createDocument"]["id"], [
+            "signer" => [
+                "email" => "test@test.com",
+                "action" => "SIGN",
+            ],
+        ]);
+
+        $this->assertArrayHasKey(
+            "createDocument",
+            $data["data"],
+            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
+        );
+
+        $this->assertArrayHasKey(
+            "createSigner",
+            $sut["data"],
+            self::ERROR_ARRAY_DOESNT_CONTAINS_DATA
+        );
+    }
+
+    /**
+     * @test
+     *
+     * Test Add signer on document in Autentique
+     * @return void
+     */
+    public function testDeleteSignerOnDocument(): void
+    {
+        $data = $this->createDocument();
+
+        $addSigner = $this->documents->createSigner($data["data"]["createDocument"]["id"], [
+            "signer" => [
+                "email" => "test@test.com",
+                "action" => "SIGN",
+            ],
+        ]);
+
+        $sut = $this->documents->deleteSigner(
+            $data["data"]["createDocument"]["id"],
+            $addSigner["data"]["createSigner"]["public_id"]
+        );
+
+        $this->assertTrue($sut["data"]["deleteSigner"]);
+    }
 }
