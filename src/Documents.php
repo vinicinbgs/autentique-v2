@@ -213,7 +213,7 @@ class Documents extends BaseResource
     }
 
     /**
-     * Add signer from document
+     * Create signer to document
      * @api
      * @param string $documentId Document UUID
      * @param array $signer Signer attributes

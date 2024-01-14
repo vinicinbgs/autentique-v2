@@ -131,16 +131,49 @@ $documentDeleted = $documents->deleteById($documentId);
 
 ### 7 - Move document to folder
 
-Move a document to inside folder
-
 ```php
 $documents->moveToFolder($documentId, $folderId);
 ```
 
 ### 8 - Move document between folders
 
-Move a document between folders
-
 ```php
 $documents->moveToFolderByFolder($documentId, $targetFolderId, $currentFolderId);
+```
+
+### 9 - Create Signer to document
+
+**Check fields on:** https://docs.autentique.com.br/api/mutations/adicionar-signatario
+
+```php
+$attributes = [
+    "name" => "",
+    "email" => "",
+    "action" => "SIGN",
+    "phone"=> "",
+    "delivery_method" => "EMAIL",
+    "positions" => [
+        [
+            "x" => "50", // Position of Axios X of Signature (0 a 100)
+            "y" => "85", // Position of Axios Y of Signature (0 a 100)
+            "z" => "1", // Page of Signature
+        ],
+        [
+            "x" => "50", // Position of Axios X of Signature (0 a 100)
+            "y" => "85", // Position of Axios X of Signature (0 a 100)
+            "z" => "2", // Page of Signature
+        ],
+    ],
+    "configs" => [
+        "cpf"=> ""
+    ]
+];
+
+$documents->createSigner($documentId, $attributes);
+```
+
+### 10 - Remove Signer from document
+
+```php
+$documents->deleteSigner($documentId, $signerPublicId);
 ```
