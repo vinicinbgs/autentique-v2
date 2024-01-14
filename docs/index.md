@@ -40,6 +40,8 @@ AUTENTIQUE_DEV_MODE="true" # set "true" for SANDBOX MODE or "false" to PRODUCTIO
   - [Delete](./documents#6---delete-the-document-by-id)
   - [Move to folder](./documents#7---move-document-to-folder)
   - [Move between folders](./documents#8---move-document-between-folders)
+  - [Create signer](./documents#9---create-signer-to-document)
+  - [Remove signer](./documents#10---remove-signer-from-document)
   
 - [2) Folders](./folders)
   - [List pagination](./folders#1---list-all-folders)
