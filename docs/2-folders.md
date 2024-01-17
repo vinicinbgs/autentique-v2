@@ -2,7 +2,7 @@
 title: Folders
 layout: index
 filename: /docs/folders
-permalink: /autentique-v2/folders
+permalink: folders
 --- 
 # 📁 Folders
 
