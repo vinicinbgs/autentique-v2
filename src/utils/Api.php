@@ -19,9 +19,16 @@ class Api
 
     private $url;
 
-    public function __construct(string $url)
+    private $timeout = 60;
+
+    /**
+     * @param string $url Autentique API URL
+     * @param int $timeout=60 seconds to timeout request
+     */
+    public function __construct(string $url, int $timeout = 60)
     {
         $this->url = $this->setUrl($url);
+        $this->timeout = $timeout;
     }
 
     /**
@@ -80,7 +87,8 @@ class Api
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 60,
+                CURLOPT_CONNECTTIMEOUT => $this->timeout,
+                CURLOPT_TIMEOUT => $this->timeout,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
@@ -158,5 +166,16 @@ class Api
             /** @scrutinizer ignore-type */
             $curl
         );
+    }
+
+    /**
+     * Get the value of url
+     * @return string
+     *
+     * @codeCoverageIgnore
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 }

@@ -15,10 +15,16 @@ jobs:
       with:
         ref: master
 
+    - name: Install phpDocumentator
+      run: |
+        make phpdoc-install
+        make phpdoc-generate
+
     - name: Copy Markdown files
       run: |
         mkdir -p ${{ github.workspace }}/tmp-markdown
         cp -R ./docs/*.md ${{ github.workspace }}/tmp-markdown/
+        cp -R ./phpdoc/ ${{ github.workspace }}/tmp-markdown/
 
     - name: Checkout gh-pages branch
       uses: actions/checkout@v2

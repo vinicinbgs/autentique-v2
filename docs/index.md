@@ -1,13 +1,12 @@
 ---
 title: Home
 layout: index
-filename: index
+filename: /index
 --- 
 #### AUTENTIQUE Api v2
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/vinicinbgs/autentique-v2)](https://packagist.org/packages/vinicinbgs/autentique-v2)
 [![Total Downloads](https://poser.pugx.org/vinicinbgs/autentique-v2/downloads)](https://packagist.org/packages/vinicinbgs/autentique-v2)
-[![Build Status](https://travis-ci.org/vinicinbgs/autentique-v2.svg?branch=master)](https://travis-ci.org/vinicinbgs/autentique-v2)
 [![codecov](https://codecov.io/gh/vinicinbgs/autentique-v2/branch/master/graph/badge.svg)](https://codecov.io/gh/vinicinbgs/autentique-v2)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/vinicinbgs/autentique-v2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/vinicinbgs/autentique-v2/?branch=master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/vinicinbgs/autentique-v2/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
@@ -27,6 +26,18 @@ composer require vinicinbgs/autentique-v2
 AUTENTIQUE_URL="https://api.autentique.com.br/v2/graphql"
 AUTENTIQUE_TOKEN="YOUR_TOKEN"
 AUTENTIQUE_DEV_MODE="true" # set "true" for SANDBOX MODE or "false" to PRODUCTION MODE
+```
+
+If you not able to use environment variables, you can set it directly in `(Documents | Folders) instance`:
+
+```php
+use vinicinbgs\Autentique\Utils\Api;
+use vinicinbgs\Autentique\Documents;
+
+$api = new Api('https://api.autentique.com.br/v2/graphql', 100);
+$document = new Documents($token);
+$document->setApi($api) // use only if you want to change the default timeout 60 seconds
+$document->setSandbox("true") // string. "true"|"false"
 ```
 
 ### 2) API's
@@ -55,20 +66,13 @@ AUTENTIQUE_DEV_MODE="true" # set "true" for SANDBOX MODE or "false" to PRODUCTIO
 
 # Contribute
 
-### 1) Setup
-
 ```sh
 git clone git@github.com:vinicinbgs/autentique-v2.git
-```
-
-### 2) Configure
-
-```sh
 cd autentique-v2
-sh ./contribute.sh
+make contribute
 ```
 
-### 3) Configure prettier php in vscode (optional)
+### Configure prettier php in vscode (optional)
 
 1. `(CTRL + P)` 
 2. `> Preferences: Open Setting (JSON)`
@@ -83,3 +87,29 @@ sh ./contribute.sh
         ]
     }
 ```
+
+## TODO
+
+Check: [https://altair.autentique.com.br/](https://altair.autentique.com.br/)
+
+### 1) Queries
+- [ ] me
+- [ ] organization
+- [ ] organizations
+- [ ] groupsByOrganization
+- [ ] documentsByFolder
+- [ ] emailTemplates
+
+### 2) Mutations
+- [ ] moveDocumentToRoot
+- [ ] transferDocument
+
+## Tests
+The tests are _**integrated directly with Autentique API**_, so you need to set your `.env` file based on `.env.example` Make sure you have set the `AUTENTIQUE_TOKEN`, `AUTENTIQUE_URL` and `AUTENTIQUE_DEV_MODE` to `true` for `SANDBOX MODE` or `false` to `PRODUCTION MODE`.
+
+```bash
+composer test
+composer test -- --filter ApiTest
+```
+
+

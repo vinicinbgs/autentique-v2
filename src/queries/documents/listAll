@@ -1,5 +1,5 @@
 "query{
-    documents(limit: 60, page: $page) {
+    documents(limit: 60, page: $page, showSandbox: $sandbox) {
        total
        data {
               id

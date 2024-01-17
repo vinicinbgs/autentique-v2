@@ -22,10 +22,11 @@ class Documents extends BaseResource
      * Documents constructor.
      *
      * @param string|null $token Autentique API Token
+     * @param int $timeout=60 Request Timeout in seconds
      */
-    public function __construct(string $token = null)
+    public function __construct(string $token = null, int $timeout = 60)
     {
-        parent::__construct($token);
+        parent::__construct($token, $timeout);
 
         $this->query = new Query($this->resourcesEnum::DOCUMENTS);
     }
@@ -40,7 +41,11 @@ class Documents extends BaseResource
     {
         $graphQuery = $this->query->query(__FUNCTION__);
 
-        $graphQuery = $this->query->setVariables("page", $page, $graphQuery);
+        $graphQuery = $this->query->setVariables(
+            ["page", "sandbox"],
+            [$page, $this->sandbox],
+            $graphQuery
+        );
 
         return $this->api->request($this->token, $graphQuery, "json");
     }

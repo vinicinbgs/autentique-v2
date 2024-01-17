@@ -10,6 +10,7 @@
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="/assets/css/custom-style.css">
     {% include head-custom.html %}
   </head>
   <body>
@@ -21,8 +22,13 @@
       {% if site.github.is_project_page %}
         <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
       {% endif %}
+      <a href="/" class="btn">Home</a>
       {% for page in site.pages %}
-        <a href={{ page.filename }} class="btn">{{ page.title }}</a>
+        {% if page.filename == "/index" %}
+          {{ continue }}
+        {% else %}
+          <a href={{ page.permalink }} class="btn">{{ page.title }}</a>
+        {% endif %}
       {% endfor %}
     </header>
 

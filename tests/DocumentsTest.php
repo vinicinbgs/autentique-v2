@@ -2,10 +2,12 @@
 
 namespace vinicinbgs\Autentique\tests;
 
+use Exception;
 use vinicinbgs\Autentique\tests\_Base;
 
 use vinicinbgs\Autentique\Documents;
 use vinicinbgs\Autentique\Folders;
+use vinicinbgs\Autentique\Utils\Api;
 
 class DocumentsTest extends _Base
 {
@@ -329,5 +331,63 @@ class DocumentsTest extends _Base
         );
 
         $this->assertTrue($sut["data"]["deleteSigner"]);
+    }
+
+    /**
+     * @test
+     *
+     * Test timeouted operation
+     * @return void
+     */
+    public function testTimeoutedOperation(): void
+    {
+        // Arrange
+        $document = (new Documents())->setApi(new Api("http://10.255.255.1", 1));
+
+        // Assert
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessageMatches("/Connection timed out/");
+
+        // Act
+        $document->listAll();
+    }
+
+    /**
+     * @test
+     *
+     * Test invalid token
+     * @return void
+     */
+    public function testSetInvalidToken(): void
+    {
+        // Arrange
+        $document = (new Documents())->setToken("invalid_token");
+
+        // Act
+        $sut = $document->listAll();
+
+        // Assert
+        $this->assertEquals("unauthorized", $sut["message"]);
+    }
+
+    /**
+     * @test
+     *
+     * Test invalid sandbox mode
+     * @return void
+     */
+    public function testInvalidSandboxMode(): void
+    {
+        // Arrange
+        $document = (new Documents())->setSandbox("invalid_sandbox_mode");
+
+        // Act
+        $sut = $document->listAll();
+
+        // Assert
+        $this->assertEquals(
+            "Field \"documents\" argument \"showSandbox\" requires type Boolean, found invalid_sandbox_mode.",
+            $sut["errors"][0]["message"]
+        );
     }
 }
