@@ -23,7 +23,7 @@ jobs:
     - name: Copy Markdown files
       run: |
         mkdir -p ${{ github.workspace }}/tmp-markdown
-        cp -R ./docs/*.md ${{ github.workspace }}/tmp-markdown/
+        cp -R ./docs/* ${{ github.workspace }}/tmp-markdown/
         cp -R ./phpdoc/ ${{ github.workspace }}/tmp-markdown/
 
     - name: Checkout gh-pages branch
@@ -34,6 +34,7 @@ jobs:
 
     - name: Update gh-pages branch
       run: |
+        rm -rf ./gh-pages/*
         cp -R ${{ github.workspace }}/tmp-markdown/* ./gh-pages/ # Copy Markdown to gh-pages
         cd gh-pages
         git config user.name github-actions

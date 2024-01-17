@@ -2,7 +2,7 @@
 title: Folders
 layout: index
 filename: /docs/folders
-permalink: /folders
+permalink: folders
 --- 
 # 📁 Folders
 
