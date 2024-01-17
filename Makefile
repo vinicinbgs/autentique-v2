@@ -18,4 +18,19 @@ ruby-install:
 .PHONY: jekyll-serve
 jekyll-serve:
 	@echo "Building Jekyll site..."
-	bundle exec jekyll serve -s ./docs/
+	bundle exec jekyll serve -s ./docs/ -l
+
+.PHONY: test
+test:
+	@echo "Running tests..."
+	composer run test
+
+.PHONY: test-coverage
+test-coverage:
+	@echo "Running tests with coverage..."
+	composer run test-coverage
+
+.PHONY: contribute
+contribute:
+	@echo "Running contribute..."
+	sh ./contribute.sh

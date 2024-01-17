@@ -19,11 +19,12 @@ class Folders extends BaseResource
     /**
      * Documents constructor.
      *
-     * @param string|null $token
+     * @param string|null $token Autentique API Token
+     * @param int $timeout=60 Request Timeout in seconds
      */
-    public function __construct(string $token)
+    public function __construct(string $token = null, int $timeout = 60)
     {
-        parent::__construct($token);
+        parent::__construct($token, $timeout);
 
         $this->query = new Query($this->resourcesEnum::FOLDERS);
     }
