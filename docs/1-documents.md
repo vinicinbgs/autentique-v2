@@ -2,7 +2,7 @@
 title: Documents
 layout: index
 filename: /docs/1-documents
-permalink: /documents
+permalink: /autentique-v2/documents
 ---
 
 # 📄 Documents
