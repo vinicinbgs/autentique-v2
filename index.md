@@ -36,8 +36,8 @@ use vinicinbgs\Autentique\Documents;
 
 $api = new Api('https://api.autentique.com.br/v2/graphql', 100);
 $document = new Documents($token);
-$document->setApi($api) // use only if you want to change the default timeout 60 seconds
-$document->setSandbox("true") // string. "true"|"false"
+$document->setApi($api); // use only if you want to change the default timeout 60 seconds
+$document->setSandbox("true"); // string. "true"|"false"
 ```
 
 ### 2) API's
