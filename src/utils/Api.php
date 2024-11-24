@@ -3,14 +3,12 @@
 namespace vinicinbgs\Autentique\Utils;
 
 use CURLFile;
-use CurlHandle;
 use Exception;
-
-use vinicinbgs\Autentique\exceptions\EmptyTokenException;
-use vinicinbgs\Autentique\exceptions\EmptyQueryException;
 use vinicinbgs\Autentique\exceptions\ContentTypeException;
 use vinicinbgs\Autentique\exceptions\EmptyAutentiqueResponseException;
 use vinicinbgs\Autentique\exceptions\EmptyAutentiqueUrlException;
+use vinicinbgs\Autentique\exceptions\EmptyQueryException;
+use vinicinbgs\Autentique\exceptions\EmptyTokenException;
 use vinicinbgs\Autentique\exceptions\InvalidAutentiqueUrlException;
 
 class Api
@@ -27,7 +25,7 @@ class Api
      */
     public function __construct(string $url, int $timeout = 60)
     {
-        $this->url = $this->setUrl($url);
+        $this->url     = $this->setUrl($url);
         $this->timeout = $timeout;
     }
 
@@ -58,10 +56,10 @@ class Api
             $contentType = $this->requestJson();
         } else {
             $contentType = $this->requestFormData();
-            $fields = [
+            $fields      = [
                 "operations" => $fields,
-                "map" => '{"file": ["variables.file"]}',
-                "file" => new CURLFile($pathFile),
+                "map"        => '{"file": ["variables.file"]}',
+                "file"       => new CURLFile($pathFile),
             ];
         }
 
@@ -83,18 +81,18 @@ class Api
             /** @scrutinizer ignore-type */
             $curl,
             [
-                CURLOPT_URL => $this->url,
+                CURLOPT_URL            => $this->url,
                 CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_ENCODING       => "",
+                CURLOPT_MAXREDIRS      => 10,
                 CURLOPT_CONNECTTIMEOUT => $this->timeout,
-                CURLOPT_TIMEOUT => $this->timeout,
+                CURLOPT_TIMEOUT        => $this->timeout,
                 CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $fields,
-                CURLOPT_HTTPHEADER => $httpHeader,
-                CURLOPT_CAINFO => __DIR__ . "/../../ssl/ca-bundle.crt",
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST  => "POST",
+                CURLOPT_POSTFIELDS     => $fields,
+                CURLOPT_HTTPHEADER     => $httpHeader,
+                CURLOPT_CAINFO         => __DIR__ . "/../../ssl/ca-bundle.crt",
             ]
         );
 
@@ -152,7 +150,7 @@ class Api
         return "Content-Type: multipart/form-data";
     }
 
-    public function getErrorNo(CurlHandle $curl): int
+    public function getErrorNo($curl): int
     {
         return curl_errno(
             /** @scrutinizer ignore-type */
@@ -160,7 +158,7 @@ class Api
         );
     }
 
-    public function executeCurl(CurlHandle $curl): string
+    public function executeCurl($curl): string
     {
         return curl_exec(
             /** @scrutinizer ignore-type */
