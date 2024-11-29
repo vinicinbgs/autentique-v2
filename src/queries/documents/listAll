@@ -18,6 +18,8 @@
                   viewed { created_at }
                   signed { created_at }
                   rejected { created_at }
+                  signed_unapproved { created_at }
+                  biometric_approved { created_at }
               }
               files { original signed }
             }

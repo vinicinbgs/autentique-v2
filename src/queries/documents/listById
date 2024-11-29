@@ -14,7 +14,7 @@
         link { short_link }
         user { id name email }
         email_events { sent opened delivered refused reason }
-        viewed { ...event } signed { ...event } rejected { ...event } } }
+        viewed { ...event } signed { ...event } rejected { ...event } signed_unapproved { ...event } biometric_approved { ...event } } }
 }
 fragment event on Event {
     ipv4
